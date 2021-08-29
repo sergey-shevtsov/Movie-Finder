@@ -25,10 +25,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBottomNavigation() {
         binding.bottomNavigation.setOnItemSelectedListener {
-            when(it.itemId) {
-                R.id.home -> replaceFragment(HomeFragment.newInstance())
-                R.id.favorites -> replaceFragment(FavoritesFragment.newInstance())
-                R.id.ratings -> replaceFragment(RatingsFragment.newInstance())
+            if (!it.isChecked) {
+                when(it.itemId) {
+                    R.id.home -> replaceFragment(HomeFragment.newInstance())
+                    R.id.favorites -> replaceFragment(FavoritesFragment.newInstance())
+                    R.id.ratings -> replaceFragment(RatingsFragment.newInstance())
+                }
             }
             true
         }
