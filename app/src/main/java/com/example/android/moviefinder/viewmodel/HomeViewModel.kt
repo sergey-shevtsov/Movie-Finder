@@ -8,29 +8,30 @@ import java.lang.Exception
 import kotlin.random.Random
 
 class HomeViewModel : ViewModel() {
-    private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
-    val liveData: LiveData<AppState> = liveDataToObserve
+    private val firstCategoryLiveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
+    val firstCategoryLiveData: LiveData<AppState> = firstCategoryLiveDataToObserve
 
-    fun getFirstSectionMovies() = getDataFromLocalSource()
+    fun getFirstSectionMovies() = getFirstCategoryDataFromLocalSource()
 
-    private fun getDataFromLocalSource() {
-        liveDataToObserve.value = AppState.Loading
+    private fun getFirstCategoryDataFromLocalSource() {
+        firstCategoryLiveDataToObserve.value = AppState.Loading
 
         Thread {
-            Thread.sleep(3000)
-            if (Random.nextBoolean()) {
-                liveDataToObserve.postValue(AppState.Success(arrayListOf(
-                   Movie(),
-                   Movie(),
-                   Movie(),
-                   Movie(),
-                   Movie(),
-                   Movie(),
-                   Movie()
-                )))
-            } else {
-                liveDataToObserve.postValue(AppState.Error(Exception("ошибка сети")))
-            }
+            Thread.sleep(2000)
+//            if (Random.nextBoolean()) {
+//                firstCategoryLiveDataToObserve.postValue(AppState.Success(arrayListOf(
+//                   Movie(),
+//                   Movie(),
+//                   Movie(),
+//                   Movie(),
+//                   Movie(),
+//                   Movie(),
+//                   Movie()
+//                )))
+//            } else {
+//                firstCategoryLiveDataToObserve.postValue(AppState.Error(Exception("no internet")))
+//            }
+            firstCategoryLiveDataToObserve.postValue(AppState.Error(Exception("no internet")))
         }.start()
     }
 }
