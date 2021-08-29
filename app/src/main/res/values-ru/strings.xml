@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loading">Загрузка…</string>
+    <string name="error">Ошибка</string>
+    <string name="try_again"><u>Еще раз</u></string>
+</resources>
