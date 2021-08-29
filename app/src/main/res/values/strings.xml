@@ -4,4 +4,8 @@
     <string name="loading">Loading…</string>
     <string name="error">Error</string>
     <string name="try_again"><u>Try again</u></string>
+    <string name="home">Home</string>
+    <string name="favorites">Favorites</string>
+    <string name="ratings">Ratings</string>
+    <string name="in_developing">In developing</string>
 </resources>
