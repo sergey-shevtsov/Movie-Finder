@@ -2,6 +2,7 @@ package com.example.android.moviefinder.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,9 +38,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        createCategory("Category 1", firstCategoryAdapter, viewModel.firstCategoryLiveData)
-        createCategory("Category 2", firstCategoryAdapter, viewModel.firstCategoryLiveData)
-        createCategory("Category 3", firstCategoryAdapter, viewModel.firstCategoryLiveData)
+        createCategory("Category 1", firstCategoryAdapter, viewModel.getData())
+        createCategory("Category 2", firstCategoryAdapter, viewModel.getData())
+        createCategory("Category 3", firstCategoryAdapter, viewModel.getData())
     }
 
     override fun onDestroyView() {
@@ -57,7 +58,6 @@ class HomeFragment : Fragment() {
         liveData.observe(viewLifecycleOwner) {
             renderData(it, adapter, view)
         }
-        viewModel.getFirstSectionMovies()
     }
 
     private fun renderData(state: AppState, adapter: MoviesAdapter, view: View) {
@@ -81,7 +81,7 @@ class HomeFragment : Fragment() {
                     errorLinear.visibility = View.VISIBLE
                     errorTextView.text = String.format(Locale.getDefault(), "%s: %s", resources.getString(R.string.error), state.error.message)
                     errorButton.setOnClickListener {
-                        viewModel.getFirstSectionMovies()
+                        viewModel.getMovies()
                     }
                 }
             }
