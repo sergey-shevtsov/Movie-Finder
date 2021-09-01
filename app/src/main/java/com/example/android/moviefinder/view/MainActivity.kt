@@ -43,12 +43,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBottomNavigation() {
         binding.bottomNavigation.setOnItemSelectedListener {
-            if (!it.isChecked) {
-                when(it.itemId) {
-                    R.id.home -> replaceFragment(HomeFragment.newInstance())
-                    R.id.favorites -> replaceFragment(FavoritesFragment.newInstance())
-                    R.id.ratings -> replaceFragment(RatingsFragment.newInstance())
-                }
+            when(it.itemId) {
+                R.id.home -> replaceFragment(HomeFragment.newInstance())
+                R.id.favorites -> replaceFragment(FavoritesFragment.newInstance())
+                R.id.ratings -> replaceFragment(RatingsFragment.newInstance())
             }
             true
         }
