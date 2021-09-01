@@ -22,11 +22,12 @@ class HomeViewModel : ViewModel() {
 
         Thread {
             Thread.sleep(2000)
-            if (Random.nextBoolean()) {
-                liveDataToObserve.postValue(AppState.Success(repository.getMoviesFromLocalStorage()))
-            } else {
-                liveDataToObserve.postValue(AppState.Error(Exception("no internet")))
-            }
+//            if (Random.nextBoolean()) {
+//                liveDataToObserve.postValue(AppState.Success(repository.getMoviesFromLocalStorage()))
+//            } else {
+//                liveDataToObserve.postValue(AppState.Error(Exception("no internet")))
+//            }
+            liveDataToObserve.postValue(AppState.Success(repository.getMoviesFromLocalStorage()))
         }.start()
     }
 }

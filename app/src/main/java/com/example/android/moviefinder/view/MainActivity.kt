@@ -5,15 +5,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.MainActivityBinding
 
 class MainActivity : AppCompatActivity() {
-
-    companion object {
-
-    }
 
     private lateinit var binding: MainActivityBinding
 
@@ -37,8 +34,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.search) {
-            Toast.makeText(this, "Searching", Toast.LENGTH_LONG).show()
+        when (item.itemId) {
+            android.R.id.home -> onBackPressed()
+            R.id.search -> Toast.makeText(this, "Searching", Toast.LENGTH_LONG).show()
         }
         return true
     }
