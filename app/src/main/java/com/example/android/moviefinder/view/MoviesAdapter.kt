@@ -37,7 +37,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
     }
 
     private lateinit var data: ArrayList<Movie>
-    private lateinit var onItemClickListener: OnItemClickListener
+    private var onItemClickListener: OnItemClickListener? = null
 
     fun setData(data: ArrayList<Movie>) {
         this.data = data
@@ -45,9 +45,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
     }
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener?) {
-        if (onItemClickListener != null) {
-            this.onItemClickListener = onItemClickListener
-        }
+        this.onItemClickListener = onItemClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieVH {
