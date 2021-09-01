@@ -2,7 +2,6 @@ package com.example.android.moviefinder.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.CategorySectionBinding
 import com.example.android.moviefinder.databinding.HomeFragmentBinding
+import com.example.android.moviefinder.model.Movie
 import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.HomeViewModel
 import java.util.*
@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
     private var _binding: HomeFragmentBinding? = null
     private val binding get() = _binding!!
-    private val firstCategoryAdapter = MoviesAdapter()
+    private val adapter = MoviesAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,9 +38,19 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        createCategory("Category 1", firstCategoryAdapter, viewModel.getData())
-        createCategory("Category 2", firstCategoryAdapter, viewModel.getData())
-        createCategory("Category 3", firstCategoryAdapter, viewModel.getData())
+        adapter.setOnItemClickListener(object : MoviesAdapter.OnItemClickListener {
+            override fun onItemClicked(item: View, movie: Movie) {
+                activity?.supportFragmentManager
+                    ?.beginTransaction()
+                    ?.replace(R.id.fragment_container, DetailFragment.newInstance())
+                    ?.addToBackStack(null)
+                    ?.commit()
+            }
+
+        })
+        createCategory("Category 1", adapter, viewModel.getData())
+        createCategory("Category 2", adapter, viewModel.getData())
+        createCategory("Category 3", adapter, viewModel.getData())
     }
 
     override fun onDestroyView() {

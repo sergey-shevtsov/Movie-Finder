@@ -7,6 +7,6 @@
     <string name="home">Home</string>
     <string name="favorites">Favorites</string>
     <string name="ratings">Ratings</string>
-    <string name="in_developing">In developing</string>
     <string name="search">Search</string>
+    <string name="detail">Detail</string>
 </resources>

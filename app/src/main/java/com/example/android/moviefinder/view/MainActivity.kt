@@ -11,6 +11,10 @@ import com.example.android.moviefinder.databinding.MainActivityBinding
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+
+    }
+
     private lateinit var binding: MainActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,9 +56,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commitNow()
+    private fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = false) {
+        supportFragmentManager.apply {
+            for (i in 0 until backStackEntryCount) popBackStack()
+
+            beginTransaction().apply {
+                replace(R.id.fragment_container, fragment)
+                if (addToBackStack) addToBackStack(null)
+                commit()
+            }
+        }
     }
 }

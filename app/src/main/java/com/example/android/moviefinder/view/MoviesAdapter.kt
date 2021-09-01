@@ -10,27 +10,50 @@ import com.example.android.moviefinder.model.Movie
 
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
 
-    class MovieVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MovieVH(itemView: View, onItemClickListener: OnItemClickListener?) : RecyclerView.ViewHolder(itemView) {
         private val binding = MovieItemBinding.bind(itemView)
-        fun bind(movie: Movie) = with(binding) {
-            posterImage.setImageResource(movie.imageId)
-            title.text = movie.title
-            releaseYear.text = movie.released.toString()
-            ratingTv.text = movie.rating.toString()
+        private lateinit var movie: Movie
+
+        init {
+            itemView.setOnClickListener {
+                onItemClickListener?.onItemClicked(itemView, movie)
+            }
+        }
+
+        fun bind(movie: Movie) {
+            this.movie = movie
+
+            binding.apply {
+                posterImage.setImageResource(movie.imageId)
+                title.text = movie.title
+                releaseYear.text = movie.released.toString()
+                ratingTv.text = movie.rating.toString()
+            }
         }
     }
 
+    interface OnItemClickListener {
+        fun onItemClicked(item: View, movie: Movie)
+    }
+
     private lateinit var data: ArrayList<Movie>
+    private lateinit var onItemClickListener: OnItemClickListener
 
     fun setData(data: ArrayList<Movie>) {
         this.data = data
         notifyDataSetChanged()
     }
 
+    fun setOnItemClickListener(onItemClickListener: OnItemClickListener?) {
+        if (onItemClickListener != null) {
+            this.onItemClickListener = onItemClickListener
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieVH {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.movie_item, parent, false)
-        return MovieVH(view)
+        return MovieVH(view, onItemClickListener)
     }
 
     override fun onBindViewHolder(holder: MovieVH, position: Int) {
