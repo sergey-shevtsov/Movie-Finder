@@ -1,9 +1,12 @@
 package com.example.android.moviefinder.model
 
+import android.os.Parcelable
 import com.example.android.moviefinder.R
+import kotlinx.android.parcel.Parcelize
 
-data class Movie(
-    val id: Int = 0,
+@Parcelize
+data class Movie (
+    val id: Int = 1,
     val imageId: Int = R.drawable.dummy,
     val title: String = "Терминатор",
     val originalTitle: String = "Terminator",
@@ -13,6 +16,6 @@ data class Movie(
     val voteCount: Int = 10000,
     val budget: Long = 6_400_000,
     val revenue: Long = 78_371_200,
-    val released: Int = 1984,
+    val released: String = "29.10.1984",
     val overview: String = "История противостояния солдата Кайла Риза и киборга-терминатора, прибывших в 1984-й год из пост-апокалиптического будущего, где миром правят машины-убийцы, а человечество находится на грани вымирания. Цель киборга: убить девушку по имени Сара Коннор, чей ещё нерождённый сын к 2029 году выиграет войну человечества с машинами. Цель Риза: спасти Сару и остановить Терминатора любой ценой."
-)
+) : Parcelable

@@ -1,6 +1,8 @@
 package com.example.android.moviefinder.model
 
 interface Repository {
-    fun getMoviesFromLocalStorage(): ArrayList<Movie>
-    fun getMoviesFromServer(): ArrayList<Movie>
+    fun getMoviesFromLocalStorage(): List<Movie>
+    fun getMoviesFromServer(): List<Movie>
+    fun getMovieByIdFromLocalStorage(id: Int): Movie?
+    fun getMovieByIdFromServer(id: Int): Movie?
 }

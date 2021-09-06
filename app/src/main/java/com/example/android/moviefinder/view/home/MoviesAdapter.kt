@@ -22,24 +22,25 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
 
         fun bind(movie: Movie) {
             this.movie = movie
+            val releaseYear = movie.released.subSequence(6, 10).toString()
 
             binding.apply {
                 posterImage.setImageResource(movie.imageId)
                 title.text = movie.title
-                releaseYear.text = movie.released.toString()
+                released.text = releaseYear
                 ratingTv.text = movie.rating.toString()
             }
         }
     }
 
-    interface OnItemClickListener {
+    fun interface OnItemClickListener {
         fun onItemClicked(item: View, movie: Movie)
     }
 
-    private lateinit var data: ArrayList<Movie>
+    private lateinit var data: List<Movie>
     private var onItemClickListener: OnItemClickListener? = null
 
-    fun setData(data: ArrayList<Movie>) {
+    fun setData(data: List<Movie>) {
         this.data = data
         notifyDataSetChanged()
     }

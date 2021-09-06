@@ -43,17 +43,18 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        adapter.setOnItemClickListener(object : MoviesAdapter.OnItemClickListener {
-            override fun onItemClicked(item: View, movie: Movie) {
-                activity?.supportFragmentManager
-                    ?.beginTransaction()
-                    ?.replace(R.id.fragment_container, DetailFragment.newInstance())
-                    ?.addToBackStack(null)
-                    ?.commit()
+        adapter.setOnItemClickListener { item, movie ->
+            val manager = activity?.supportFragmentManager
+            if (manager != null) {
+                val bundle = Bundle()
+                bundle.putInt(DetailFragment.MOVIE_KEY, movie.id)
+                manager.beginTransaction()
+                    .replace(R.id.fragment_container, DetailFragment.newInstance(bundle))
+                    .addToBackStack("")
+                    .commit()
             }
-
-        })
-        createCategory("Category 1", adapter, viewModel.getData())
+        }
+        createCategory("Category title", adapter, viewModel.getData())
     }
 
     override fun onDestroyView() {
@@ -86,7 +87,7 @@ class HomeFragment : Fragment() {
                     errorLinear.visibility = View.GONE
                     loadingTextView.visibility = View.GONE
                     recyclerView.visibility = View.VISIBLE
-                    adapter.setData(state.movies)
+                    adapter.setData((state.data as List<Movie>))
                 }
                 is AppState.Error -> {
                     recyclerView.visibility = View.GONE

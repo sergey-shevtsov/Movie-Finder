@@ -2,19 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Терминатор"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="24sp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:paddingEnd="32dp"
+        tools:text="Title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/favorites_button"/>
@@ -35,10 +36,10 @@
         android:id="@+id/original_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Terminator (1984)"
         android:textColor="@color/grey"
         android:textStyle="italic"
         android:layout_marginStart="8dp"
+        tools:text="Original Title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"/>
 
@@ -46,20 +47,20 @@
         android:id="@+id/image"
         android:layout_width="140dp"
         android:layout_height="196dp"
-        android:src="@drawable/dummy"
         android:scaleType="centerCrop"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/original_title"/>
+        app:layout_constraintTop_toBottomOf="@id/original_title"
+        android:contentDescription="@string/movie_image" />
 
     <TextView
         android:id="@+id/genres"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="фантастика, боевик, триллер"
         android:textColor="@color/black"
         android:layout_marginStart="8dp"
+        tools:text="Genres"
         app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toTopOf="@id/image"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -68,10 +69,10 @@
         android:id="@+id/duration"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="108 мин./ 01:48"
         android:textColor="@color/black"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
+        tools:text="Duration"
         app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toBottomOf="@id/genres"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -80,10 +81,10 @@
         android:id="@+id/rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="8.0 (10000)"
         android:textColor="@color/black"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
+        tools:text="Rating"
         app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toBottomOf="@id/duration"/>
 
@@ -94,16 +95,17 @@
         android:layout_marginStart="4dp"
         android:src="@drawable/ic_rating"
         app:layout_constraintStart_toEndOf="@id/rating"
-        app:layout_constraintTop_toTopOf="@id/rating"/>
+        app:layout_constraintTop_toTopOf="@id/rating"
+        android:contentDescription="@string/rating_image" />
 
     <TextView
         android:id="@+id/budget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Бюджет: $6 400 000"
         android:textColor="@color/black"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
+        tools:text="Budget"
         app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toBottomOf="@id/rating"/>
 
@@ -111,10 +113,10 @@
         android:id="@+id/revenue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Сборы в мире: $78 371 200"
         android:textColor="@color/black"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
+        tools:text="Revenue"
         app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toBottomOf="@id/budget"/>
 
@@ -122,10 +124,10 @@
         android:id="@+id/released"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Премьера: 29.10.1984"
         android:textColor="@color/black"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
+        tools:text="Released"
         app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toBottomOf="@id/revenue"/>
 
@@ -133,11 +135,11 @@
         android:id="@+id/overview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="История противостояния солдата Кайла Риза и киборга-терминатора, прибывших в 1984-й год из пост-апокалиптического будущего, где миром правят машины-убийцы, а человечество находится на грани вымирания. Цель киборга: убить девушку по имени Сара Коннор, чей ещё нерождённый сын к 2029 году выиграет войну человечества с машинами. Цель Риза: спасти Сару и остановить Терминатора любой ценой."
         android:textColor="@color/grey"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        tools:text="Overview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image"/>

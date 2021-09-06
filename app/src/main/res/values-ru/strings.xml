@@ -8,4 +8,9 @@
     <string name="ratings">Рейтинг</string>
     <string name="search">Поиск</string>
     <string name="detail">Подробно</string>
+    <string name="add_to_favorites">В избранное</string>
+    <string name="released">Дата выхода:</string>
+    <string name="revenue">Сборы в мире:</string>
+    <string name="budget">Бюджет:</string>
+    <string name="minute">мин.</string>
 </resources>

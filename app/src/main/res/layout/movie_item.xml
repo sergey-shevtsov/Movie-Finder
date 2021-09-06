@@ -21,7 +21,8 @@
             android:src="@drawable/dummy"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/movie_image" />
 
         <TextView
             android:id="@+id/title"
@@ -36,7 +37,7 @@
             tools:text="Movie Title" />
 
         <TextView
-            android:id="@+id/release_year"
+            android:id="@+id/released"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -51,14 +52,15 @@
             android:layout_marginEnd="4dp"
             android:src="@drawable/ic_rating"
             app:layout_constraintBottom_toBottomOf="@id/rating_tv"
-            app:layout_constraintEnd_toStartOf="@id/rating_tv" />
+            app:layout_constraintEnd_toStartOf="@id/rating_tv"
+            android:contentDescription="@string/rating_image" />
 
         <TextView
             android:id="@+id/rating_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
-            app:layout_constraintBaseline_toBaselineOf="@id/release_year"
+            app:layout_constraintBaseline_toBaselineOf="@id/released"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="8.0" />
 
