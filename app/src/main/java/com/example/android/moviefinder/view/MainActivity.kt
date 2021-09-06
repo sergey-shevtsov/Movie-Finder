@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.MainActivityBinding
+import com.example.android.moviefinder.view.favorites.FavoritesFragment
+import com.example.android.moviefinder.view.home.HomeFragment
+import com.example.android.moviefinder.view.ratings.RatingsFragment
 
 class MainActivity : AppCompatActivity() {
 

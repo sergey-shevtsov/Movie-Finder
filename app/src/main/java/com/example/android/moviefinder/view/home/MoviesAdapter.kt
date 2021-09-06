@@ -1,4 +1,4 @@
-package com.example.android.moviefinder.view
+package com.example.android.moviefinder.view.home
 
 import android.view.LayoutInflater
 import android.view.View

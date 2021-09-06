@@ -1,4 +1,4 @@
-package com.example.android.moviefinder.view
+package com.example.android.moviefinder.view.home
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -13,6 +13,7 @@ import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.CategorySectionBinding
 import com.example.android.moviefinder.databinding.HomeFragmentBinding
 import com.example.android.moviefinder.model.Movie
+import com.example.android.moviefinder.view.detail.DetailFragment
 import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.HomeViewModel
 import java.util.*
@@ -53,8 +54,6 @@ class HomeFragment : Fragment() {
 
         })
         createCategory("Category 1", adapter, viewModel.getData())
-        createCategory("Category 2", adapter, viewModel.getData())
-        createCategory("Category 3", adapter, viewModel.getData())
     }
 
     override fun onDestroyView() {
