@@ -21,12 +21,8 @@ class HomeViewModel : ViewModel() {
         liveDataToObserve.value = AppState.Loading
 
         Thread {
-            Thread.sleep(2000)
-            if (Random.nextBoolean()) {
-                liveDataToObserve.postValue(AppState.Success(repository.getMoviesFromLocalStorage()))
-            } else {
-                liveDataToObserve.postValue(AppState.Error(Exception("no internet")))
-            }
+            Thread.sleep(500)
+            liveDataToObserve.postValue(AppState.Success(repository.getMoviesFromLocalStorage()))
         }.start()
     }
 }
