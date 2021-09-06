@@ -1,9 +1,12 @@
 package com.example.android.moviefinder.model
 
+import com.example.android.moviefinder.R
+
 class RepositoryImpl : Repository {
     private val movies = listOf(
         Movie(
             id = 1,
+            imageId = R.drawable.terminator,
             title = "Терминатор",
             originalTitle = "The Terminator",
             genres = arrayOf("фантастика", "боевик", "триллер"),
@@ -17,6 +20,7 @@ class RepositoryImpl : Repository {
         ),
         Movie(
             id = 2,
+            imageId = R.drawable.titanic,
             title = "Титаник",
             originalTitle = "Titanic",
             genres = arrayOf("мелодрама", "история", "триллер", "драма"),
@@ -30,6 +34,7 @@ class RepositoryImpl : Repository {
         ),
         Movie(
             id = 3,
+            imageId = R.drawable.godfather,
             title = "Крестный отец",
             originalTitle = "The Godfather",
             genres = arrayOf("драма", "криминал"),
@@ -45,6 +50,7 @@ class RepositoryImpl : Repository {
         ),
         Movie(
             id = 4,
+            imageId = R.drawable.greenmile,
             title = "Зеленая миля",
             originalTitle = "The Green Mile",
             genres = arrayOf("фэнтези", "драма", "криминал", "детектив"),
@@ -58,6 +64,7 @@ class RepositoryImpl : Repository {
         ),
         Movie(
             id = 5,
+            imageId = R.drawable.shawshank,
             title = "Побег из Шоушенка",
             originalTitle = "The Shawshank Redemption",
             genres = arrayOf("драма"),
