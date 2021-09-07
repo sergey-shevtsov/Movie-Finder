@@ -65,12 +65,13 @@ class DetailFragment : Fragment() {
     private fun renderData(state: AppState) {
         when (state) {
             is AppState.Loading -> {
-
+                binding.loadingFrame.visibility = View.VISIBLE
             }
             is AppState.Success -> {
                 val movie = state.data as Movie
                 val releaseYear = movie.released.subSequence(6, 10).toString()
                 binding.apply {
+                    loadingFrame.visibility = View.GONE
                     title.text = movie.title
                     originalTitle.text = "${movie.originalTitle} ($releaseYear)"
                     image.setImageResource(movie.imageId)

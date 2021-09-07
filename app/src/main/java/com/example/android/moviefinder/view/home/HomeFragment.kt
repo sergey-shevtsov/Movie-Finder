@@ -80,23 +80,14 @@ class HomeFragment : Fragment() {
             when (state) {
                 is AppState.Loading -> {
                     recyclerView.visibility = View.GONE
-                    errorLinear.visibility = View.GONE
                     loadingTextView.visibility = View.VISIBLE
                 }
                 is AppState.Success -> {
-                    errorLinear.visibility = View.GONE
                     loadingTextView.visibility = View.GONE
                     recyclerView.visibility = View.VISIBLE
                     adapter.setData((state.data as List<Movie>))
                 }
                 is AppState.Error -> {
-                    recyclerView.visibility = View.GONE
-                    loadingTextView.visibility = View.GONE
-                    errorLinear.visibility = View.VISIBLE
-                    errorTextView.text = String.format(Locale.getDefault(), "%s: %s", resources.getString(R.string.error), state.error.message)
-                    errorButton.setOnClickListener {
-                        viewModel.getMovies()
-                    }
                 }
             }
         }

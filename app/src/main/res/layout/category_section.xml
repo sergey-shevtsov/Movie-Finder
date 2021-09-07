@@ -41,29 +41,6 @@
             android:gravity="center"
             android:text="@string/loading"/>
 
-        <LinearLayout
-            android:id="@+id/error_linear"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/error_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Error: No internet"/>
-
-            <TextView
-                android:id="@+id/error_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/blue"
-                android:text="@string/try_again"/>
-
-        </LinearLayout>
-
-    </FrameLayout>
+E,    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
