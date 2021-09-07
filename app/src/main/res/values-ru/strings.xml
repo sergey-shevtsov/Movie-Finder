@@ -2,7 +2,6 @@
 <resources>
     <string name="loading">Загрузка…</string>
     <string name="error">Ошибка</string>
-    <string name="try_again"><u>Еще раз</u></string>
     <string name="home">Домой</string>
     <string name="favorites">Избранное</string>
     <string name="ratings">Рейтинг</string>
@@ -15,4 +14,5 @@
     <string name="minute">мин.</string>
     <string name="movie_image">Постер</string>
     <string name="rating_image">Рейтинг</string>
+    <string name="reload">Перезагрузить</string>
 </resources>

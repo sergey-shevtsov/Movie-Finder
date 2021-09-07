@@ -3,7 +3,7 @@
     <string name="app_name" translatable="false">Movie Finder</string>
     <string name="loading">Loading…</string>
     <string name="error">Error</string>
-    <string name="try_again"><u>Try again</u></string>
+    <string name="reload">Reload</string>
     <string name="home">Home</string>
     <string name="favorites">Favorites</string>
     <string name="ratings">Ratings</string>

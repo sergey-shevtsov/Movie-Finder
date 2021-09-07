@@ -14,6 +14,8 @@ import com.example.android.moviefinder.databinding.DetailFragmentBinding
 import com.example.android.moviefinder.model.Movie
 import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.DetailViewModel
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 class DetailFragment : Fragment() {
@@ -30,6 +32,7 @@ class DetailFragment : Fragment() {
     private lateinit var viewModel: DetailViewModel
     private var _binding: DetailFragmentBinding? = null
     private val binding get() = _binding!!
+    private var movieId: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +56,7 @@ class DetailFragment : Fragment() {
 
         val movieId = arguments?.getInt(MOVIE_KEY)
         if (movieId != null) {
+            this.movieId = movieId
             viewModel.getMovieById(movieId)
         }
 
@@ -65,12 +69,16 @@ class DetailFragment : Fragment() {
     private fun renderData(state: AppState) {
         when (state) {
             is AppState.Loading -> {
-                binding.loadingFrame.visibility = View.VISIBLE
+                binding.apply {
+                    errorFrame.visibility = View.GONE
+                    binding.loadingFrame.visibility = View.VISIBLE
+                }
             }
             is AppState.Success -> {
                 val movie = state.data as Movie
                 val releaseYear = movie.released.subSequence(6, 10).toString()
                 binding.apply {
+                    errorFrame.visibility = View.GONE
                     loadingFrame.visibility = View.GONE
                     title.text = movie.title
                     originalTitle.text = "${movie.originalTitle} ($releaseYear)"
@@ -85,7 +93,18 @@ class DetailFragment : Fragment() {
                 }
             }
             is AppState.Error -> {
-
+                binding.apply {
+                    loadingFrame.visibility = View.GONE
+                    errorFrame.visibility = View.VISIBLE
+                }
+                Snackbar.make(
+                    binding.root,
+                    "${resources.getString(R.string.error)}: ${state.error.message}",
+                    BaseTransientBottomBar.LENGTH_INDEFINITE
+                )
+                    .setAction(resources.getString(R.string.reload)) {
+                        viewModel.getMovieById(movieId)
+                    }.show()
             }
         }
     }

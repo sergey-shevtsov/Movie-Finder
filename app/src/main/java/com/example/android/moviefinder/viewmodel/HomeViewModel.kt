@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.moviefinder.model.RepositoryImpl
-import java.lang.Exception
-import kotlin.random.Random
 
 class HomeViewModel : ViewModel() {
     private val repository = RepositoryImpl()
