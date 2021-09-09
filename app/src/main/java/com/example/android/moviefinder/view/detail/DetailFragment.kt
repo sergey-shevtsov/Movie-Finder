@@ -29,7 +29,9 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private lateinit var viewModel: DetailViewModel
+    private val viewModel: DetailViewModel by lazy {
+        ViewModelProvider(this).get(DetailViewModel::class.java)
+    }
     private var _binding: DetailFragmentBinding? = null
     private val binding get() = _binding!!
     private var movieId: Int = -1
@@ -49,7 +51,6 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
         viewModel.getData().observe(viewLifecycleOwner) {
             renderData(it)
         }

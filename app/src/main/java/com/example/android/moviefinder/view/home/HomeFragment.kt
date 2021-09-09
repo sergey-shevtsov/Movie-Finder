@@ -25,7 +25,9 @@ class HomeFragment : Fragment() {
         fun newInstance() = HomeFragment()
     }
 
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by lazy {
+        ViewModelProvider(this).get(HomeViewModel::class.java)
+    }
     private var _binding: HomeFragmentBinding? = null
     private val binding get() = _binding!!
     private val recommendedMoviesAdapter = MoviesAdapter()
@@ -45,7 +47,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         addCategory(resources.getString(R.string.recommended), recommendedMoviesAdapter, viewModel.getRecommendedMoviesLiveData())
         addCategory(resources.getString(R.string.top_rated), topRatedMoviesAdapter, viewModel.getTopRatedMoviesLiveData())
         addCategory(resources.getString(R.string.comedy), comedyMoviesAdapter, viewModel.getComedyMoviesLiveData())
@@ -64,7 +65,7 @@ class HomeFragment : Fragment() {
         adapter.setOnItemClickListener { movie ->
             activity?.supportFragmentManager?.let {
                 val bundle = Bundle()
-                bundle.putInt(DetailFragment.MOVIE_ID_KEY, movie.id)
+                bundle.putInt(DetailFragment.MOVIE_ID_KEY, movie?.id ?: -1)
                 it.beginTransaction()
                     .replace(R.id.fragment_container, DetailFragment.newInstance(bundle))
                     .addToBackStack("")

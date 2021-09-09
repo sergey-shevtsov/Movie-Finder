@@ -17,7 +17,9 @@ class FavoritesFragment : Fragment() {
         fun newInstance() = FavoritesFragment()
     }
 
-    private lateinit var viewModel: ViewModel
+    private val viewModel: ViewModel by lazy {
+        ViewModelProvider(this).get(FavoritesViewModel::class.java)
+    }
     private var _binding: FavoritesFragmentBinding? = null
     private val binding get() = _binding!!
 
@@ -35,7 +37,6 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(FavoritesViewModel::class.java)
     }
 
     override fun onDestroyView() {

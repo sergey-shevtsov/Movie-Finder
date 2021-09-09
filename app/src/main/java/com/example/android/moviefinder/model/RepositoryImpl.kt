@@ -251,6 +251,7 @@ class RepositoryImpl : Repository {
     }
 
     override fun getMovieByIdFromLocalStorage(id: Int): Movie? {
+        if (id == -1) return null
         for (movie in recommendedMovies) {
             if (id == movie.id) return movie
         }

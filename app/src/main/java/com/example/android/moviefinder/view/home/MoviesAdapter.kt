@@ -12,7 +12,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
 
     class MovieVH(itemView: View, onItemClickListener: OnItemClickListener?) : RecyclerView.ViewHolder(itemView) {
         private val binding = MovieItemBinding.bind(itemView)
-        private lateinit var movie: Movie
+        private var movie: Movie? = null
 
         init {
             itemView.setOnClickListener {
@@ -34,7 +34,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
     }
 
     fun interface OnItemClickListener {
-        fun onItemClicked(movie: Movie)
+        fun onItemClicked(movie: Movie?)
     }
 
     private lateinit var data: List<Movie>

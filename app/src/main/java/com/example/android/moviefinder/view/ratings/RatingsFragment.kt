@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.moviefinder.databinding.RatingsFragmentBinding
+import com.example.android.moviefinder.viewmodel.FavoritesViewModel
 import com.example.android.moviefinder.viewmodel.RatingsViewModel
 
 class RatingsFragment : Fragment() {
@@ -17,7 +18,9 @@ class RatingsFragment : Fragment() {
         fun newInstance() = RatingsFragment()
     }
 
-    private lateinit var viewModel: ViewModel
+    private val viewModel: ViewModel by lazy {
+        ViewModelProvider(this).get(RatingsViewModel::class.java)
+    }
     private var _binding: RatingsFragmentBinding? = null
     private val binding get() = _binding!!
 
@@ -35,7 +38,6 @@ class RatingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(RatingsViewModel::class.java)
     }
 
     override fun onDestroyView() {
