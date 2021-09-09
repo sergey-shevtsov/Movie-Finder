@@ -14,6 +14,8 @@ import com.example.android.moviefinder.databinding.CategorySectionBinding
 import com.example.android.moviefinder.databinding.HomeFragmentBinding
 import com.example.android.moviefinder.model.Movie
 import com.example.android.moviefinder.view.detail.DetailFragment
+import com.example.android.moviefinder.view.hide
+import com.example.android.moviefinder.view.show
 import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.HomeViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
@@ -91,12 +93,12 @@ class HomeFragment : Fragment() {
         sectionBinding.apply {
             when (state) {
                 is AppState.Loading -> {
-                    recyclerView.visibility = View.GONE
-                    loadingTextView.visibility = View.VISIBLE
+                    recyclerView.hide()
+                    loadingTextView.show()
                 }
                 is AppState.Success -> {
-                    loadingTextView.visibility = View.GONE
-                    recyclerView.visibility = View.VISIBLE
+                    loadingTextView.hide()
+                    recyclerView.show()
                     adapter.setData((state.data as List<Movie>))
                 }
                 is AppState.Error -> {

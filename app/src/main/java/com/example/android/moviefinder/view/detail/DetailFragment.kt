@@ -12,10 +12,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.DetailFragmentBinding
 import com.example.android.moviefinder.model.Movie
+import com.example.android.moviefinder.view.hide
+import com.example.android.moviefinder.view.show
+import com.example.android.moviefinder.view.showSnackBar
 import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.DetailViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.main_activity.*
 import java.util.*
 
 class DetailFragment : Fragment() {
@@ -78,8 +82,8 @@ class DetailFragment : Fragment() {
                 val movie = state.data as Movie
                 val releaseYear = movie.released.subSequence(6, 10).toString()
                 binding.apply {
-                    errorFrame.visibility = View.GONE
-                    loadingFrame.visibility = View.GONE
+                    errorFrame.hide()
+                    loadingFrame.hide()
                     title.text = movie.title
                     originalTitle.text = "${movie.originalTitle} ($releaseYear)"
                     image.setImageResource(movie.imageId)
@@ -94,17 +98,14 @@ class DetailFragment : Fragment() {
             }
             is AppState.Error -> {
                 binding.apply {
-                    loadingFrame.visibility = View.GONE
-                    errorFrame.visibility = View.VISIBLE
+                    loadingFrame.hide()
+                    errorFrame.show()
+                    errorFrame.showSnackBar(
+                        "${resources.getString(R.string.error)}: ${state.error.message}",
+                        resources.getString(R.string.reload),
+                        { viewModel.getMovieById(movieId) }
+                    )
                 }
-                Snackbar.make(
-                    binding.root,
-                    "${resources.getString(R.string.error)}: ${state.error.message}",
-                    BaseTransientBottomBar.LENGTH_INDEFINITE
-                )
-                    .setAction(resources.getString(R.string.reload)) {
-                        viewModel.getMovieById(movieId)
-                    }.show()
             }
         }
     }
