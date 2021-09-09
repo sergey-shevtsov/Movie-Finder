@@ -18,8 +18,6 @@ import com.example.android.moviefinder.view.hide
 import com.example.android.moviefinder.view.show
 import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.HomeViewModel
-import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
-import com.google.android.material.snackbar.Snackbar
 
 class HomeFragment : Fragment() {
 
@@ -63,12 +61,11 @@ class HomeFragment : Fragment() {
         adapter: MoviesAdapter,
         liveData: LiveData<AppState>
     ) {
-        adapter.setOnItemClickListener { item, movie ->
-            val manager = activity?.supportFragmentManager
-            if (manager != null) {
+        adapter.setOnItemClickListener { movie ->
+            activity?.supportFragmentManager?.let {
                 val bundle = Bundle()
-                bundle.putInt(DetailFragment.MOVIE_KEY, movie.id)
-                manager.beginTransaction()
+                bundle.putInt(DetailFragment.MOVIE_ID_KEY, movie.id)
+                it.beginTransaction()
                     .replace(R.id.fragment_container, DetailFragment.newInstance(bundle))
                     .addToBackStack("")
                     .commit()

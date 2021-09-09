@@ -16,7 +16,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
 
         init {
             itemView.setOnClickListener {
-                onItemClickListener?.onItemClicked(itemView, movie)
+                onItemClickListener?.onItemClicked(movie)
             }
         }
 
@@ -34,7 +34,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
     }
 
     fun interface OnItemClickListener {
-        fun onItemClicked(item: View, movie: Movie)
+        fun onItemClicked(movie: Movie)
     }
 
     private lateinit var data: List<Movie>

@@ -54,15 +54,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = false) {
+    private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.apply {
             for (i in 0 until backStackEntryCount) popBackStack()
-
-            beginTransaction().apply {
-                replace(R.id.fragment_container, fragment)
-                if (addToBackStack) addToBackStack(null)
-                commit()
-            }
+            beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
         }
     }
 }

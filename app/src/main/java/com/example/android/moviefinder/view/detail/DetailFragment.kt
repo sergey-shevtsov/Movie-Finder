@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.DetailFragmentBinding
@@ -17,15 +16,12 @@ import com.example.android.moviefinder.view.show
 import com.example.android.moviefinder.view.showSnackBar
 import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.DetailViewModel
-import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.main_activity.*
 import java.util.*
 
 class DetailFragment : Fragment() {
 
     companion object {
-        const val MOVIE_KEY = "MOVIE_EXTRA"
+        const val MOVIE_ID_KEY = "MOVIE_EXTRA"
         fun newInstance(bundle: Bundle): DetailFragment {
             val fragment = DetailFragment()
             fragment.arguments = bundle
@@ -58,7 +54,7 @@ class DetailFragment : Fragment() {
             renderData(it)
         }
 
-        val movieId = arguments?.getInt(MOVIE_KEY)
+        val movieId = arguments?.getInt(MOVIE_ID_KEY)
         if (movieId != null) {
             this.movieId = movieId
             viewModel.getMovieById(movieId)
