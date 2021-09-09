@@ -13,9 +13,9 @@ import com.example.android.moviefinder.model.Movie
 import com.example.android.moviefinder.view.hide
 import com.example.android.moviefinder.view.show
 import com.example.android.moviefinder.view.showHomeButton
-import com.example.android.moviefinder.view.showSnackBar
 import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.DetailViewModel
+import com.example.android.moviefinder.viewmodel.MovieNotFoundException
 import java.util.*
 
 class DetailFragment : Fragment() {
@@ -51,7 +51,7 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getData().observe(viewLifecycleOwner) {
+        viewModel.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)
         }
 
@@ -69,12 +69,14 @@ class DetailFragment : Fragment() {
 
     private fun renderData(state: AppState) {
         when (state) {
+
             is AppState.Loading -> {
                 binding.apply {
-                    errorFrame.visibility = View.GONE
-                    binding.loadingFrame.visibility = View.VISIBLE
+                    errorFrame.hide()
+                    loadingFrame.show()
                 }
             }
+
             is AppState.Success -> {
                 val movie = state.data as Movie
                 val releaseYear = movie.released.subSequence(6, 10).toString()
@@ -95,17 +97,19 @@ class DetailFragment : Fragment() {
                     overview.text = movie.overview
                 }
             }
+
             is AppState.Error -> {
                 binding.apply {
                     loadingFrame.hide()
                     errorFrame.show()
-                    errorFrame.showSnackBar(
-                        "${resources.getString(R.string.error)}: ${state.error.message}",
-                        resources.getString(R.string.reload),
-                        { viewModel.getMovieById(movieId) }
-                    )
+                    val e = state.error as MovieNotFoundException
+                    errorMessage.text = "${resources.getString(R.string.error)}: ${e.message}"
+                    errorActionButton.setOnClickListener {
+                        viewModel.getMovieById(e.id)
+                    }
                 }
             }
+
         }
     }
 

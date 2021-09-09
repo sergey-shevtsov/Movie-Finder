@@ -8,7 +8,7 @@ import com.example.android.moviefinder.model.RepositoryImpl
 class DetailViewModel : ViewModel() {
     private val repository = RepositoryImpl()
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
-    fun getData(): LiveData<AppState> {
+    fun getLiveData(): LiveData<AppState> {
         return liveDataToObserve
     }
 
@@ -21,12 +21,16 @@ class DetailViewModel : ViewModel() {
 
         Thread {
             Thread.sleep(500)
-            val movie = repository.getMovieByIdFromLocalStorage(id)
-            if (movie != null) {
-                liveDataToObserve.postValue(AppState.Success(movie))
-            } else {
-                liveDataToObserve.postValue(AppState.Error(Exception("movie not found")))
-            }
+            repository.getMovieByIdFromLocalStorage(id)?.let {
+                liveDataToObserve.postValue(AppState.Success(it))
+            } ?: liveDataToObserve.postValue(
+                AppState.Error(
+                    MovieNotFoundException(
+                        "movie not found",
+                        id
+                    )
+                )
+            )
         }.start()
     }
 }
