@@ -18,4 +18,5 @@
     <string name="recommended">Рекомендуемое</string>
     <string name="top_rated">Самые популярные</string>
     <string name="comedy">Комедии</string>
+    <string name="in_developing">Раздел в разработке</string>
 </resources>

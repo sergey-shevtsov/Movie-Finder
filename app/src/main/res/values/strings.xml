@@ -19,4 +19,5 @@
     <string name="recommended">Recommended</string>
     <string name="top_rated">Top rated</string>
     <string name="comedy">Comedy</string>
+    <string name="in_developing">Section in development</string>
 </resources>

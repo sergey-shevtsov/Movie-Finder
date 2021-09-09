@@ -79,23 +79,7 @@ class DetailFragment : Fragment() {
 
             is AppState.Success -> {
                 val movie = state.data as Movie
-                val releaseYear = movie.released.subSequence(6, 10).toString()
-                binding.apply {
-                    errorFrame.hide()
-                    loadingFrame.hide()
-                    title.text = movie.title
-                    originalTitle.text = "${movie.originalTitle} ($releaseYear)"
-                    image.setImageResource(movie.imageId)
-                    genres.text = movie.genres.joinToString(", ")
-                    duration.text = "${movie.duration} ${resources.getString(R.string.minute)}/ ${
-                        getFormatDuration(movie.duration)
-                    }"
-                    rating.text = "${movie.rating} (${movie.voteCount})"
-                    budget.text = "${resources.getString(R.string.budget)} ${movie.budget}"
-                    revenue.text = "${resources.getString(R.string.revenue)} ${movie.revenue}"
-                    released.text = "${resources.getString(R.string.released)} ${movie.released}"
-                    overview.text = movie.overview
-                }
+                fillDetail(movie)
             }
 
             is AppState.Error -> {
@@ -110,6 +94,26 @@ class DetailFragment : Fragment() {
                 }
             }
 
+        }
+    }
+
+    private fun fillDetail(movie: Movie) {
+        val releaseYear = movie.released.subSequence(6, 10).toString()
+        binding.apply {
+            errorFrame.hide()
+            loadingFrame.hide()
+            title.text = movie.title
+            originalTitle.text = "${movie.originalTitle} ($releaseYear)"
+            image.setImageResource(movie.imageId)
+            genres.text = movie.genres.joinToString(", ")
+            duration.text = "${movie.duration} ${resources.getString(R.string.minute)}/ ${
+                getFormatDuration(movie.duration)
+            }"
+            rating.text = "${movie.rating} (${movie.voteCount})"
+            budget.text = "${resources.getString(R.string.budget)} ${movie.budget}"
+            revenue.text = "${resources.getString(R.string.revenue)} ${movie.revenue}"
+            released.text = "${resources.getString(R.string.released)} ${movie.released}"
+            overview.text = movie.overview
         }
     }
 

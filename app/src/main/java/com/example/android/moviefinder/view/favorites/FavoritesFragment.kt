@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.FavoritesFragmentBinding
 import com.example.android.moviefinder.view.hideHomeButton
+import com.example.android.moviefinder.view.showSnackBarMessage
 import com.example.android.moviefinder.viewmodel.FavoritesViewModel
 
 class FavoritesFragment : Fragment() {
@@ -37,6 +39,7 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.showSnackBarMessage(R.string.in_developing)
     }
 
     override fun onDestroyView() {
