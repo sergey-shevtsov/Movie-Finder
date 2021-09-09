@@ -86,8 +86,8 @@ class DetailFragment : Fragment() {
                     genres.text = movie.genres.joinToString(", ")
                     duration.text = "${movie.duration} ${resources.getString(R.string.minute)}/ ${getFormatDuration(movie.duration)}"
                     rating.text = "${movie.rating} (${movie.voteCount})"
-                    budget.text = "${resources.getString(R.string.budget)} $${movie.budget}"
-                    revenue.text = "${resources.getString(R.string.revenue)} $${movie.revenue}"
+                    budget.text = "${resources.getString(R.string.budget)} ${movie.budget}"
+                    revenue.text = "${resources.getString(R.string.revenue)} ${movie.revenue}"
                     released.text = "${resources.getString(R.string.released)} ${movie.released}"
                     overview.text = movie.overview
                 }

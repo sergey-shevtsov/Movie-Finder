@@ -28,7 +28,9 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
     private var _binding: HomeFragmentBinding? = null
     private val binding get() = _binding!!
-    private val adapter = MoviesAdapter()
+    private val recommendedMoviesAdapter = MoviesAdapter()
+    private val topRatedMoviesAdapter = MoviesAdapter()
+    private val comedyMoviesAdapter = MoviesAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +46,21 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        addCategory(resources.getString(R.string.recommended), recommendedMoviesAdapter, viewModel.getRecommendedMoviesLiveData())
+        addCategory(resources.getString(R.string.top_rated), topRatedMoviesAdapter, viewModel.getTopRatedMoviesLiveData())
+        addCategory(resources.getString(R.string.comedy), comedyMoviesAdapter, viewModel.getComedyMoviesLiveData())
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun addCategory(
+        title: String,
+        adapter: MoviesAdapter,
+        liveData: LiveData<AppState>
+    ) {
         adapter.setOnItemClickListener { item, movie ->
             val manager = activity?.supportFragmentManager
             if (manager != null) {
@@ -55,19 +72,7 @@ class HomeFragment : Fragment() {
                     .commit()
             }
         }
-        createCategory("Category title", adapter, viewModel.getData())
-    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun createCategory(
-        title: String,
-        adapter: MoviesAdapter,
-        liveData: LiveData<AppState>
-    ) {
         val view =
             LayoutInflater.from(context).inflate(R.layout.category_section, binding.root, false)
         binding.container.addView(view)
@@ -95,16 +100,16 @@ class HomeFragment : Fragment() {
                     adapter.setData((state.data as List<Movie>))
                 }
                 is AppState.Error -> {
-                    loadingTextView.visibility = View.GONE
-                    recyclerView.visibility = View.GONE
-                    Snackbar.make(
-                        binding.root,
-                        "${resources.getString(R.string.error)}: ${state.error.message}",
-                        LENGTH_INDEFINITE
-                    )
-                        .setAction(resources.getString(R.string.reload)) {
-                            viewModel.getMovies()
-                        }.show()
+//                    loadingTextView.visibility = View.GONE
+//                    recyclerView.visibility = View.GONE
+//                    Snackbar.make(
+//                        binding.root,
+//                        "${resources.getString(R.string.error)}: ${state.error.message}",
+//                        LENGTH_INDEFINITE
+//                    )
+//                        .setAction(resources.getString(R.string.reload)) {
+//                            viewModel.getMovies()
+//                        }.show()
                 }
             }
         }

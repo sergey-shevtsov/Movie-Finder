@@ -15,4 +15,7 @@
     <string name="movie_image">Постер</string>
     <string name="rating_image">Рейтинг</string>
     <string name="reload">Перезагрузить</string>
+    <string name="recommended">Рекомендуемое</string>
+    <string name="top_rated">Самые популярные</string>
+    <string name="comedy">Комедии</string>
 </resources>

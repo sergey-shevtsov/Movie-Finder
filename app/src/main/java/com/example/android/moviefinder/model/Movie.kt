@@ -14,8 +14,8 @@ data class Movie (
     val duration: Int,
     val rating: Float,
     val voteCount: Int,
-    val budget: Long,
-    val revenue: Long,
+    val budget: String,
+    val revenue: String,
     val released: String,
     val overview: String
     ) : Parcelable
