@@ -12,7 +12,7 @@ import com.example.android.moviefinder.databinding.DetailFragmentBinding
 import com.example.android.moviefinder.model.Movie
 import com.example.android.moviefinder.view.hide
 import com.example.android.moviefinder.view.show
-import com.example.android.moviefinder.view.showHome
+import com.example.android.moviefinder.view.showHomeButton
 import com.example.android.moviefinder.view.showSnackBar
 import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.DetailViewModel
@@ -43,7 +43,7 @@ class DetailFragment : Fragment() {
     ): View {
         _binding = DetailFragmentBinding.inflate(inflater, container, false)
 
-        activity?.showHome()
+        activity?.showHomeButton()
 
         return binding.root
     }
@@ -85,7 +85,9 @@ class DetailFragment : Fragment() {
                     originalTitle.text = "${movie.originalTitle} ($releaseYear)"
                     image.setImageResource(movie.imageId)
                     genres.text = movie.genres.joinToString(", ")
-                    duration.text = "${movie.duration} ${resources.getString(R.string.minute)}/ ${getFormatDuration(movie.duration)}"
+                    duration.text = "${movie.duration} ${resources.getString(R.string.minute)}/ ${
+                        getFormatDuration(movie.duration)
+                    }"
                     rating.text = "${movie.rating} (${movie.voteCount})"
                     budget.text = "${resources.getString(R.string.budget)} ${movie.budget}"
                     revenue.text = "${resources.getString(R.string.revenue)} ${movie.revenue}"

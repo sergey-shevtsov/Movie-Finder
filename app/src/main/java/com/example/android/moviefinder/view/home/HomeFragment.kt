@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.moviefinder.R
@@ -14,9 +13,10 @@ import com.example.android.moviefinder.databinding.HomeFragmentBinding
 import com.example.android.moviefinder.model.Movie
 import com.example.android.moviefinder.view.detail.DetailFragment
 import com.example.android.moviefinder.view.hide
-import com.example.android.moviefinder.view.hideHome
+import com.example.android.moviefinder.view.hideHomeButton
 import com.example.android.moviefinder.view.show
 import com.example.android.moviefinder.viewmodel.AppState
+import com.example.android.moviefinder.viewmodel.Category
 import com.example.android.moviefinder.viewmodel.HomeViewModel
 
 class HomeFragment : Fragment() {
@@ -46,16 +46,32 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = HomeFragmentBinding.inflate(inflater, container, false)
 
-        activity?.hideHome()
+        activity?.hideHomeButton()
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addCategory(resources.getString(R.string.recommended), recommendedMoviesAdapter, viewModel.getRecommendedMoviesLiveData())
-        addCategory(resources.getString(R.string.top_rated), topRatedMoviesAdapter, viewModel.getTopRatedMoviesLiveData())
-        addCategory(resources.getString(R.string.comedy), comedyMoviesAdapter, viewModel.getComedyMoviesLiveData())
+        addCategory(
+            getStringRes(R.string.recommended),
+            recommendedMoviesAdapter,
+            Category.RECOMMENDED
+        )
+        addCategory(
+            getStringRes(R.string.top_rated),
+            topRatedMoviesAdapter,
+            Category.TOP_RATED
+        )
+        addCategory(
+            getStringRes(R.string.comedy),
+            comedyMoviesAdapter,
+            Category.COMEDY
+        )
+    }
+
+    private fun getStringRes(id: Int): String {
+        return resources.getString(id)
     }
 
     override fun onDestroyView() {
@@ -66,12 +82,12 @@ class HomeFragment : Fragment() {
     private fun addCategory(
         title: String,
         adapter: MoviesAdapter,
-        liveData: LiveData<AppState>
+        category: Category
     ) {
         adapter.setOnItemClickListener { movie ->
             activity?.supportFragmentManager?.let {
                 val bundle = Bundle()
-                bundle.putInt(DetailFragment.MOVIE_ID_KEY, movie?.id ?: -1)
+                bundle.putInt(DetailFragment.MOVIE_ID_KEY, movie.id)
                 it.beginTransaction()
                     .replace(R.id.fragment_container, DetailFragment.newInstance(bundle))
                     .addToBackStack("")
@@ -79,45 +95,48 @@ class HomeFragment : Fragment() {
             }
         }
 
-        val view =
-            LayoutInflater.from(context).inflate(R.layout.category_section, binding.root, false)
+        val view = LayoutInflater.from(context)
+            .inflate(R.layout.category_section, binding.root, false)
         binding.container.addView(view)
-        val sectionBinding = CategorySectionBinding.bind(view)
-        sectionBinding.title.text = title
-        sectionBinding.recyclerView.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        sectionBinding.recyclerView.adapter = adapter
-        liveData.observe(viewLifecycleOwner) {
-            renderData(it, adapter, view)
+
+        CategorySectionBinding.bind(view).apply {
+            titleTextView.text = title
+            recyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            recyclerView.adapter = adapter
         }
+
+        viewModel.getLiveData(category).observe(viewLifecycleOwner) {
+            renderData(it, adapter, view, category)
+        }
+        viewModel.getMovies(category)
     }
 
-    private fun renderData(state: AppState, adapter: MoviesAdapter, view: View) {
-        val sectionBinding = CategorySectionBinding.bind(view)
-        sectionBinding.apply {
+    private fun renderData(state: AppState, adapter: MoviesAdapter, view: View, category: Category) {
+        CategorySectionBinding.bind(view).apply {
+
+            recyclerView.hide()
+            errorFrame.hide()
+            loadingTextView.hide()
+
             when (state) {
                 is AppState.Loading -> {
-                    recyclerView.hide()
                     loadingTextView.show()
                 }
                 is AppState.Success -> {
-                    loadingTextView.hide()
                     recyclerView.show()
                     adapter.setData((state.data as List<Movie>))
                 }
                 is AppState.Error -> {
-//                    loadingTextView.visibility = View.GONE
-//                    recyclerView.visibility = View.GONE
-//                    Snackbar.make(
-//                        binding.root,
-//                        "${resources.getString(R.string.error)}: ${state.error.message}",
-//                        LENGTH_INDEFINITE
-//                    )
-//                        .setAction(resources.getString(R.string.reload)) {
-//                            viewModel.getMovies()
-//                        }.show()
+                    errorFrame.show()
+                    errorMessage.text =
+                        "${resources.getString(R.string.error)}: ${state.error.message}"
+                    errorActionButton.setOnClickListener {
+                        viewModel.getMovies(category)
+                    }
                 }
             }
+
         }
     }
 }

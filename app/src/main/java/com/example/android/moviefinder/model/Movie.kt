@@ -1,11 +1,10 @@
 package com.example.android.moviefinder.model
 
 import android.os.Parcelable
-import com.example.android.moviefinder.R
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Movie (
+data class Movie(
     val id: Int,
     val imageId: Int,
     val title: String,
@@ -18,4 +17,4 @@ data class Movie (
     val revenue: String,
     val released: String,
     val overview: String
-    ) : Parcelable
+) : Parcelable

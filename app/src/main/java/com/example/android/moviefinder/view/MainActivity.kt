@@ -1,10 +1,10 @@
 package com.example.android.moviefinder.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.MainActivityBinding
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBottomNavigation() {
         binding.bottomNavigation.setOnItemSelectedListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.home -> replaceFragment(HomeFragment.newInstance())
                 R.id.favorites -> replaceFragment(FavoritesFragment.newInstance())
                 R.id.ratings -> replaceFragment(RatingsFragment.newInstance())

@@ -7,53 +7,53 @@ import com.example.android.moviefinder.model.RepositoryImpl
 
 class HomeViewModel : ViewModel() {
     private val repository = RepositoryImpl()
-    private val liveDataToObserveRecommendedMovies: MutableLiveData<AppState> = MutableLiveData()
-    private val liveDataToObserveTopRatedMovies: MutableLiveData<AppState> = MutableLiveData()
-    private val liveDataToObserveComedyMovies: MutableLiveData<AppState> = MutableLiveData()
+    private val liveDataToObserveRecommended: MutableLiveData<AppState> = MutableLiveData()
+    private val liveDataToObserveTopRated: MutableLiveData<AppState> = MutableLiveData()
+    private val liveDataToObserveComedy: MutableLiveData<AppState> = MutableLiveData()
 
-    fun getRecommendedMoviesLiveData(): LiveData<AppState> {
-        getRecommendedMovies()
-        return liveDataToObserveRecommendedMovies
+    fun getLiveData(category: Category): LiveData<AppState> {
+        return when (category) {
+            Category.RECOMMENDED -> liveDataToObserveRecommended
+            Category.TOP_RATED -> liveDataToObserveTopRated
+            Category.COMEDY -> liveDataToObserveComedy
+        }
     }
 
-    fun getTopRatedMoviesLiveData(): LiveData<AppState> {
-        getTopRatedMovies()
-        return liveDataToObserveTopRatedMovies
+    fun getMovies(category: Category) {
+        getMoviesFromLocalSource(category)
     }
 
-    fun getComedyMoviesLiveData(): LiveData<AppState> {
-        getComedyMovies()
-        return liveDataToObserveComedyMovies
-    }
+    private fun getMoviesFromLocalSource(category: Category) {
+        when (category) {
 
-    fun getRecommendedMovies() = getRecommendedMoviesFromLocalSource()
-    fun getTopRatedMovies() = getTopRatedMoviesFromLocalSource()
-    fun getComedyMovies() = getComedyMoviesFromLocalSource()
+            Category.RECOMMENDED -> {
+                liveDataToObserveRecommended.value = AppState.Loading
 
-    private fun getRecommendedMoviesFromLocalSource() {
-        liveDataToObserveRecommendedMovies.value = AppState.Loading
+                Thread {
+                    Thread.sleep(800)
+                    liveDataToObserveRecommended.postValue(AppState.Success(repository.getRecommendedMoviesFromLocalStorage()))
+                }.start()
+            }
 
-        Thread {
-            Thread.sleep(500)
-            liveDataToObserveRecommendedMovies.postValue(AppState.Success(repository.getRecommendedMoviesFromLocalStorage()))
-        }.start()
-    }
+            Category.TOP_RATED -> {
+                liveDataToObserveTopRated.value = AppState.Loading
 
-    private fun getTopRatedMoviesFromLocalSource() {
-        liveDataToObserveTopRatedMovies.value = AppState.Loading
+                Thread {
+                    Thread.sleep(700)
+                    liveDataToObserveTopRated.postValue(AppState.Success(repository.getTopRatedMoviesFromLocalStorage()))
+                }.start()
+            }
 
-        Thread {
-            Thread.sleep(500)
-            liveDataToObserveTopRatedMovies.postValue(AppState.Success(repository.getTopRatedMoviesFromLocalStorage()))
-        }.start()
-    }
+            Category.COMEDY -> {
+                liveDataToObserveComedy.value = AppState.Loading
 
-    private fun getComedyMoviesFromLocalSource() {
-        liveDataToObserveComedyMovies.value = AppState.Loading
+                Thread {
+                    Thread.sleep(500)
+                    liveDataToObserveComedy.postValue(AppState.Success(repository.getComedyMoviesFromLocalStorage()))
+                }.start()
+            }
 
-        Thread {
-            Thread.sleep(500)
-            liveDataToObserveComedyMovies.postValue(AppState.Success(repository.getComedyMoviesFromLocalStorage()))
-        }.start()
+        }
+
     }
 }

@@ -29,10 +29,10 @@ fun View.showSnackBar(
         .show()
 }
 
-fun FragmentActivity.showHome() {
+fun FragmentActivity.showHomeButton() {
     (this as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
 }
 
-fun FragmentActivity.hideHome() {
+fun FragmentActivity.hideHomeButton() {
     (this as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
 }

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.moviefinder.databinding.RatingsFragmentBinding
-import com.example.android.moviefinder.view.hideHome
+import com.example.android.moviefinder.view.hideHomeButton
 import com.example.android.moviefinder.viewmodel.RatingsViewModel
 
 class RatingsFragment : Fragment() {
@@ -30,7 +30,7 @@ class RatingsFragment : Fragment() {
     ): View {
         _binding = RatingsFragmentBinding.inflate(inflater, container, false)
 
-        activity?.hideHome()
+        activity?.hideHomeButton()
 
         return binding.root
     }

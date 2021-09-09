@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.moviefinder.databinding.FavoritesFragmentBinding
-import com.example.android.moviefinder.view.hideHome
+import com.example.android.moviefinder.view.hideHomeButton
 import com.example.android.moviefinder.viewmodel.FavoritesViewModel
 
 class FavoritesFragment : Fragment() {
@@ -30,7 +30,7 @@ class FavoritesFragment : Fragment() {
     ): View {
         _binding = FavoritesFragmentBinding.inflate(inflater, container, false)
 
-        activity?.hideHome()
+        activity?.hideHomeButton()
 
         return binding.root
     }

@@ -11,6 +11,7 @@ class DetailViewModel : ViewModel() {
     fun getData(): LiveData<AppState> {
         return liveDataToObserve
     }
+
     fun getMovieById(id: Int) {
         getMovieByIdFromLocalSource(id)
     }
