@@ -1,6 +1,8 @@
 package com.example.android.moviefinder.view
 
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
 
 fun View.show() {
@@ -25,4 +27,12 @@ fun View.showSnackBar(
         )
         .setAction(actionText) { action(this) }
         .show()
+}
+
+fun FragmentActivity.showHome() {
+    (this as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+}
+
+fun FragmentActivity.hideHome() {
+    (this as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
 }

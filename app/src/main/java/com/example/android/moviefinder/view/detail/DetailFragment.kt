@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.moviefinder.R
@@ -13,6 +12,7 @@ import com.example.android.moviefinder.databinding.DetailFragmentBinding
 import com.example.android.moviefinder.model.Movie
 import com.example.android.moviefinder.view.hide
 import com.example.android.moviefinder.view.show
+import com.example.android.moviefinder.view.showHome
 import com.example.android.moviefinder.view.showSnackBar
 import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.DetailViewModel
@@ -43,7 +43,7 @@ class DetailFragment : Fragment() {
     ): View {
         _binding = DetailFragmentBinding.inflate(inflater, container, false)
 
-        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        activity?.showHome()
 
         return binding.root
     }

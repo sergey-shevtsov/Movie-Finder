@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +14,7 @@ import com.example.android.moviefinder.databinding.HomeFragmentBinding
 import com.example.android.moviefinder.model.Movie
 import com.example.android.moviefinder.view.detail.DetailFragment
 import com.example.android.moviefinder.view.hide
+import com.example.android.moviefinder.view.hideHome
 import com.example.android.moviefinder.view.show
 import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.HomeViewModel
@@ -28,11 +28,17 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by lazy {
         ViewModelProvider(this).get(HomeViewModel::class.java)
     }
+    private val recommendedMoviesAdapter: MoviesAdapter by lazy {
+        MoviesAdapter()
+    }
+    private val topRatedMoviesAdapter: MoviesAdapter by lazy {
+        MoviesAdapter()
+    }
+    private val comedyMoviesAdapter: MoviesAdapter by lazy {
+        MoviesAdapter()
+    }
     private var _binding: HomeFragmentBinding? = null
     private val binding get() = _binding!!
-    private val recommendedMoviesAdapter = MoviesAdapter()
-    private val topRatedMoviesAdapter = MoviesAdapter()
-    private val comedyMoviesAdapter = MoviesAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +46,7 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = HomeFragmentBinding.inflate(inflater, container, false)
 
-        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        activity?.hideHome()
 
         return binding.root
     }
