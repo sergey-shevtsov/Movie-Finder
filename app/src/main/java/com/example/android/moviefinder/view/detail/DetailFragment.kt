@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.DetailFragmentBinding
+import com.example.android.moviefinder.model.GenresDTO
 import com.example.android.moviefinder.model.Movie
 import com.example.android.moviefinder.model.MovieDTO
 import com.example.android.moviefinder.view.hide
@@ -110,16 +111,32 @@ class DetailFragment : Fragment() {
             title.text = movie.title
             originalTitle.text = "${movie.original_title} ($releaseYear)"
             image.setImageResource(R.drawable.dummy)
-//            genres.text = movie.genres.joinToString(", ")
+            genres.text = movie.genres?.let { getGenresNames(it) }
             duration.text = "${movie.runtime} ${resources.getString(R.string.minute)}/ ${
                 movie.runtime?.let { getFormatDuration(it) }
             }"
             rating.text = "${movie.vote_average} (${movie.vote_count})"
-            budget.text = "${resources.getString(R.string.budget)} ${movie.budget}"
-            revenue.text = "${resources.getString(R.string.revenue)} ${movie.revenue}"
-            released.text = "${resources.getString(R.string.released)} ${movie.release_date}"
+            budget.text = "${resources.getString(R.string.budget)} \$${movie.budget}"
+            revenue.text = "${resources.getString(R.string.revenue)} \$${movie.revenue}"
+            released.text = "${resources.getString(R.string.released)} ${movie.release_date?.let { formatDate(it) }}"
             overview.text = movie.overview
         }
+    }
+
+    private fun formatDate(date: String): String {
+        val year = date.subSequence(0, 4)
+        val month = date.subSequence(5, 7)
+        val day = date.subSequence(8, 10)
+        return "$day.$month.$year"
+    }
+
+    private fun getGenresNames(genres: Array<GenresDTO.GenreDTO>): String {
+        val sb = StringBuilder()
+        for (i in genres.indices) {
+            sb.append(genres[i].name)
+            if (i != genres.lastIndex) sb.append(", ")
+        }
+        return sb.toString()
     }
 
     private fun getFormatDuration(duration: Int): String {
