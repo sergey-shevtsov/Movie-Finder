@@ -16,8 +16,8 @@
     <string name="minute">min.</string>
     <string name="movie_image">Movie image</string>
     <string name="rating_image">Rating image</string>
-    <string name="recommended">Recommended</string>
+    <string name="now_playing">Now playing</string>
     <string name="top_rated">Top rated</string>
-    <string name="comedy">Comedy</string>
+    <string name="popular">Popular</string>
     <string name="in_developing">Section in development</string>
 </resources>

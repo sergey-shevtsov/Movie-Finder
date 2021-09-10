@@ -1,59 +1,49 @@
 package com.example.android.moviefinder.viewmodel
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.android.moviefinder.model.RepositoryImpl
+import com.example.android.moviefinder.model.MovieListDTO
+import com.example.android.moviefinder.model.MovieListLoader
 
 class HomeViewModel : ViewModel() {
-    private val repository = RepositoryImpl()
-    private val liveDataToObserveRecommended: MutableLiveData<AppState> = MutableLiveData()
+    private val liveDataToObserveNowPlaying: MutableLiveData<AppState> = MutableLiveData()
+    private val liveDataToObservePopular: MutableLiveData<AppState> = MutableLiveData()
     private val liveDataToObserveTopRated: MutableLiveData<AppState> = MutableLiveData()
-    private val liveDataToObserveComedy: MutableLiveData<AppState> = MutableLiveData()
+    private val movieListLoader = MovieListLoader(object : MovieListLoader.MovieListLoaderListener {
+        override fun onLoaded(movieListDTO: MovieListDTO) {
+            liveDataToObserveNowPlaying.postValue(AppState.Success(movieListDTO.results))
+        }
+
+        override fun onFailed(e: Throwable) {
+            liveDataToObserveNowPlaying.postValue(AppState.Error(e))
+        }
+
+    })
 
     fun getLiveData(category: Category): LiveData<AppState> {
         return when (category) {
-            Category.RECOMMENDED -> liveDataToObserveRecommended
+            Category.NOW_PLAYING -> liveDataToObserveNowPlaying
+            Category.POPULAR -> liveDataToObservePopular
             Category.TOP_RATED -> liveDataToObserveTopRated
-            Category.COMEDY -> liveDataToObserveComedy
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     fun getMovies(category: Category) {
-        getMoviesFromLocalSource(category)
+        val requestName = when (category) {
+            Category.NOW_PLAYING -> "now_playing"
+            Category.POPULAR -> "popular"
+            Category.TOP_RATED -> "top_rated"
+        }
+        getMoviesFromServer(requestName)
     }
 
-    private fun getMoviesFromLocalSource(category: Category) {
-        when (category) {
-
-            Category.RECOMMENDED -> {
-                liveDataToObserveRecommended.value = AppState.Loading
-
-                Thread {
-                    Thread.sleep(800)
-                    liveDataToObserveRecommended.postValue(AppState.Success(repository.getRecommendedMoviesFromLocalStorage()))
-                }.start()
-            }
-
-            Category.TOP_RATED -> {
-                liveDataToObserveTopRated.value = AppState.Loading
-
-                Thread {
-                    Thread.sleep(700)
-                    liveDataToObserveTopRated.postValue(AppState.Success(repository.getTopRatedMoviesFromLocalStorage()))
-                }.start()
-            }
-
-            Category.COMEDY -> {
-                liveDataToObserveComedy.value = AppState.Loading
-
-                Thread {
-                    Thread.sleep(500)
-                    liveDataToObserveComedy.postValue(AppState.Success(repository.getComedyMoviesFromLocalStorage()))
-                }.start()
-            }
-
-        }
-
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun getMoviesFromServer(requestName: String) {
+        liveDataToObserveNowPlaying.value = AppState.Loading
+        movieListLoader.getMovies(requestName)
     }
 }

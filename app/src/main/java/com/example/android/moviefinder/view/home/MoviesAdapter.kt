@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.MovieItemBinding
-import com.example.android.moviefinder.model.Movie
+import com.example.android.moviefinder.model.MovieListDTO
 
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
 
     class MovieVH(itemView: View, onItemClickListener: OnItemClickListener?) :
         RecyclerView.ViewHolder(itemView) {
         private val binding = MovieItemBinding.bind(itemView)
-        private lateinit var movie: Movie
+        private lateinit var movie: MovieListDTO.MovieItemDTO
 
         init {
             itemView.setOnClickListener {
@@ -21,27 +21,27 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
             }
         }
 
-        fun bind(movie: Movie) {
+        fun bind(movie: MovieListDTO.MovieItemDTO) {
             this.movie = movie
-            val releaseYear = movie.released.subSequence(6, 10).toString()
+            val releaseYear = movie.release_date?.subSequence(0, 4).toString()
 
             binding.apply {
-                posterImage.setImageResource(movie.imageId)
+                posterImage.setImageResource(R.drawable.dummy)
                 title.text = movie.title
                 released.text = releaseYear
-                ratingTv.text = movie.rating.toString()
+                ratingTv.text = movie.vote_average.toString()
             }
         }
     }
 
     fun interface OnItemClickListener {
-        fun onItemClicked(movie: Movie)
+        fun onItemClicked(movie: MovieListDTO.MovieItemDTO)
     }
 
-    private lateinit var data: List<Movie>
+    private var data: Array<MovieListDTO.MovieItemDTO>? = null
     private var onItemClickListener: OnItemClickListener? = null
 
-    fun setData(data: List<Movie>) {
+    fun setData(data: Array<MovieListDTO.MovieItemDTO>) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -57,9 +57,9 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
     }
 
     override fun onBindViewHolder(holder: MovieVH, position: Int) {
-        holder.bind(data[position])
+        data?.get(position)?.let { holder.bind(it) }
     }
 
-    override fun getItemCount(): Int = data.size
+    override fun getItemCount(): Int = data?.size ?: 0
 
 }
