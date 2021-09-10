@@ -21,6 +21,6 @@ fun FragmentActivity.hideHomeButton() {
     (this as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
 }
 
-fun View.showSnackBarMessage(stringId: Int) {
-    Snackbar.make(this, resources.getString(stringId), Snackbar.LENGTH_SHORT).show()
+fun View.showSnackBarMessage(stringId: Int, length: Int = Snackbar.LENGTH_SHORT) {
+    Snackbar.make(this, resources.getString(stringId), length).show()
 }
