@@ -1,15 +1,18 @@
 package com.example.android.moviefinder.view.detail
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.DetailFragmentBinding
 import com.example.android.moviefinder.model.Movie
+import com.example.android.moviefinder.model.MovieDTO
 import com.example.android.moviefinder.view.hide
 import com.example.android.moviefinder.view.show
 import com.example.android.moviefinder.view.showHomeButton
@@ -48,6 +51,7 @@ class DetailFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -56,8 +60,8 @@ class DetailFragment : Fragment() {
         }
 
         val movieId = arguments?.getInt(MOVIE_ID_KEY)
-        if (movieId != null) {
-            this.movieId = movieId
+        movieId?.let {
+            this.movieId = it
             viewModel.getMovieById(movieId)
         }
 
@@ -67,6 +71,7 @@ class DetailFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun renderData(state: AppState) {
         when (state) {
 
@@ -78,7 +83,7 @@ class DetailFragment : Fragment() {
             }
 
             is AppState.Success -> {
-                val movie = state.data as Movie
+                val movie = state.data as MovieDTO
                 fillDetail(movie)
             }
 
@@ -97,22 +102,22 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun fillDetail(movie: Movie) {
-        val releaseYear = movie.released.subSequence(6, 10).toString()
+    private fun fillDetail(movie: MovieDTO) {
+        val releaseYear = movie.release_date?.subSequence(0, 4).toString()
         binding.apply {
             errorFrame.hide()
             loadingFrame.hide()
             title.text = movie.title
-            originalTitle.text = "${movie.originalTitle} ($releaseYear)"
-            image.setImageResource(movie.imageId)
-            genres.text = movie.genres.joinToString(", ")
-            duration.text = "${movie.duration} ${resources.getString(R.string.minute)}/ ${
-                getFormatDuration(movie.duration)
+            originalTitle.text = "${movie.original_title} ($releaseYear)"
+            image.setImageResource(R.drawable.dummy)
+//            genres.text = movie.genres.joinToString(", ")
+            duration.text = "${movie.runtime} ${resources.getString(R.string.minute)}/ ${
+                movie.runtime?.let { getFormatDuration(it) }
             }"
-            rating.text = "${movie.rating} (${movie.voteCount})"
+            rating.text = "${movie.vote_average} (${movie.vote_count})"
             budget.text = "${resources.getString(R.string.budget)} ${movie.budget}"
             revenue.text = "${resources.getString(R.string.revenue)} ${movie.revenue}"
-            released.text = "${resources.getString(R.string.released)} ${movie.released}"
+            released.text = "${resources.getString(R.string.released)} ${movie.release_date}"
             overview.text = movie.overview
         }
     }

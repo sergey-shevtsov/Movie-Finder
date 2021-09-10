@@ -6,13 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.moviefinder.model.MovieListDTO
-import com.example.android.moviefinder.model.MovieListLoader
+import com.example.android.moviefinder.model.MovieLoader
 
 class HomeViewModel : ViewModel() {
     private val liveDataToObserveNowPlaying: MutableLiveData<AppState> = MutableLiveData()
     private val liveDataToObservePopular: MutableLiveData<AppState> = MutableLiveData()
     private val liveDataToObserveTopRated: MutableLiveData<AppState> = MutableLiveData()
-    private val movieListLoader = MovieListLoader(object : MovieListLoader.MovieListLoaderListener {
+    private val movieListLoader = MovieLoader(movieListListener = object : MovieLoader.MovieListLoaderListener {
         override fun onLoaded(movieListDTO: MovieListDTO) {
             liveDataToObserveNowPlaying.postValue(AppState.Success(movieListDTO.results))
         }
@@ -44,6 +44,6 @@ class HomeViewModel : ViewModel() {
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getMoviesFromServer(requestName: String) {
         liveDataToObserveNowPlaying.value = AppState.Loading
-        movieListLoader.getMovies(requestName)
+        movieListLoader.getMovieList(requestName)
     }
 }
