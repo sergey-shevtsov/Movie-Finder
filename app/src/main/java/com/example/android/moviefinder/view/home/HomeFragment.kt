@@ -94,7 +94,7 @@ class HomeFragment : Fragment() {
             recyclerView.adapter = category.adapter
         }
 
-        val movieListLoader = MovieApiLoader.MovieListLoader(object :
+        category.loader = MovieApiLoader.MovieListLoader(object :
             MovieApiLoader.MovieListLoader.MovieListLoaderListener {
             override fun onLoading() {
                 categoryBinding.apply {
@@ -121,13 +121,18 @@ class HomeFragment : Fragment() {
                     errorMessage.text =
                         "${resources.getString(R.string.error)}: ${throwable.message}"
                     errorActionButton.setOnClickListener {
-
+                        getMovieList(category)
                     }
                 }
             }
 
         })
 
-        movieListLoader.getMovieList("ru-RU", category.request)
+        getMovieList(category)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun getMovieList(category: Category) {
+        category.loader?.getMovieList("ru-RU", category.request)
     }
 }

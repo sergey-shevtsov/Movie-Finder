@@ -18,10 +18,12 @@ sealed class MovieApiLoader() {
         @RequiresApi(Build.VERSION_CODES.N)
         fun getMovieList(language: String = "en-US", request: String, page: Int = 1) {
             Thread {
-                listener.onLoading()
+                val handler = Handler(Looper.getMainLooper())
+                handler.post {
+                    listener.onLoading()
+                }
                 val uri =
                     URL("https://api.themoviedb.org/3/movie/$request?api_key=${BuildConfig.TMDB_API_KEY}&language=$language&page=$page")
-                val handler = Handler(Looper.getMainLooper())
                 var urlConnection: HttpsURLConnection? = null
 
                 try {
@@ -39,7 +41,9 @@ sealed class MovieApiLoader() {
                         listener.onLoaded(movieListDTO)
                     }
                 } catch (e: Exception) {
-                    listener.onFailed(e)
+                    handler.post {
+                        listener.onFailed(e)
+                    }
                 } finally {
                     urlConnection?.disconnect()
                 }
@@ -57,10 +61,12 @@ sealed class MovieApiLoader() {
         @RequiresApi(Build.VERSION_CODES.N)
         fun getMovieById(language: String = "en-US", id: Int) {
             Thread {
-                listener.onLoading()
+                val handler = Handler(Looper.getMainLooper())
+                handler.post {
+                    listener.onLoading()
+                }
                 val uri =
                     URL("https://api.themoviedb.org/3/movie/$id?api_key=${BuildConfig.TMDB_API_KEY}&language=$language")
-                val handler = Handler(Looper.getMainLooper())
                 var urlConnection: HttpsURLConnection? = null
 
                 try {
@@ -78,7 +84,9 @@ sealed class MovieApiLoader() {
                         listener.onLoaded(movieDTO)
                     }
                 } catch (e: Exception) {
-                    listener.onFailed(e)
+                    handler.post {
+                        listener.onFailed(e)
+                    }
                 } finally {
                     urlConnection?.disconnect()
                 }
