@@ -17,6 +17,7 @@
     <string name="movie_image">Movie image</string>
     <string name="rating_image">Rating image</string>
     <string name="now_playing">Now playing</string>
+    <string name="now_playing_request" translatable="false">now_playing</string>
     <string name="top_rated">Top rated</string>
     <string name="popular">Popular</string>
     <string name="in_developing">Section in development</string>

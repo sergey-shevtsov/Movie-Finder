@@ -12,14 +12,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.DetailFragmentBinding
 import com.example.android.moviefinder.model.GenresDTO
-import com.example.android.moviefinder.model.Movie
+import com.example.android.moviefinder.model.MovieApiLoader
 import com.example.android.moviefinder.model.MovieDTO
 import com.example.android.moviefinder.view.hide
 import com.example.android.moviefinder.view.show
 import com.example.android.moviefinder.view.showHomeButton
-import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.DetailViewModel
-import com.example.android.moviefinder.viewmodel.MovieNotFoundException
 import java.util.*
 
 class DetailFragment : Fragment() {
@@ -35,6 +33,38 @@ class DetailFragment : Fragment() {
 
     private val viewModel: DetailViewModel by lazy {
         ViewModelProvider(this).get(DetailViewModel::class.java)
+    }
+    private val movieLoader: MovieApiLoader.MovieLoader by lazy {
+        MovieApiLoader.MovieLoader(object : MovieApiLoader.MovieLoader.MovieLoaderListener {
+            override fun onLoading() {
+                binding.apply {
+                    errorFrame.hide()
+                    loadingFrame.show()
+                }
+            }
+
+            override fun onLoaded(movieDTO: MovieDTO) {
+                binding.apply {
+                    errorFrame.hide()
+                    loadingFrame.hide()
+                    fillDetail(movieDTO)
+                }
+            }
+
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun onFailed(throwable: Throwable) {
+                binding.apply {
+                    loadingFrame.hide()
+                    errorFrame.show()
+                    errorMessage.text =
+                        "${resources.getString(R.string.error)}: ${throwable.message}"
+                    errorActionButton.setOnClickListener {
+                        getMovie()
+                    }
+                }
+            }
+
+        })
     }
     private var _binding: DetailFragmentBinding? = null
     private val binding get() = _binding!!
@@ -56,16 +86,12 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getLiveData().observe(viewLifecycleOwner) {
-            renderData(it)
-        }
 
-        val movieId = arguments?.getInt(MOVIE_ID_KEY)
-        movieId?.let {
+        arguments?.getInt(MOVIE_ID_KEY)?.let {
             this.movieId = it
-            viewModel.getMovieById(movieId)
         }
 
+        getMovie()
 
         binding.favoritesButton.setOnClickListener {
             Toast.makeText(context, "To favorites!", Toast.LENGTH_SHORT).show()
@@ -73,34 +99,8 @@ class DetailFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun renderData(state: AppState) {
-        when (state) {
-
-            is AppState.Loading -> {
-                binding.apply {
-                    errorFrame.hide()
-                    loadingFrame.show()
-                }
-            }
-
-            is AppState.Success -> {
-                val movie = state.data as MovieDTO
-                fillDetail(movie)
-            }
-
-            is AppState.Error -> {
-                binding.apply {
-                    loadingFrame.hide()
-                    errorFrame.show()
-                    val e = state.error as MovieNotFoundException
-                    errorMessage.text = "${resources.getString(R.string.error)}: ${e.message}"
-                    errorActionButton.setOnClickListener {
-                        viewModel.getMovieById(e.id)
-                    }
-                }
-            }
-
-        }
+    private fun getMovie() {
+        movieLoader.getMovieById("ru-RU", movieId)
     }
 
     private fun fillDetail(movie: MovieDTO) {
@@ -118,7 +118,8 @@ class DetailFragment : Fragment() {
             rating.text = "${movie.vote_average} (${movie.vote_count})"
             budget.text = "${resources.getString(R.string.budget)} \$${movie.budget}"
             revenue.text = "${resources.getString(R.string.revenue)} \$${movie.revenue}"
-            released.text = "${resources.getString(R.string.released)} ${movie.release_date?.let { formatDate(it) }}"
+            released.text =
+                "${resources.getString(R.string.released)} ${movie.release_date?.let { formatDate(it) }}"
             overview.text = movie.overview
         }
     }
