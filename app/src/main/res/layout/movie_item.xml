@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/movie_item"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    android:elevation="8dp"
-    app:cardCornerRadius="5dp">
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/movie_item_margin"
+    android:elevation="@dimen/base_elevation"
+    app:cardCornerRadius="@dimen/movie_item_corner_radius">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/poster_image"
-            android:layout_width="120dp"
-            android:layout_height="153dp"
+            android:layout_width="@dimen/movie_item_poster_width"
+            android:layout_height="@dimen/movie_item_poster_height"
             android:scaleType="centerCrop"
             android:src="@drawable/dummy"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,8 +28,9 @@
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:lines="2"
+            android:paddingStart="@dimen/movie_item_title_padding"
+            android:paddingEnd="@dimen/movie_item_title_padding"
+            android:lines="3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,16 +41,18 @@
             android:id="@+id/released"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/movie_item_parts_margin"
+            app:layout_constraintVertical_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:text="1984" />
 
         <ImageView
             android:id="@+id/rating_icon"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginEnd="4dp"
+            android:layout_width="@dimen/rating_icon_size"
+            android:layout_height="@dimen/rating_icon_size"
+            android:layout_marginEnd="@dimen/movie_item_parts_margin"
             android:src="@drawable/ic_rating"
             app:layout_constraintBottom_toBottomOf="@id/rating_tv"
             app:layout_constraintEnd_toStartOf="@id/rating_tv"
@@ -59,7 +62,7 @@
             android:id="@+id/rating_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="@dimen/movie_item_parts_margin"
             app:layout_constraintBaseline_toBaselineOf="@id/released"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="8.0" />

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="rating_icon_size">18dp</dimen>
+    <dimen name="movie_item_title_padding">4dp</dimen>
+    <dimen name="movie_item_poster_width">130dp</dimen>
+    <dimen name="movie_item_poster_height">166dp</dimen>
+    <dimen name="base_elevation">8dp</dimen>
+    <dimen name="movie_item_margin">4dp</dimen>
+    <dimen name="movie_item_parts_margin">4dp</dimen>
+    <dimen name="movie_item_corner_radius">5dp</dimen>
+    <dimen name="category_text_size">22sp</dimen>
+    <dimen name="category_margin_start">16dp</dimen>
+    <dimen name="category_base_margin">4dp</dimen>
+    <dimen name="detail_overview_margin">8dp</dimen>
+    <dimen name="details_list_item_margin_start">8dp</dimen>
+    <dimen name="details_list_item_margin_top">4dp</dimen>
+    <dimen name="details_rating_icon_margin">4dp</dimen>
+    <dimen name="details_genres_margin_end">16dp</dimen>
+    <dimen name="detail_image_width">140dp</dimen>
+    <dimen name="detail_image_height">196dp</dimen>
+    <dimen name="detail_image_margin">8dp</dimen>
+    <dimen name="details_favorites_button_margin_end">16dp</dimen>
+    <dimen name="details_favorites_button_margin_top">8dp</dimen>
+    <dimen name="detail_title_margin_top">4dp</dimen>
+    <dimen name="detail_title_margin_end">32dp</dimen>
+    <dimen name="detail_title_text_size">24sp</dimen>
+</resources>
