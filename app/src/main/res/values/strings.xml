@@ -23,7 +23,7 @@
     <string name="in_developing">Section in development</string>
     <string name="detail_orig_title_pattern" translatable="false">%s (%s)</string>
     <string name="detail_duration_pattern" translatable="false">%d %s/ %s</string>
-    <string name="detail_rating_pattern" translatable="false">%f (%d)</string>
+    <string name="detail_rating_pattern" translatable="false">%.2f (%d)</string>
     <string name="detail_budget_pattern" translatable="false">%s: $%d</string>
     <string name="detail_revenue_pattern" translatable="false">%s: $%d</string>
     <string name="detail_release_date_pattern" translatable="false">%s: %s</string>
