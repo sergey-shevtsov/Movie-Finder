@@ -10,9 +10,9 @@
     <string name="search">Search</string>
     <string name="detail">Detail</string>
     <string name="add_to_favorites">Add to favorites</string>
-    <string name="released">Release date:</string>
-    <string name="revenue">Revenue:</string>
-    <string name="budget">Budget:</string>
+    <string name="released">Release date</string>
+    <string name="revenue">Revenue</string>
+    <string name="budget">Budget</string>
     <string name="minute">min.</string>
     <string name="movie_image">Movie image</string>
     <string name="rating_image">Rating image</string>
@@ -21,4 +21,11 @@
     <string name="top_rated">Top rated</string>
     <string name="popular">Popular</string>
     <string name="in_developing">Section in development</string>
+    <string name="detail_orig_title_pattern" translatable="false">%s (%s)</string>
+    <string name="detail_duration_pattern" translatable="false">%d %s/ %s</string>
+    <string name="detail_rating_pattern" translatable="false">%f (%d)</string>
+    <string name="detail_budget_pattern" translatable="false">%s: $%d</string>
+    <string name="detail_revenue_pattern" translatable="false">%s: $%d</string>
+    <string name="detail_release_date_pattern" translatable="false">%s: %s</string>
+    <string name="error_message_pattern" translatable="false">%s: %s</string>
 </resources>

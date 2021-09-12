@@ -19,6 +19,7 @@ import com.example.android.moviefinder.view.hide
 import com.example.android.moviefinder.view.hideHomeButton
 import com.example.android.moviefinder.view.show
 import com.example.android.moviefinder.viewmodel.HomeViewModel
+import java.util.*
 
 class HomeFragment : Fragment() {
 
@@ -115,8 +116,12 @@ class HomeFragment : Fragment() {
                 categoryBinding.apply {
                     loadingFrame.loadingContainer.hide()
                     errorFrame.errorContainer.show()
-                    errorFrame.errorMessage.text =
-                        "${resources.getString(R.string.error)}: ${throwable.message}"
+                    errorFrame.errorMessage.text = String.format(
+                        Locale.getDefault(),
+                        resources.getString(R.string.error_message_pattern),
+                        resources.getString(R.string.error),
+                        throwable.message
+                    )
                     errorFrame.errorActionButton.setOnClickListener {
                         getMovieList(category)
                     }

@@ -54,8 +54,12 @@ class DetailFragment : Fragment() {
                 binding.apply {
                     loadingFrame.loadingContainer.hide()
                     errorFrame.errorContainer.show()
-                    errorFrame.errorMessage.text =
-                        "${resources.getString(R.string.error)}: ${throwable.message}"
+                    errorFrame.errorMessage.text = String.format(
+                        Locale.getDefault(),
+                        resources.getString(R.string.error_message_pattern),
+                        resources.getString(R.string.error),
+                        throwable.message
+                    )
                     errorFrame.errorActionButton.setOnClickListener {
                         getMovie()
                     }
@@ -107,17 +111,45 @@ class DetailFragment : Fragment() {
             errorFrame.errorContainer.hide()
             loadingFrame.loadingContainer.hide()
             title.text = movie.title
-            originalTitle.text = "${movie.original_title} ($releaseYear)"
+            originalTitle.text = String.format(
+                Locale.getDefault(),
+                resources.getString(R.string.detail_orig_title_pattern),
+                movie.original_title,
+                releaseYear
+            )
             image.setImageResource(R.drawable.dummy)
             genres.text = movie.genres?.let { getGenresNames(it) }
-            duration.text = "${movie.runtime} ${resources.getString(R.string.minute)}/ ${
-                movie.runtime?.let { it.getFormatDuration() }
-            }"
-            rating.text = "${movie.vote_average} (${movie.vote_count})"
-            budget.text = "${resources.getString(R.string.budget)} \$${movie.budget}"
-            revenue.text = "${resources.getString(R.string.revenue)} \$${movie.revenue}"
-            released.text =
-                "${resources.getString(R.string.released)} ${movie.release_date?.let { it.formatDate() }}"
+            duration.text = String.format(
+                Locale.getDefault(),
+                resources.getString(R.string.detail_duration_pattern),
+                movie.runtime,
+                resources.getString(R.string.minute),
+                movie.runtime?.getFormatDuration()
+            )
+            rating.text = String.format(
+                Locale.getDefault(),
+                resources.getString(R.string.detail_rating_pattern),
+                movie.vote_average,
+                movie.vote_count
+            )
+            budget.text = String.format(
+                Locale.getDefault(),
+                resources.getString(R.string.detail_budget_pattern),
+                resources.getString(R.string.budget),
+                movie.budget
+            )
+            revenue.text = String.format(
+                Locale.getDefault(),
+                resources.getString(R.string.detail_revenue_pattern),
+                resources.getString(R.string.revenue),
+                movie.revenue
+            )
+            released.text = String.format(
+                Locale.getDefault(),
+                resources.getString(R.string.detail_release_date_pattern),
+                resources.getString(R.string.released),
+                movie.release_date?.formatDate()
+            )
             overview.text = movie.overview
         }
     }

@@ -8,9 +8,9 @@
     <string name="search">Поиск</string>
     <string name="detail">Подробно</string>
     <string name="add_to_favorites">В избранное</string>
-    <string name="released">Дата выхода:</string>
-    <string name="revenue">Сборы:</string>
-    <string name="budget">Бюджет:</string>
+    <string name="released">Дата выхода</string>
+    <string name="revenue">Сборы</string>
+    <string name="budget">Бюджет</string>
     <string name="minute">мин.</string>
     <string name="movie_image">Постер</string>
     <string name="rating_image">Рейтинг</string>
