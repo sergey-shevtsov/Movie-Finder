@@ -15,11 +15,11 @@ import com.example.android.moviefinder.databinding.HomeFragmentBinding
 import com.example.android.moviefinder.model.MovieApiLoader
 import com.example.android.moviefinder.model.MovieListDTO
 import com.example.android.moviefinder.view.detail.DetailFragment
+import com.example.android.moviefinder.view.getStringFormat
 import com.example.android.moviefinder.view.hide
 import com.example.android.moviefinder.view.hideHomeButton
 import com.example.android.moviefinder.view.show
 import com.example.android.moviefinder.viewmodel.HomeViewModel
-import java.util.*
 
 class HomeFragment : Fragment() {
 
@@ -116,12 +116,12 @@ class HomeFragment : Fragment() {
                 categoryBinding.apply {
                     loadingFrame.loadingContainer.hide()
                     errorFrame.errorContainer.show()
-                    errorFrame.errorMessage.text = String.format(
-                        Locale.getDefault(),
-                        resources.getString(R.string.error_message_pattern),
-                        resources.getString(R.string.error),
-                        throwable.message
-                    )
+                    errorFrame.errorMessage.text =
+                        resources.getString(R.string.error_message_pattern)
+                            .getStringFormat(
+                                resources.getString(R.string.error),
+                                throwable.message
+                            )
                     errorFrame.errorActionButton.setOnClickListener {
                         getMovieList(category)
                     }

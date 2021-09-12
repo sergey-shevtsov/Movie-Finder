@@ -16,7 +16,6 @@ import com.example.android.moviefinder.model.MovieApiLoader
 import com.example.android.moviefinder.model.MovieDTO
 import com.example.android.moviefinder.view.*
 import com.example.android.moviefinder.viewmodel.DetailViewModel
-import java.util.*
 
 class DetailFragment : Fragment() {
 
@@ -54,12 +53,12 @@ class DetailFragment : Fragment() {
                 binding.apply {
                     loadingFrame.loadingContainer.hide()
                     errorFrame.errorContainer.show()
-                    errorFrame.errorMessage.text = String.format(
-                        Locale.getDefault(),
-                        resources.getString(R.string.error_message_pattern),
-                        resources.getString(R.string.error),
-                        throwable.message
-                    )
+                    errorFrame.errorMessage.text =
+                        resources.getString(R.string.error_message_pattern)
+                            .getStringFormat(
+                                resources.getString(R.string.error),
+                                throwable.message
+                            )
                     errorFrame.errorActionButton.setOnClickListener {
                         getMovie()
                     }
@@ -110,46 +109,29 @@ class DetailFragment : Fragment() {
         binding.apply {
             errorFrame.errorContainer.hide()
             loadingFrame.loadingContainer.hide()
+
             title.text = movie.title
-            originalTitle.text = String.format(
-                Locale.getDefault(),
-                resources.getString(R.string.detail_orig_title_pattern),
-                movie.original_title,
-                releaseYear
-            )
+            originalTitle.text = resources.getString(R.string.detail_orig_title_pattern)
+                .getStringFormat(movie.original_title, releaseYear)
             image.setImageResource(R.drawable.dummy)
             genres.text = movie.genres?.let { getGenresNames(it) }
-            duration.text = String.format(
-                Locale.getDefault(),
-                resources.getString(R.string.detail_duration_pattern),
-                movie.runtime,
-                resources.getString(R.string.minute),
-                movie.runtime?.getFormatDuration()
-            )
-            rating.text = String.format(
-                Locale.getDefault(),
-                resources.getString(R.string.detail_rating_pattern),
-                movie.vote_average,
-                movie.vote_count
-            )
-            budget.text = String.format(
-                Locale.getDefault(),
-                resources.getString(R.string.detail_budget_pattern),
-                resources.getString(R.string.budget),
-                movie.budget
-            )
-            revenue.text = String.format(
-                Locale.getDefault(),
-                resources.getString(R.string.detail_revenue_pattern),
-                resources.getString(R.string.revenue),
-                movie.revenue
-            )
-            released.text = String.format(
-                Locale.getDefault(),
-                resources.getString(R.string.detail_release_date_pattern),
-                resources.getString(R.string.released),
-                movie.release_date?.formatDate()
-            )
+            duration.text = resources.getString(R.string.detail_duration_pattern)
+                .getStringFormat(
+                    movie.runtime,
+                    resources.getString(R.string.minute),
+                    movie.runtime?.getFormatDuration()
+                )
+            rating.text = resources.getString(R.string.detail_rating_pattern)
+                .getStringFormat(movie.vote_average, movie.vote_count)
+            budget.text = resources.getString(R.string.detail_budget_pattern)
+                .getStringFormat(resources.getString(R.string.budget), movie.budget)
+            revenue.text = resources.getString(R.string.detail_revenue_pattern)
+                .getStringFormat(resources.getString(R.string.revenue), movie.revenue)
+            released.text = resources.getString(R.string.detail_release_date_pattern)
+                .getStringFormat(
+                    resources.getString(R.string.released),
+                    movie.release_date?.formatDate()
+                )
             overview.text = movie.overview
         }
     }

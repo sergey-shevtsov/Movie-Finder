@@ -43,3 +43,6 @@ fun Int.formatNum(): String {
     return if (this < 10) "0$this"
     else this.toString()
 }
+
+fun String.getStringFormat(vararg args: Any?): String =
+    String.format(Locale.getDefault(), this, *args)
