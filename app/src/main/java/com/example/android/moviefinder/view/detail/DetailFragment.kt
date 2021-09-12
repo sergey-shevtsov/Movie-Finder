@@ -14,9 +14,7 @@ import com.example.android.moviefinder.databinding.DetailFragmentBinding
 import com.example.android.moviefinder.model.GenresDTO
 import com.example.android.moviefinder.model.MovieApiLoader
 import com.example.android.moviefinder.model.MovieDTO
-import com.example.android.moviefinder.view.hide
-import com.example.android.moviefinder.view.show
-import com.example.android.moviefinder.view.showHomeButton
+import com.example.android.moviefinder.view.*
 import com.example.android.moviefinder.viewmodel.DetailViewModel
 import java.util.*
 
@@ -113,22 +111,15 @@ class DetailFragment : Fragment() {
             image.setImageResource(R.drawable.dummy)
             genres.text = movie.genres?.let { getGenresNames(it) }
             duration.text = "${movie.runtime} ${resources.getString(R.string.minute)}/ ${
-                movie.runtime?.let { getFormatDuration(it) }
+                movie.runtime?.let { it.getFormatDuration() }
             }"
             rating.text = "${movie.vote_average} (${movie.vote_count})"
             budget.text = "${resources.getString(R.string.budget)} \$${movie.budget}"
             revenue.text = "${resources.getString(R.string.revenue)} \$${movie.revenue}"
             released.text =
-                "${resources.getString(R.string.released)} ${movie.release_date?.let { formatDate(it) }}"
+                "${resources.getString(R.string.released)} ${movie.release_date?.let { it.formatDate() }}"
             overview.text = movie.overview
         }
-    }
-
-    private fun formatDate(date: String): String {
-        val year = date.subSequence(0, 4)
-        val month = date.subSequence(5, 7)
-        val day = date.subSequence(8, 10)
-        return "$day.$month.$year"
     }
 
     private fun getGenresNames(genres: Array<GenresDTO.GenreDTO>): String {
@@ -138,17 +129,6 @@ class DetailFragment : Fragment() {
             if (i != genres.lastIndex) sb.append(", ")
         }
         return sb.toString()
-    }
-
-    private fun getFormatDuration(duration: Int): String {
-        val hours = formatNum(duration / 60)
-        val minutes = formatNum(duration % 60)
-        return String.format(Locale.getDefault(), "%s:%s", hours, minutes)
-    }
-
-    private fun formatNum(num: Int): String {
-        if (num < 10) return "0$num"
-        return num.toString()
     }
 
     override fun onDestroyView() {
