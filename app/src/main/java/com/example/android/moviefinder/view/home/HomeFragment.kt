@@ -20,6 +20,7 @@ import com.example.android.moviefinder.view.hide
 import com.example.android.moviefinder.view.hideHomeButton
 import com.example.android.moviefinder.view.show
 import com.example.android.moviefinder.viewmodel.HomeViewModel
+import java.util.*
 
 class HomeFragment : Fragment() {
 
@@ -135,6 +136,8 @@ class HomeFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getMovieList(category: Category) {
-        category.loader?.getMovieList("ru-RU", category.request)
+        Locale.getDefault().apply {
+            category.loader?.getMovieList("${language}-${country}", category.request)
+        }
     }
 }

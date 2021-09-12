@@ -16,6 +16,7 @@ import com.example.android.moviefinder.model.MovieApiLoader
 import com.example.android.moviefinder.model.MovieDTO
 import com.example.android.moviefinder.view.*
 import com.example.android.moviefinder.viewmodel.DetailViewModel
+import java.util.*
 
 class DetailFragment : Fragment() {
 
@@ -101,7 +102,9 @@ class DetailFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getMovie() {
-        movieLoader.getMovieById("ru-RU", movieId)
+        Locale.getDefault().apply {
+            movieLoader.getMovieById("${language}-${country}", movieId)
+        }
     }
 
     private fun fillDetail(movie: MovieDTO) {
