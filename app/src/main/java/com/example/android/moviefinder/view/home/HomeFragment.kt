@@ -98,29 +98,26 @@ class HomeFragment : Fragment() {
             MovieApiLoader.MovieListLoader.MovieListLoaderListener {
             override fun onLoading() {
                 categoryBinding.apply {
-                    errorFrame.hide()
-                    recyclerView.hide()
-                    loadingTextView.show()
+                    errorFrame.errorContainer.hide()
+                    loadingFrame.loadingContainer.show()
                 }
             }
 
             override fun onLoaded(movieListDTO: MovieListDTO) {
                 categoryBinding.apply {
-                    loadingTextView.hide()
-                    errorFrame.hide()
-                    recyclerView.show()
+                    errorFrame.errorContainer.hide()
+                    loadingFrame.loadingContainer.hide()
                     movieListDTO.results?.let { category.adapter.setData(it) }
                 }
             }
 
             override fun onFailed(throwable: Throwable) {
                 categoryBinding.apply {
-                    loadingTextView.hide()
-                    recyclerView.hide()
-                    errorFrame.show()
-                    errorMessage.text =
+                    loadingFrame.loadingContainer.hide()
+                    errorFrame.errorContainer.show()
+                    errorFrame.errorMessage.text =
                         "${resources.getString(R.string.error)}: ${throwable.message}"
-                    errorActionButton.setOnClickListener {
+                    errorFrame.errorActionButton.setOnClickListener {
                         getMovieList(category)
                     }
                 }

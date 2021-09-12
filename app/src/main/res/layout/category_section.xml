@@ -30,38 +30,16 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
+            android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/loading_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/loading" />
+        <include
+            android:id="@+id/loading_frame"
+            layout="@layout/loading_frame" />
 
-        <LinearLayout
+        <include
             android:id="@+id/error_frame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/error_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Ошибка" />
-
-            <TextView
-                android:id="@+id/error_action_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/reload"
-                android:textColor="@color/blue" />
-
-        </LinearLayout>
+            layout="@layout/error_frame"
+            android:visibility="gone" />
 
     </FrameLayout>
 

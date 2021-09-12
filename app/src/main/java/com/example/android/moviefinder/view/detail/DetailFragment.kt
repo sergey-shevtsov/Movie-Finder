@@ -38,15 +38,15 @@ class DetailFragment : Fragment() {
         MovieApiLoader.MovieLoader(object : MovieApiLoader.MovieLoader.MovieLoaderListener {
             override fun onLoading() {
                 binding.apply {
-                    errorFrame.hide()
-                    loadingFrame.show()
+                    errorFrame.errorContainer.hide()
+                    loadingFrame.loadingContainer.show()
                 }
             }
 
             override fun onLoaded(movieDTO: MovieDTO) {
                 binding.apply {
-                    errorFrame.hide()
-                    loadingFrame.hide()
+                    errorFrame.errorContainer.hide()
+                    loadingFrame.loadingContainer.hide()
                     fillDetail(movieDTO)
                 }
             }
@@ -54,11 +54,11 @@ class DetailFragment : Fragment() {
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onFailed(throwable: Throwable) {
                 binding.apply {
-                    loadingFrame.hide()
-                    errorFrame.show()
-                    errorMessage.text =
+                    loadingFrame.loadingContainer.hide()
+                    errorFrame.errorContainer.show()
+                    errorFrame.errorMessage.text =
                         "${resources.getString(R.string.error)}: ${throwable.message}"
-                    errorActionButton.setOnClickListener {
+                    errorFrame.errorActionButton.setOnClickListener {
                         getMovie()
                     }
                 }
@@ -106,8 +106,8 @@ class DetailFragment : Fragment() {
     private fun fillDetail(movie: MovieDTO) {
         val releaseYear = movie.release_date?.subSequence(0, 4).toString()
         binding.apply {
-            errorFrame.hide()
-            loadingFrame.hide()
+            errorFrame.errorContainer.hide()
+            loadingFrame.loadingContainer.hide()
             title.text = movie.title
             originalTitle.text = "${movie.original_title} ($releaseYear)"
             image.setImageResource(R.drawable.dummy)
