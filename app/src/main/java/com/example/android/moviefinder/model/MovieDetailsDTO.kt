@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
 
 @Parcelize
-data class MovieDTO(
+data class MovieDetailsDTO(
     val budget: Int?,
     val genres: @RawValue Array<GenresDTO.GenreDTO>?,
     val id: Int?,

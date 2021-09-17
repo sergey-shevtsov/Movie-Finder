@@ -56,7 +56,7 @@ class MovieDetailsService(name: String = "MovieDetailsService") : IntentService(
 
             val reader = BufferedReader(InputStreamReader(urlConnection.inputStream))
             val result = reader.lines().collect(Collectors.joining("\n"))
-            val movieDTO = Gson().fromJson(result, MovieDTO::class.java)
+            val movieDTO = Gson().fromJson(result, MovieDetailsDTO::class.java)
 
             onResponse(movieDTO)
         } catch (e: Exception) {
@@ -66,18 +66,18 @@ class MovieDetailsService(name: String = "MovieDetailsService") : IntentService(
         }
     }
 
-    private fun onResponse(movieDTO: MovieDTO?) {
-        movieDTO?.let {
+    private fun onResponse(movieDetailsDTO: MovieDetailsDTO?) {
+        movieDetailsDTO?.let {
             onSuccessResponse(it)
         } ?: onEmptyResponse()
     }
 
-    private fun onSuccessResponse(movieDTO: MovieDTO) {
+    private fun onSuccessResponse(movieDetailsDTO: MovieDetailsDTO) {
         LocalBroadcastManager.getInstance(this)
             .sendBroadcast(
                 Intent(MOVIE_DETAILS_INTENT_FILTER)
                     .putExtra(RESULT_EXTRA, SUCCESS_RESULT)
-                    .putExtra(MOVIE_DETAILS_EXTRA, movieDTO)
+                    .putExtra(MOVIE_DETAILS_EXTRA, movieDetailsDTO)
             )
     }
 

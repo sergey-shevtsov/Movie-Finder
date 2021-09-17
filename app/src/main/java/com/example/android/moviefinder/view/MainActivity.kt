@@ -1,13 +1,22 @@
 package com.example.android.moviefinder.view
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.MainActivityBinding
+import com.example.android.moviefinder.model.*
 import com.example.android.moviefinder.view.favorites.FavoritesFragment
 import com.example.android.moviefinder.view.home.HomeFragment
 import com.example.android.moviefinder.view.ratings.RatingsFragment
@@ -26,6 +35,46 @@ class MainActivity : AppCompatActivity() {
         MainActivityBinding.inflate(layoutInflater)
     }
 
+    private val localMainReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (intent?.getStringExtra(NETWORK_STATUS)) {
+                AVAILABLE_STATUS -> {
+                    context?.let { onNetworkRestored(it) }
+                }
+                LOST_STATUS -> {
+                    context?.let { onNetworkLost(it) }
+                }
+            }
+        }
+    }
+
+    private fun onNetworkRestored(context: Context) {
+        Thread {
+            runOnUiThread {
+                binding.connectivityBar.apply {
+                    connectivityContainer.background =
+                        AppCompatResources.getDrawable(context, R.drawable.green_bg)
+                    connectivityTextView.text = getString(R.string.internet_restored)
+                }
+            }
+            Thread.sleep(2000)
+            runOnUiThread {
+                binding.connectivityBar.connectivityContainer.hide()
+            }
+        }.start()
+    }
+
+
+    private fun onNetworkLost(context: Context) {
+        binding.connectivityBar.apply {
+            connectivityContainer.show()
+            connectivityContainer.background =
+                AppCompatResources.getDrawable(context, R.drawable.red_bg)
+            connectivityTextView.text = getString(R.string.no_internet)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,6 +86,9 @@ class MainActivity : AppCompatActivity() {
             replaceFragment(HomeFragment.newInstance())
         }
 
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(localMainReceiver, IntentFilter(NETWORK_STATUS_INTENT_FILTER))
+        NetworkMonitor(application).startNetworkCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

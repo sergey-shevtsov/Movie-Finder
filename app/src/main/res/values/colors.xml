@@ -10,4 +10,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="blue">#1245FF</color>
+    <color name="red">#FF3636</color>
+    <color name="green">#1FCF00</color>
 </resources>

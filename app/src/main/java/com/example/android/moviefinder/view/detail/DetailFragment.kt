@@ -81,7 +81,7 @@ class DetailFragment : Fragment() {
 
             when (intent?.getStringExtra(RESULT_EXTRA)) {
                 SUCCESS_RESULT -> {
-                    intent.getParcelableExtra<MovieDTO>(MOVIE_DETAILS_EXTRA)?.let {
+                    intent.getParcelableExtra<MovieDetailsDTO>(MOVIE_DETAILS_EXTRA)?.let {
                         fillDetail(it)
                     }
                 }
@@ -134,35 +134,35 @@ class DetailFragment : Fragment() {
         )
     }
 
-    private fun fillDetail(movie: MovieDTO) {
-        val releaseYear = movie.release_date?.subSequence(0, 4).toString()
+    private fun fillDetail(movieDetailsDTO: MovieDetailsDTO) {
+        val releaseYear = movieDetailsDTO.release_date?.subSequence(0, 4).toString()
         binding.apply {
             errorFrame.errorContainer.hide()
             loadingFrame.loadingContainer.hide()
 
-            title.text = movie.title
+            title.text = movieDetailsDTO.title
             originalTitle.text = resources.getString(R.string.detail_orig_title_pattern)
-                .getStringFormat(movie.original_title, releaseYear)
+                .getStringFormat(movieDetailsDTO.original_title, releaseYear)
             image.setImageResource(R.drawable.dummy)
-            genres.text = movie.genres?.let { getGenresNames(it) }
+            genres.text = movieDetailsDTO.genres?.let { getGenresNames(it) }
             duration.text = resources.getString(R.string.detail_duration_pattern)
                 .getStringFormat(
-                    movie.runtime,
+                    movieDetailsDTO.runtime,
                     resources.getString(R.string.minute),
-                    movie.runtime?.getFormatDuration()
+                    movieDetailsDTO.runtime?.getFormatDuration()
                 )
             rating.text = resources.getString(R.string.detail_rating_pattern)
-                .getStringFormat(movie.vote_average, movie.vote_count)
+                .getStringFormat(movieDetailsDTO.vote_average, movieDetailsDTO.vote_count)
             budget.text = resources.getString(R.string.detail_budget_pattern)
-                .getStringFormat(resources.getString(R.string.budget), movie.budget)
+                .getStringFormat(resources.getString(R.string.budget), movieDetailsDTO.budget)
             revenue.text = resources.getString(R.string.detail_revenue_pattern)
-                .getStringFormat(resources.getString(R.string.revenue), movie.revenue)
+                .getStringFormat(resources.getString(R.string.revenue), movieDetailsDTO.revenue)
             released.text = resources.getString(R.string.detail_release_date_pattern)
                 .getStringFormat(
                     resources.getString(R.string.released),
-                    movie.release_date?.formatDate()
+                    movieDetailsDTO.release_date?.formatDate()
                 )
-            overview.text = movie.overview
+            overview.text = movieDetailsDTO.overview
         }
     }
 

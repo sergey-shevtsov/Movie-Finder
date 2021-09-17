@@ -19,4 +19,6 @@
     <string name="in_developing">Раздел в разработке</string>
     <string name="popular">Популярные</string>
     <string name="now_playing">Сейчас в кино</string>
+    <string name="no_internet">Нет интернета</string>
+    <string name="internet_restored">Интернет-соединение восстановлено</string>
 </resources>

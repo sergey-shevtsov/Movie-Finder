@@ -78,7 +78,7 @@ sealed class MovieApiLoader() {
 
                     val reader = BufferedReader(InputStreamReader(urlConnection.inputStream))
                     val result = reader.lines().collect(Collectors.joining("\n"))
-                    val movieDTO = Gson().fromJson(result, MovieDTO::class.java)
+                    val movieDTO = Gson().fromJson(result, MovieDetailsDTO::class.java)
 
                     handler.post {
                         listener.onLoaded(movieDTO)
@@ -95,7 +95,7 @@ sealed class MovieApiLoader() {
 
         interface MovieLoaderListener {
             fun onLoading()
-            fun onLoaded(movieDTO: MovieDTO)
+            fun onLoaded(movieDetailsDTO: MovieDetailsDTO)
             fun onFailed(throwable: Throwable)
         }
     }
