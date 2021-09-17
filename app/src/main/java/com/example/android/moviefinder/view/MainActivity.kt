@@ -11,8 +11,16 @@ import com.example.android.moviefinder.databinding.MainActivityBinding
 import com.example.android.moviefinder.view.favorites.FavoritesFragment
 import com.example.android.moviefinder.view.home.HomeFragment
 import com.example.android.moviefinder.view.ratings.RatingsFragment
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        fun getDefaultLocaleString(): String {
+            Locale.getDefault().apply {
+                return "${language}-${country}"
+            }
+        }
+    }
 
     private val binding: MainActivityBinding by lazy {
         MainActivityBinding.inflate(layoutInflater)

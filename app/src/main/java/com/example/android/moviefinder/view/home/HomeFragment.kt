@@ -14,13 +14,9 @@ import com.example.android.moviefinder.databinding.CategorySectionBinding
 import com.example.android.moviefinder.databinding.HomeFragmentBinding
 import com.example.android.moviefinder.model.MovieApiLoader
 import com.example.android.moviefinder.model.MovieListDTO
+import com.example.android.moviefinder.view.*
 import com.example.android.moviefinder.view.detail.DetailFragment
-import com.example.android.moviefinder.view.getStringFormat
-import com.example.android.moviefinder.view.hide
-import com.example.android.moviefinder.view.hideHomeButton
-import com.example.android.moviefinder.view.show
 import com.example.android.moviefinder.viewmodel.HomeViewModel
-import java.util.*
 
 class HomeFragment : Fragment() {
 
@@ -136,8 +132,6 @@ class HomeFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getMovieList(category: Category) {
-        Locale.getDefault().apply {
-            category.loader?.getMovieList("${language}-${country}", category.request)
-        }
+        category.loader?.getMovieList(MainActivity.getDefaultLocaleString(), category.request)
     }
 }
