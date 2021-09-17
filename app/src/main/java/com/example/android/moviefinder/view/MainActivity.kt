@@ -91,6 +91,11 @@ class MainActivity : AppCompatActivity() {
         NetworkMonitor(application).startNetworkCallback()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        NetworkMonitor(application).stopNetworkCallback()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
