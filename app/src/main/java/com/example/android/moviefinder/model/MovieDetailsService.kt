@@ -20,7 +20,9 @@ const val LOCALE_EXTRA = "Locale"
 const val ID_EXTRA = "Id"
 const val RESULT_EXTRA = "Result"
 const val SUCCESS_RESULT = "SuccessResult"
+const val ERROR_RESULT = "ErrorResult"
 const val MOVIE_DETAILS_EXTRA = "MovieDetails"
+const val EXCEPTION_EXTRA = "Exception"
 
 class MovieDetailsService(name: String = "MovieDetailsService") : IntentService(name) {
     @RequiresApi(Build.VERSION_CODES.N)
@@ -30,7 +32,7 @@ class MovieDetailsService(name: String = "MovieDetailsService") : IntentService(
             val id = intent.getIntExtra(ID_EXTRA, -1)
 
             if (id == -1) {
-                onEmptyData()
+                onEmptyData(Exception("data is empty"))
             } else {
                 loadMovieDetails(locale, id)
             }
@@ -41,8 +43,8 @@ class MovieDetailsService(name: String = "MovieDetailsService") : IntentService(
     private fun loadMovieDetails(locale: String? = BASE_LOCALE, id: Int) {
         val uri = try {
             URL("https://api.themoviedb.org/3/movie/$id?api_key=${BuildConfig.TMDB_API_KEY}&language=$locale")
-        } catch (e: MalformedURLException) {
-            onMalformedURL()
+        } catch (exception: MalformedURLException) {
+            onMalformedURL(exception)
             return
         }
 
@@ -59,8 +61,8 @@ class MovieDetailsService(name: String = "MovieDetailsService") : IntentService(
             val movieDTO = Gson().fromJson(result, MovieDetailsDTO::class.java)
 
             onResponse(movieDTO)
-        } catch (e: Exception) {
-            onErrorResponse(e.message ?: "Unknown Error")
+        } catch (exception: Exception) {
+            onErrorResponse(exception)
         } finally {
             urlConnection?.disconnect()
         }
@@ -69,31 +71,43 @@ class MovieDetailsService(name: String = "MovieDetailsService") : IntentService(
     private fun onResponse(movieDetailsDTO: MovieDetailsDTO?) {
         movieDetailsDTO?.let {
             onSuccessResponse(it)
-        } ?: onEmptyResponse()
+        } ?: onEmptyResponse(Exception("empty response"))
     }
 
     private fun onSuccessResponse(movieDetailsDTO: MovieDetailsDTO) {
+        sendResult(
+            Intent(MOVIE_DETAILS_INTENT_FILTER)
+                .putExtra(RESULT_EXTRA, SUCCESS_RESULT)
+                .putExtra(MOVIE_DETAILS_EXTRA, movieDetailsDTO)
+        )
+    }
+
+    private fun onEmptyResponse(exception: Exception) {
+        sendException(exception)
+    }
+
+    private fun onErrorResponse(exception: Exception) {
+        sendException(exception)
+    }
+
+    private fun onMalformedURL(exception: Exception) {
+        sendException(exception)
+    }
+
+    private fun onEmptyData(exception: Exception) {
+        sendException(exception)
+    }
+
+    private fun sendResult(intent: Intent) {
         LocalBroadcastManager.getInstance(this)
-            .sendBroadcast(
-                Intent(MOVIE_DETAILS_INTENT_FILTER)
-                    .putExtra(RESULT_EXTRA, SUCCESS_RESULT)
-                    .putExtra(MOVIE_DETAILS_EXTRA, movieDetailsDTO)
-            )
+            .sendBroadcast(intent)
     }
 
-    private fun onEmptyResponse() {
-//        TODO("Not yet implemented")
-    }
-
-    private fun onErrorResponse(s: String) {
-//        TODO("Not yet implemented")
-    }
-
-    private fun onMalformedURL() {
-//        TODO("Not yet implemented")
-    }
-
-    private fun onEmptyData() {
-//        TODO("Not yet implemented")
+    private fun sendException(exception: Exception) {
+        sendResult(
+            Intent(MOVIE_DETAILS_INTENT_FILTER)
+                .putExtra(RESULT_EXTRA, ERROR_RESULT)
+                .putExtra(EXCEPTION_EXTRA, exception)
+        )
     }
 }

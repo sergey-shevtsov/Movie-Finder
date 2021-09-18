@@ -37,7 +37,8 @@ class DetailFragment : Fragment() {
     private val movieId: Int by lazy {
         arguments?.getInt(MOVIE_ID_KEY) ?: -1
     }
-//    private val movieLoader: MovieApiLoader.MovieLoader by lazy {
+
+    //    private val movieLoader: MovieApiLoader.MovieLoader by lazy {
 //        MovieApiLoader.MovieLoader(object : MovieApiLoader.MovieLoader.MovieLoaderListener {
 //            override fun onLoading() {
 //                binding.apply {
@@ -77,6 +78,7 @@ class DetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val localDetailsReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        @RequiresApi(Build.VERSION_CODES.N)
         override fun onReceive(context: Context?, intent: Intent?) {
 
             when (intent?.getStringExtra(RESULT_EXTRA)) {
@@ -85,13 +87,31 @@ class DetailFragment : Fragment() {
                         fillDetail(it)
                     }
                 }
-                else -> {
-
+                ERROR_RESULT -> {
+                    intent.getSerializableExtra(EXCEPTION_EXTRA)?.let {
+                        showError(it as Exception)
+                    }
                 }
             }
 
         }
 
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun showError(exception: Exception) {
+        binding.apply {
+            loadingFrame.loadingContainer.hide()
+            errorFrame.errorContainer.show()
+            errorFrame.errorMessage.text = resources.getString(R.string.error_message_pattern)
+                .getStringFormat(
+                    resources.getString(R.string.error),
+                    exception.message
+                )
+            errorFrame.errorActionButton.setOnClickListener {
+                getMovie()
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,6 +146,8 @@ class DetailFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getMovie() {
+        binding.errorFrame.errorContainer.hide()
+        binding.loadingFrame.loadingContainer.show()
         requireActivity().startService(
             Intent(requireContext(), MovieDetailsService::class.java).apply {
                 putExtra(LOCALE_EXTRA, MainActivity.getDefaultLocaleString())
