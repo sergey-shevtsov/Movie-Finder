@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingStart="32dp"
-    android:paddingEnd="32dp"
+    android:paddingStart="@dimen/error_frame_padding"
+    android:paddingEnd="@dimen/error_frame_padding"
     android:orientation="vertical"
     android:gravity="center"
     android:background="@color/white">
