@@ -11,4 +11,14 @@ class RepositoryImpl(private val remoteDataSource: RemoteDataSource) : Repositor
     ) {
         remoteDataSource.getMovieDetails(id, language, apiKey, callback)
     }
+
+    override fun getMovieListFromServer(
+        category: String,
+        language: String,
+        page: Int,
+        apiKey: String,
+        callback: Callback<MovieListDTO>
+    ) {
+        remoteDataSource.getMovieList(category, language, page, apiKey, callback)
+    }
 }

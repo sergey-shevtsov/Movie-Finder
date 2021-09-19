@@ -9,4 +9,11 @@ interface Repository {
         apiKey: String,
         callback: Callback<MovieDetailsDTO>
     )
+    fun getMovieListFromServer(
+        category: String,
+        language: String,
+        page: Int,
+        apiKey: String,
+        callback: Callback<MovieListDTO>
+    )
 }
