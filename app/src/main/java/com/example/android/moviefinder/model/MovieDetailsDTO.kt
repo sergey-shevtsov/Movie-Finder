@@ -17,4 +17,19 @@ data class MovieDetailsDTO(
     val title: String?,
     val vote_average: Double?,
     val vote_count: Int?
-) : Parcelable
+) : Parcelable {
+    fun isNotValid(): Boolean {
+        return (budget == null
+                || genres.isNullOrEmpty()
+                || id == null
+                || original_title == null
+                || overview == null
+                || release_date == null
+                || revenue == null
+                || runtime == null
+                || title == null
+                || vote_average == null
+                || vote_count == null
+                )
+    }
+}

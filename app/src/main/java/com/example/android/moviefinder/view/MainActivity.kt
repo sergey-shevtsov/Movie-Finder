@@ -25,9 +25,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     companion object {
         fun getDefaultLocaleString(): String {
-            Locale.getDefault().apply {
-                return "${language}-${country}"
-            }
+            return Locale.getDefault().language
         }
     }
 
