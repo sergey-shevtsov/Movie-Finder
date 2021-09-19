@@ -19,11 +19,11 @@ class DetailsViewModel(
 ) : ViewModel() {
     val liveData: LiveData<AppState> = detailsLiveData
 
-    fun getMovieDetailsFromRemoteSource(id: Int, language: String = Locale.getDefault().language) {
+    fun getMovieDetailsFromRemoteSource(id: Int) {
         detailsLiveData.value = AppState.Loading
 
         repositoryImpl.getMovieDetailsFromServer(
-            id, language, BuildConfig.TMDB_API_KEY,
+            id, Locale.getDefault().language, BuildConfig.TMDB_API_KEY,
             object : Callback<MovieDetailsDTO> {
                 override fun onResponse(
                     call: Call<MovieDetailsDTO>,

@@ -7,15 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.CategorySectionBinding
 import com.example.android.moviefinder.databinding.HomeFragmentBinding
-import com.example.android.moviefinder.model.MovieApiLoader
 import com.example.android.moviefinder.model.MovieListDTO
-import com.example.android.moviefinder.view.*
 import com.example.android.moviefinder.view.detail.DetailFragment
+import com.example.android.moviefinder.view.getStringFormat
+import com.example.android.moviefinder.view.hide
+import com.example.android.moviefinder.view.hideHomeButton
+import com.example.android.moviefinder.view.show
+import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.HomeViewModel
 
 class HomeFragment : Fragment() {
@@ -61,77 +65,81 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val nowPlayingCategory = Category(
-            resources.getString(R.string.now_playing),
-            MoviesAdapter(),
-            resources.getString(R.string.now_playing_request)
-        )
-
-        addCategory(nowPlayingCategory)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        addNowPlayingCategory()
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun addCategory(category: Category) {
+    private fun addNowPlayingCategory() {
+        val nowPlayingCategory = Category(
+            resources.getString(R.string.now_playing),
+            MoviesAdapter(),
+            resources.getString(R.string.now_playing_request),
+            LayoutInflater.from(context)
+                .inflate(R.layout.category_section, binding.root, false)
+        )
 
+        renderCategory(nowPlayingCategory)
+
+        viewModel.liveDataNowPlaying.observe(viewLifecycleOwner, getObserver(nowPlayingCategory))
+        viewModel.getNowPlayingMovieListFromRemoteSource()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun renderCategory(category: Category) {
         category.adapter.setOnItemClickListener(onItemClickListener)
 
-        val view = LayoutInflater.from(context)
-            .inflate(R.layout.category_section, binding.root, false)
-        binding.container.addView(view)
+        binding.container.addView(category.view)
 
-        val categoryBinding = CategorySectionBinding.bind(view)
-        categoryBinding.apply {
+        CategorySectionBinding.bind(category.view).apply {
             titleTextView.text = category.title
             recyclerView.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             recyclerView.adapter = category.adapter
         }
+    }
 
-        category.loader = MovieApiLoader.MovieListLoader(object :
-            MovieApiLoader.MovieListLoader.MovieListLoaderListener {
-            override fun onLoading() {
-                categoryBinding.apply {
-                    errorFrame.errorContainer.hide()
-                    loadingFrame.loadingContainer.show()
-                }
-            }
-
-            override fun onLoaded(movieListDTO: MovieListDTO) {
-                categoryBinding.apply {
-                    errorFrame.errorContainer.hide()
-                    loadingFrame.loadingContainer.hide()
-                    movieListDTO.results?.let { category.adapter.setData(it) }
-                }
-            }
-
-            override fun onFailed(throwable: Throwable) {
-                categoryBinding.apply {
-                    loadingFrame.loadingContainer.hide()
-                    errorFrame.errorContainer.show()
-                    errorFrame.errorMessage.text =
-                        resources.getString(R.string.error_message_pattern)
-                            .getStringFormat(
-                                resources.getString(R.string.error),
-                                throwable.message
-                            )
-                    errorFrame.errorActionButton.setOnClickListener {
-                        getMovieList(category)
+    private fun getObserver(category: Category): Observer<AppState> {
+        return Observer<AppState> { state ->
+            CategorySectionBinding.bind(category.view).apply {
+                when (state) {
+                    is AppState.Loading -> {
+                        errorFrame.errorContainer.hide()
+                        loadingFrame.loadingContainer.show()
+                    }
+                    is AppState.Success<*> -> {
+                        errorFrame.errorContainer.hide()
+                        loadingFrame.loadingContainer.hide()
+                        (state.data as MovieListDTO).results?.let { category.adapter.setData(it) }
+                    }
+                    is AppState.Error -> {
+                        loadingFrame.loadingContainer.hide()
+                        errorFrame.errorContainer.show()
+                        showError(category, state.t)
                     }
                 }
             }
-
-        })
-
-        getMovieList(category)
+        }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    private fun getMovieList(category: Category) {
-        category.loader?.getMovieList(MainActivity.getDefaultLocaleString(), category.request)
+    private fun showError(category: Category, t: Throwable) {
+        CategorySectionBinding.bind(category.view).apply {
+            errorFrame.errorMessage.text =
+                resources.getString(R.string.error_message_pattern)
+                    .getStringFormat(
+                        resources.getString(R.string.error),
+                        t.message
+                    )
+            errorFrame.errorActionButton.setOnClickListener {
+                when (category.title) {
+                    resources.getString(R.string.now_playing) ->
+                        viewModel.getNowPlayingMovieListFromRemoteSource()
+                }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
