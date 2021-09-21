@@ -19,8 +19,7 @@ import com.example.android.moviefinder.databinding.MainActivityBinding
 import com.example.android.moviefinder.model.*
 import com.example.android.moviefinder.view.favorites.FavoritesFragment
 import com.example.android.moviefinder.view.home.HomeFragment
-import com.example.android.moviefinder.view.ratings.RatingsFragment
-import java.util.*
+import com.example.android.moviefinder.view.settings.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -107,7 +106,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.home -> replaceFragment(HomeFragment.newInstance())
                 R.id.favorites -> replaceFragment(FavoritesFragment.newInstance())
-                R.id.ratings -> replaceFragment(RatingsFragment.newInstance())
+                R.id.settings -> replaceFragment(SettingsFragment.newInstance())
             }
             true
         }

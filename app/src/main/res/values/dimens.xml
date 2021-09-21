@@ -8,9 +8,9 @@
     <dimen name="movie_item_margin">4dp</dimen>
     <dimen name="movie_item_parts_margin">4dp</dimen>
     <dimen name="movie_item_corner_radius">5dp</dimen>
-    <dimen name="category_text_size">22sp</dimen>
-    <dimen name="category_margin_start">16dp</dimen>
-    <dimen name="category_base_margin">4dp</dimen>
+    <dimen name="title_text_size">22sp</dimen>
+    <dimen name="title_margin_start">16dp</dimen>
+    <dimen name="title_base_margin">4dp</dimen>
     <dimen name="detail_overview_margin">8dp</dimen>
     <dimen name="details_list_item_margin_start">8dp</dimen>
     <dimen name="details_list_item_margin_top">4dp</dimen>
@@ -26,4 +26,5 @@
     <dimen name="detail_title_text_size">24sp</dimen>
     <dimen name="connectivity_message_padding">4dp</dimen>
     <dimen name="error_frame_padding">32dp</dimen>
+    <dimen name="settings_item_text_size">16sp</dimen>
 </resources>

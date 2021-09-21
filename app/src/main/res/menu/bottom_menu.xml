@@ -14,9 +14,9 @@
         android:orderInCategory="2"/>
 
     <item
-        android:id="@+id/ratings"
-        android:icon="@drawable/ic_ratings"
-        android:title="@string/ratings"
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/settings"
         android:orderInCategory="3"/>
 
 </menu>

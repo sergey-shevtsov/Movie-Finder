@@ -5,6 +5,7 @@ data class MovieListDTO(
 ) {
     data class MovieItemDTO(
         val poster_path: String?,
+        val adult: Boolean?,
         val overview: String?,
         val release_date: String?,
         val genre_ids: Array<Int>?,

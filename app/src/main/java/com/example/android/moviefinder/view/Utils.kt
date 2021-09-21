@@ -1,10 +1,18 @@
 package com.example.android.moviefinder.view
 
+import android.app.Activity
+import android.content.Context
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
+import com.example.android.moviefinder.view.settings.CHILD_MODE_KEY
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
+
+fun Activity.isChildMode(): Boolean? {
+    return this.getPreferences(Context.MODE_PRIVATE)
+        ?.getBoolean(CHILD_MODE_KEY, false)
+}
 
 fun View.show() {
     this.visibility = View.VISIBLE
