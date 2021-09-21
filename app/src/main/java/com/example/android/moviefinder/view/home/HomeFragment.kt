@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,11 +14,8 @@ import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.CategorySectionBinding
 import com.example.android.moviefinder.databinding.HomeFragmentBinding
 import com.example.android.moviefinder.model.MovieListDTO
+import com.example.android.moviefinder.view.*
 import com.example.android.moviefinder.view.detail.DetailFragment
-import com.example.android.moviefinder.view.getStringFormat
-import com.example.android.moviefinder.view.hide
-import com.example.android.moviefinder.view.hideHomeButton
-import com.example.android.moviefinder.view.show
 import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.HomeViewModel
 
@@ -140,7 +136,13 @@ class HomeFragment : Fragment() {
                     is AppState.Success<*> -> {
                         errorFrame.errorContainer.hide()
                         loadingFrame.loadingContainer.hide()
-                        (state.data as MovieListDTO).results?.let { adapter.setData(it) }
+                        (state.data as MovieListDTO).results?.let { list ->
+                            if (activity?.isChildMode() == true) {
+                                adapter.setData(removeAdult(list))
+                            } else {
+                                adapter.setData(list)
+                            }
+                        }
                     }
                     is AppState.Error -> {
                         loadingFrame.loadingContainer.hide()
@@ -150,6 +152,16 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun removeAdult(list: Array<MovieListDTO.MovieItemDTO>): Array<MovieListDTO.MovieItemDTO> {
+        val result = mutableListOf<MovieListDTO.MovieItemDTO>()
+
+        list.forEach {
+            if (it.adult == false) result.add(it)
+        }
+
+        return result.toTypedArray()
     }
 
     private fun showError(view: View, t: Throwable) {

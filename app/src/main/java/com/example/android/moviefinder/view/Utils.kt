@@ -5,9 +5,10 @@ import android.content.Context
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
-import com.example.android.moviefinder.view.settings.CHILD_MODE_KEY
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
+
+const val CHILD_MODE_KEY = "ChildModeKey"
 
 fun Activity.isChildMode(): Boolean? {
     return this.getPreferences(Context.MODE_PRIVATE)
