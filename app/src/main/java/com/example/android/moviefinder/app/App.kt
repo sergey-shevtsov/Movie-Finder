@@ -1,8 +1,6 @@
 package com.example.android.moviefinder.app
 
 import android.app.Application
-import androidx.room.Room
-import java.lang.IllegalStateException
 
 class App : Application() {
 
