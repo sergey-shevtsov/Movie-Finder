@@ -5,13 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.moviefinder.BuildConfig
 import com.example.android.moviefinder.model.*
+import com.example.android.moviefinder.model.remote.RemoteDataSource
+import com.example.android.moviefinder.model.remote.RemoteRepository
+import com.example.android.moviefinder.model.remote.RemoteRepositoryImpl
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
 class HomeViewModel(
-    private val repositoryImpl: Repository = RepositoryImpl(RemoteDataSource()),
+    private val remoteRepositoryImpl: RemoteRepository = RemoteRepositoryImpl(RemoteDataSource()),
     private val homeLiveDataNowPlaying: MutableLiveData<AppState> = MutableLiveData(),
     private val homeLiveDataPopular: MutableLiveData<AppState> = MutableLiveData(),
     private val homeLiveDataTopRated: MutableLiveData<AppState> = MutableLiveData()
@@ -35,7 +38,7 @@ class HomeViewModel(
     private fun getMovieListFromRemoteSource(liveData: MutableLiveData<AppState>, category: String, page: Int) {
         liveData.value = AppState.Loading
 
-        repositoryImpl.getMovieListFromServer(
+        remoteRepositoryImpl.getMovieListFromServer(
             category, Locale.getDefault().language, page, BuildConfig.TMDB_API_KEY,
             object : Callback<MovieListDTO> {
                 override fun onResponse(

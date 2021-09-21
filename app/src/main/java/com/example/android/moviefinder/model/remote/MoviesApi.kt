@@ -1,5 +1,7 @@
-package com.example.android.moviefinder.model
+package com.example.android.moviefinder.model.remote
 
+import com.example.android.moviefinder.model.MovieDetailsDTO
+import com.example.android.moviefinder.model.MovieListDTO
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/movie_item_title_padding"
             android:paddingEnd="@dimen/movie_item_title_padding"
-            android:lines="3"
+            android:lines="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

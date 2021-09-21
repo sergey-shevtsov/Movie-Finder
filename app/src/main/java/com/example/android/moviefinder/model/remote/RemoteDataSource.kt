@@ -1,5 +1,7 @@
-package com.example.android.moviefinder.model
+package com.example.android.moviefinder.model.remote
 
+import com.example.android.moviefinder.model.MovieDetailsDTO
+import com.example.android.moviefinder.model.MovieListDTO
 import com.google.gson.GsonBuilder
 import retrofit2.Callback
 import retrofit2.Retrofit

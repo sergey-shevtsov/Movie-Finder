@@ -1,8 +1,10 @@
-package com.example.android.moviefinder.model
+package com.example.android.moviefinder.model.remote
 
+import com.example.android.moviefinder.model.MovieDetailsDTO
+import com.example.android.moviefinder.model.MovieListDTO
 import retrofit2.Callback
 
-class RepositoryImpl(private val remoteDataSource: RemoteDataSource) : Repository {
+class RemoteRepositoryImpl(private val remoteDataSource: RemoteDataSource) : RemoteRepository {
     override fun getMovieDetailsFromServer(
         id: Int,
         language: String,

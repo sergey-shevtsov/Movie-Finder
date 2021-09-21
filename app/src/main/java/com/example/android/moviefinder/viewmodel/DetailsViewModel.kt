@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.moviefinder.BuildConfig
 import com.example.android.moviefinder.model.MovieDetailsDTO
-import com.example.android.moviefinder.model.RemoteDataSource
-import com.example.android.moviefinder.model.Repository
-import com.example.android.moviefinder.model.RepositoryImpl
+import com.example.android.moviefinder.model.remote.RemoteDataSource
+import com.example.android.moviefinder.model.remote.RemoteRepository
+import com.example.android.moviefinder.model.remote.RemoteRepositoryImpl
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,14 +15,14 @@ import java.util.*
 
 class DetailsViewModel(
     private val detailsLiveData: MutableLiveData<AppState> = MutableLiveData(),
-    private val repositoryImpl: Repository = RepositoryImpl(RemoteDataSource())
+    private val remoteRepositoryImpl: RemoteRepository = RemoteRepositoryImpl(RemoteDataSource())
 ) : ViewModel() {
     val liveData: LiveData<AppState> = detailsLiveData
 
     fun getMovieDetailsFromRemoteSource(id: Int) {
         detailsLiveData.value = AppState.Loading
 
-        repositoryImpl.getMovieDetailsFromServer(
+        remoteRepositoryImpl.getMovieDetailsFromServer(
             id, Locale.getDefault().language, BuildConfig.TMDB_API_KEY,
             object : Callback<MovieDetailsDTO> {
                 override fun onResponse(
