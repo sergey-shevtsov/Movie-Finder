@@ -31,4 +31,6 @@
     <string name="no_internet">No internet</string>
     <string name="internet_restored">Internet restored</string>
     <string name="child_mode">Child mode</string>
+    <string name="notes">Notes</string>
+    <string name="history">History</string>
 </resources>

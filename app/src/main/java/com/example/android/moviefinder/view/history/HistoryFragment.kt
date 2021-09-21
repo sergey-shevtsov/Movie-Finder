@@ -1,4 +1,4 @@
-package com.example.android.moviefinder.view.favorites
+package com.example.android.moviefinder.view.history
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,20 +9,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.FavoritesFragmentBinding
+import com.example.android.moviefinder.databinding.HistoryFragmentBinding
+import com.example.android.moviefinder.databinding.NotesFragmentBinding
 import com.example.android.moviefinder.view.hideHomeButton
 import com.example.android.moviefinder.view.showSnackBarMessage
 import com.example.android.moviefinder.viewmodel.FavoritesViewModel
+import com.example.android.moviefinder.viewmodel.HistoryViewModel
+import com.example.android.moviefinder.viewmodel.NotesViewModel
 
-class FavoritesFragment : Fragment() {
+class HistoryFragment : Fragment() {
 
     companion object {
-        fun newInstance() = FavoritesFragment()
+        fun newInstance() = HistoryFragment()
     }
 
     private val viewModel: ViewModel by lazy {
-        ViewModelProvider(this).get(FavoritesViewModel::class.java)
+        ViewModelProvider(this).get(HistoryViewModel::class.java)
     }
-    private var _binding: FavoritesFragmentBinding? = null
+    private var _binding: HistoryFragmentBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -30,7 +34,7 @@ class FavoritesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FavoritesFragmentBinding.inflate(inflater, container, false)
+        _binding = HistoryFragmentBinding.inflate(inflater, container, false)
 
         activity?.hideHomeButton()
 

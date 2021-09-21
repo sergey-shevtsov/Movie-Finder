@@ -1,4 +1,4 @@
-package com.example.android.moviefinder.view.favorites
+package com.example.android.moviefinder.view.notes
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,20 +9,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.FavoritesFragmentBinding
+import com.example.android.moviefinder.databinding.NotesFragmentBinding
 import com.example.android.moviefinder.view.hideHomeButton
 import com.example.android.moviefinder.view.showSnackBarMessage
 import com.example.android.moviefinder.viewmodel.FavoritesViewModel
+import com.example.android.moviefinder.viewmodel.NotesViewModel
 
-class FavoritesFragment : Fragment() {
+class NotesFragment : Fragment() {
 
     companion object {
-        fun newInstance() = FavoritesFragment()
+        fun newInstance() = NotesFragment()
     }
 
     private val viewModel: ViewModel by lazy {
-        ViewModelProvider(this).get(FavoritesViewModel::class.java)
+        ViewModelProvider(this).get(NotesViewModel::class.java)
     }
-    private var _binding: FavoritesFragmentBinding? = null
+    private var _binding: NotesFragmentBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -30,7 +32,7 @@ class FavoritesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FavoritesFragmentBinding.inflate(inflater, container, false)
+        _binding = NotesFragmentBinding.inflate(inflater, container, false)
 
         activity?.hideHomeButton()
 

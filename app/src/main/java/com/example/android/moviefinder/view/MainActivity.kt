@@ -18,7 +18,9 @@ import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.MainActivityBinding
 import com.example.android.moviefinder.model.*
 import com.example.android.moviefinder.view.favorites.FavoritesFragment
+import com.example.android.moviefinder.view.history.HistoryFragment
 import com.example.android.moviefinder.view.home.HomeFragment
+import com.example.android.moviefinder.view.notes.NotesFragment
 import com.example.android.moviefinder.view.settings.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
@@ -105,7 +107,9 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> replaceFragment(HomeFragment.newInstance())
+                R.id.notes -> replaceFragment(NotesFragment.newInstance())
                 R.id.favorites -> replaceFragment(FavoritesFragment.newInstance())
+                R.id.history -> replaceFragment(HistoryFragment.newInstance())
                 R.id.settings -> replaceFragment(SettingsFragment.newInstance())
             }
             true

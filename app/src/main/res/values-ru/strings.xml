@@ -22,4 +22,6 @@
     <string name="no_internet">Нет интернета</string>
     <string name="internet_restored">Интернет-соединение восстановлено</string>
     <string name="child_mode">Режим для детей</string>
+    <string name="notes">Заметки</string>
+    <string name="history">История</string>
 </resources>
