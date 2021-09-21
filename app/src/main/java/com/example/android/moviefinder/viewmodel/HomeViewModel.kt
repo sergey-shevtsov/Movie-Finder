@@ -12,12 +12,24 @@ import java.util.*
 
 class HomeViewModel(
     private val repositoryImpl: Repository = RepositoryImpl(RemoteDataSource()),
-    private val homeLiveDataNowPlaying: MutableLiveData<AppState> = MutableLiveData()
+    private val homeLiveDataNowPlaying: MutableLiveData<AppState> = MutableLiveData(),
+    private val homeLiveDataPopular: MutableLiveData<AppState> = MutableLiveData(),
+    private val homeLiveDataTopRated: MutableLiveData<AppState> = MutableLiveData()
 ) : ViewModel() {
     val liveDataNowPlaying: LiveData<AppState> = homeLiveDataNowPlaying
+    val liveDataPopular: LiveData<AppState> = homeLiveDataPopular
+    val liveDataTopRated: LiveData<AppState> = homeLiveDataTopRated
 
     fun getNowPlayingMovieListFromRemoteSource(page: Int = 1) {
         getMovieListFromRemoteSource(homeLiveDataNowPlaying,"now_playing", page)
+    }
+
+    fun getPopularMovieListFromRemoteSource(page: Int = 1) {
+        getMovieListFromRemoteSource(homeLiveDataPopular,"popular", page)
+    }
+
+    fun getTopRatedMovieListFromRemoteSource(page: Int = 1) {
+        getMovieListFromRemoteSource(homeLiveDataTopRated,"top_rated", page)
     }
 
     private fun getMovieListFromRemoteSource(liveData: MutableLiveData<AppState>, category: String, page: Int) {

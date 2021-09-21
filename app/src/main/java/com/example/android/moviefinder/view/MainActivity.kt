@@ -23,11 +23,6 @@ import com.example.android.moviefinder.view.ratings.RatingsFragment
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    companion object {
-        fun getDefaultLocaleString(): String {
-            return Locale.getDefault().language
-        }
-    }
 
     private val binding: MainActivityBinding by lazy {
         MainActivityBinding.inflate(layoutInflater)
