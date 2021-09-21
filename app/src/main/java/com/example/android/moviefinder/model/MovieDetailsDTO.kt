@@ -11,6 +11,7 @@ data class MovieDetailsDTO(
     val id: Int?,
     val original_title: String?,
     val overview: String?,
+    val poster_path: String?,
     val release_date: String?,
     val revenue: Int?,
     val runtime: Int?,
@@ -24,6 +25,7 @@ data class MovieDetailsDTO(
                 || id == null
                 || original_title == null
                 || overview == null
+                || poster_path == null
                 || release_date == null
                 || revenue == null
                 || runtime == null

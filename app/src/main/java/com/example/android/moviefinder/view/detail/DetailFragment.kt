@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import coil.api.load
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.DetailFragmentBinding
 import com.example.android.moviefinder.model.GenresDTO
@@ -16,6 +17,8 @@ import com.example.android.moviefinder.model.MovieDetailsDTO
 import com.example.android.moviefinder.view.*
 import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.DetailsViewModel
+
+const val DETAILS_URL_BASE = "https://image.tmdb.org/t/p/w300"
 
 class DetailFragment : Fragment() {
 
@@ -93,7 +96,7 @@ class DetailFragment : Fragment() {
             title.text = movieDetailsDTO.title
             originalTitle.text = resources.getString(R.string.detail_orig_title_pattern)
                 .getStringFormat(movieDetailsDTO.original_title, releaseYear)
-            image.setImageResource(R.drawable.dummy)
+            image.load("${DETAILS_URL_BASE}${movieDetailsDTO.poster_path}")
             genres.text = movieDetailsDTO.genres?.let { getGenresNames(it) }
             duration.text = resources.getString(R.string.detail_duration_pattern)
                 .getStringFormat(

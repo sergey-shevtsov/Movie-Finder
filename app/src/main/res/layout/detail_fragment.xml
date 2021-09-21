@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="8dp"/>
+        app:layout_constraintGuide_begin="8dp" />
 
     <TextView
         android:id="@+id/title"
@@ -44,8 +44,8 @@
         android:layout_height="wrap_content"
         android:textColor="@color/grey"
         android:textStyle="italic"
-        app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintStart_toStartOf="@id/constraint_start"
+        app:layout_constraintTop_toBottomOf="@id/title"
         tools:text="Original Title" />
 
     <ImageView
@@ -55,8 +55,8 @@
         android:layout_marginTop="@dimen/detail_image_margin"
         android:contentDescription="@string/movie_image"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toBottomOf="@id/original_title"
-        app:layout_constraintStart_toStartOf="@id/constraint_start" />
+        app:layout_constraintStart_toStartOf="@id/constraint_start"
+        app:layout_constraintTop_toBottomOf="@id/original_title" />
 
     <TextView
         android:id="@+id/genres"

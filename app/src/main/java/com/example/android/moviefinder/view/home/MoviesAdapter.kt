@@ -4,39 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.MovieItemBinding
 import com.example.android.moviefinder.model.MovieListDTO
 
+const val POSTERS_URL_BASE = "https://image.tmdb.org/t/p/w200"
+
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
-
-    class MovieVH(itemView: View, onItemClickListener: OnItemClickListener?) :
-        RecyclerView.ViewHolder(itemView) {
-        private val binding = MovieItemBinding.bind(itemView)
-        private lateinit var movie: MovieListDTO.MovieItemDTO
-
-        init {
-            itemView.setOnClickListener {
-                onItemClickListener?.onItemClicked(movie)
-            }
-        }
-
-        fun bind(movie: MovieListDTO.MovieItemDTO) {
-            this.movie = movie
-            val releaseYear = movie.release_date?.subSequence(0, 4).toString()
-
-            binding.apply {
-                posterImage.setImageResource(R.drawable.dummy)
-                title.text = movie.title
-                released.text = releaseYear
-                ratingTv.text = movie.vote_average.toString()
-            }
-        }
-    }
-
-    fun interface OnItemClickListener {
-        fun onItemClicked(movie: MovieListDTO.MovieItemDTO)
-    }
 
     private var data: Array<MovieListDTO.MovieItemDTO>? = null
     private var onItemClickListener: OnItemClickListener? = null
@@ -61,5 +36,33 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
     }
 
     override fun getItemCount(): Int = data?.size ?: 0
+
+    fun interface OnItemClickListener {
+        fun onItemClicked(movie: MovieListDTO.MovieItemDTO)
+    }
+
+    inner class MovieVH(itemView: View, onItemClickListener: OnItemClickListener?) :
+        RecyclerView.ViewHolder(itemView) {
+        private val binding = MovieItemBinding.bind(itemView)
+        private lateinit var movie: MovieListDTO.MovieItemDTO
+
+        init {
+            itemView.setOnClickListener {
+                onItemClickListener?.onItemClicked(movie)
+            }
+        }
+
+        fun bind(movie: MovieListDTO.MovieItemDTO) {
+            this.movie = movie
+            val releaseYear = movie.release_date?.subSequence(0, 4).toString()
+
+            binding.apply {
+                posterImage.load("${POSTERS_URL_BASE}${movie.poster_path}")
+                title.text = movie.title
+                released.text = releaseYear
+                ratingTv.text = movie.vote_average.toString()
+            }
+        }
+    }
 
 }
