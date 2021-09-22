@@ -2,6 +2,8 @@ package com.example.android.moviefinder.app
 
 import android.app.Application
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.android.moviefinder.model.local.HistoryDao
 import com.example.android.moviefinder.model.local.HistoryDatabase
 
@@ -21,11 +23,27 @@ class App : Application() {
                         appInstance!!.applicationContext,
                         HistoryDatabase::class.java,
                         DB_NAME
-                    ).build()
+                    ).addMigrations(MIGRATION_1_2).build()
                 }
             }
 
             return db!!.historyDao()
+        }
+
+        private val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("DROP TABLE HistoryEntity")
+                database.execSQL("CREATE TABLE HistoryEntity (" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                        "movieId INTEGER NOT NULL," +
+                        "title TEXT NOT NULL," +
+                        "releasedYear TEXT NOT NULL," +
+                        "voteAverage REAL NOT NULL," +
+                        "timestamp INTEGER NOT NULL," +
+                        "note TEXT NOT NULL" +
+                        ")")
+            }
+
         }
     }
 

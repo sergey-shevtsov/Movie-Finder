@@ -4,7 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.moviefinder.BuildConfig
+import com.example.android.moviefinder.app.App
 import com.example.android.moviefinder.model.MovieDetailsDTO
+import com.example.android.moviefinder.model.local.HistoryEntity
+import com.example.android.moviefinder.model.local.LocalRepository
+import com.example.android.moviefinder.model.local.LocalRepositoryImpl
 import com.example.android.moviefinder.model.remote.RemoteDataSource
 import com.example.android.moviefinder.model.remote.RemoteRepository
 import com.example.android.moviefinder.model.remote.RemoteRepositoryImpl
@@ -15,7 +19,8 @@ import java.util.*
 
 class DetailsViewModel(
     private val detailsLiveData: MutableLiveData<AppState> = MutableLiveData(),
-    private val remoteRepositoryImpl: RemoteRepository = RemoteRepositoryImpl(RemoteDataSource())
+    private val remoteRepositoryImpl: RemoteRepository = RemoteRepositoryImpl(RemoteDataSource()),
+    private val localRepositoryImpl: LocalRepository = LocalRepositoryImpl(App.getHistoryDao())
 ) : ViewModel() {
     val liveData: LiveData<AppState> = detailsLiveData
 
@@ -53,5 +58,17 @@ class DetailsViewModel(
         } else {
             AppState.Success(response)
         }
+    }
+
+    fun insertHistory(historyEntity: HistoryEntity) {
+        Thread {
+            localRepositoryImpl.insertHistory(historyEntity)
+        }.start()
+    }
+
+    fun updateHistory(historyEntity: HistoryEntity) {
+        Thread {
+            localRepositoryImpl.updateHistory(historyEntity)
+        }.start()
     }
 }

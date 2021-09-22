@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
 import java.util.*
 
 const val CHILD_MODE_KEY = "ChildModeKey"
@@ -55,3 +56,8 @@ fun Int.formatNum(): String {
 
 fun String.getStringFormat(vararg args: Any?): String =
     String.format(Locale.getDefault(), this, *args)
+
+fun Long.formatToPattern(pattern: String): String {
+    val sdf = SimpleDateFormat(pattern, Locale.getDefault())
+    return sdf.format(this)
+}

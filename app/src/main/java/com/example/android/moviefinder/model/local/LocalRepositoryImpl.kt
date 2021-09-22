@@ -20,4 +20,8 @@ class LocalRepositoryImpl(private val historyDao: HistoryDao) : LocalRepository 
     override fun deleteHistory(historyEntity: HistoryEntity) {
         historyDao.delete(historyEntity)
     }
+
+    override fun clearHistory() {
+        historyDao.clear()
+    }
 }

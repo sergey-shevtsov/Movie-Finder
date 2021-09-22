@@ -12,4 +12,6 @@ interface LocalRepository {
 
     fun deleteHistory(historyEntity: HistoryEntity)
 
+    fun clearHistory()
+
 }

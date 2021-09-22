@@ -25,4 +25,5 @@
     <string name="notes">Заметки</string>
     <string name="history">История</string>
     <string name="empty_data">Здесь пока ничего нет</string>
+    <string name="add_note">Добавить заметку</string>
 </resources>
