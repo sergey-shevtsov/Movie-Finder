@@ -9,6 +9,7 @@ data class HistoryEntity(
     @PrimaryKey
     val id: Int,
     val movie: MovieDetailsDTO,
+    val movieId: Int,
     val timestamp: Long,
     val note: String
 )
