@@ -16,6 +16,7 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() 
 
     fun setData(data: List<HistoryEntity>) {
         this.data = data
+        notifyDataSetChanged()
     }
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
@@ -48,7 +49,7 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() 
 
             HistoryItemBinding.bind(itemView).apply {
 
-                timestamp.text = historyEntity.timestamp.formatToPattern("dd.MM.yyyy hh:mm")
+                timestamp.text = historyEntity.timestamp.formatToPattern("dd.MM.yyyy HH:mm")
                 title.text = historyEntity.title
                 releasedYear.text = historyEntity.releasedYear
                 voteAverage.text = historyEntity.voteAverage.toString()
