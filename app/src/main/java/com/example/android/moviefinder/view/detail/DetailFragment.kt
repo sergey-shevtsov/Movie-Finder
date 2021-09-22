@@ -22,10 +22,11 @@ import java.util.*
 
 const val DETAILS_URL_BASE = "https://image.tmdb.org/t/p/w300"
 
-class DetailFragment : Fragment() {
+class DetailFragment : Fragment(), NoteDialogFragment.DialogCallbackContract {
 
     companion object {
         const val MOVIE_ID_KEY = "MOVIE_EXTRA"
+        const val HISTORY_EXTRA_KEY = "HISTORY_EXTRA"
         fun newInstance(bundle: Bundle): DetailFragment {
             return DetailFragment().also {
                 it.arguments = bundle
@@ -64,13 +65,23 @@ class DetailFragment : Fragment() {
 
         initViewModel()
 
+        historyEntity = arguments?.getParcelable(HISTORY_EXTRA_KEY)
+
         binding.noteButton.setOnClickListener {
-            Toast.makeText(context, "Add note", Toast.LENGTH_SHORT).show()
+            historyEntity?.note?.let {
+                val noteDialogFragment = NoteDialogFragment.newInstance(it)
+                noteDialogFragment.setContractFragment(this)
+                noteDialogFragment.show(parentFragmentManager, "")
+            }
         }
 
         binding.favoritesButton.setOnClickListener {
             Toast.makeText(context, "To favorites!", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun passDataBackToFragment(note: String) {
+        updateHistory(note)
     }
 
     private fun initViewModel() {
@@ -86,7 +97,7 @@ class DetailFragment : Fragment() {
                             errorFrame.errorContainer.hide()
                             loadingFrame.loadingContainer.hide()
                             movieDetailsDTO = it.data as MovieDetailsDTO
-                            updateHistory()
+                            updateHistory(historyEntity?.note ?: "")
                             fillDetail()
                         }
                         is AppState.Error -> {
@@ -101,17 +112,16 @@ class DetailFragment : Fragment() {
         viewModel.getMovieDetailsFromRemoteSource(movieId)
     }
 
-    private fun updateHistory(note: String = "") {
+    private fun updateHistory(note: String) {
         movieDetailsDTO?.let {
             if (historyEntity == null) {
                 historyEntity = HistoryEntity(
-                    0,
-                    it.id!!,
-                    it.title!!,
-                    it.release_date!!.subSequence(0, 4).toString(),
-                    it.vote_average!!,
-                    Calendar.getInstance().timeInMillis,
-                    note
+                    movieId = it.id!!,
+                    title = it.title!!,
+                    releasedYear = it.release_date!!.subSequence(0, 4).toString(),
+                    voteAverage = it.vote_average!!,
+                    timestamp = Calendar.getInstance().timeInMillis,
+                    note = note
                 )
                 viewModel.insertHistory(historyEntity!!)
             } else {

@@ -23,7 +23,7 @@ class App : Application() {
                         appInstance!!.applicationContext,
                         HistoryDatabase::class.java,
                         DB_NAME
-                    ).addMigrations(MIGRATION_1_2).build()
+                    ).addMigrations(MIGRATION_1_2, MIGRATION_2_3).build()
                 }
             }
 
@@ -35,6 +35,21 @@ class App : Application() {
                 database.execSQL("DROP TABLE HistoryEntity")
                 database.execSQL("CREATE TABLE HistoryEntity (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                        "movieId INTEGER NOT NULL," +
+                        "title TEXT NOT NULL," +
+                        "releasedYear TEXT NOT NULL," +
+                        "voteAverage REAL NOT NULL," +
+                        "timestamp INTEGER NOT NULL," +
+                        "note TEXT NOT NULL" +
+                        ")")
+            }
+
+        }
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("DROP TABLE HistoryEntity")
+                database.execSQL("CREATE TABLE HistoryEntity (" +
+                        "id TEXT PRIMARY KEY NOT NULL," +
                         "movieId INTEGER NOT NULL," +
                         "title TEXT NOT NULL," +
                         "releasedYear TEXT NOT NULL," +

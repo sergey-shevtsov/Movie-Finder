@@ -2,6 +2,7 @@ package com.example.android.moviefinder.view
 
 import android.app.Activity
 import android.content.Context
+import android.text.Editable
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
@@ -61,3 +62,5 @@ fun Long.formatToPattern(pattern: String): String {
     val sdf = SimpleDateFormat(pattern, Locale.getDefault())
     return sdf.format(this)
 }
+
+fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)

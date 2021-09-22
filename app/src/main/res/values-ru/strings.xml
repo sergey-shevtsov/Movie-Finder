@@ -26,4 +26,8 @@
     <string name="history">История</string>
     <string name="empty_data">Здесь пока ничего нет</string>
     <string name="add_note">Добавить заметку</string>
+    <string name="note">Заметка</string>
+    <string name="ok">ОК</string>
+    <string name="cancel">Отмена</string>
+    <string name="enter_your_text_here">Введите текст здесь</string>
 </resources>

@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.HistoryFragmentBinding
 import com.example.android.moviefinder.model.local.HistoryEntity
+import com.example.android.moviefinder.view.detail.DetailFragment
 import com.example.android.moviefinder.view.hide
 import com.example.android.moviefinder.view.hideHomeButton
 import com.example.android.moviefinder.view.show
@@ -47,6 +49,19 @@ class HistoryFragment : Fragment() {
         binding.recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.recyclerView.adapter = adapter
+
+        adapter.setOnItemClickListener { historyEntity ->
+            activity?.supportFragmentManager?.let { manager ->
+                val bundle = Bundle()
+                bundle.putInt(DetailFragment.MOVIE_ID_KEY, historyEntity.movieId)
+                bundle.putParcelable(DetailFragment.HISTORY_EXTRA_KEY, historyEntity)
+
+                manager.beginTransaction()
+                    .replace(R.id.fragment_container, DetailFragment.newInstance(bundle))
+                    .addToBackStack("")
+                    .commit()
+            }
+        }
 
         viewModel.liveData.observe(viewLifecycleOwner) { state ->
             binding.apply {

@@ -35,4 +35,8 @@
     <string name="history">History</string>
     <string name="empty_data">There is nothing here yet</string>
     <string name="add_note">Add note</string>
+    <string name="note">Note</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter_your_text_here">Enter your text here</string>
 </resources>

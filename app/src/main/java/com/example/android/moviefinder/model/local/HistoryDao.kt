@@ -11,7 +11,7 @@ interface HistoryDao {
     @Query("SELECT * FROM HistoryEntity WHERE movieId IS :movieId")
     fun getHistoryByMovieId(movieId: Int): List<HistoryEntity>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(historyEntity: HistoryEntity)
 
     @Update
