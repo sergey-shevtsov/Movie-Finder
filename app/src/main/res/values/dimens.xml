@@ -27,4 +27,6 @@
     <dimen name="connectivity_message_padding">4dp</dimen>
     <dimen name="error_frame_padding">32dp</dimen>
     <dimen name="settings_item_text_size">16sp</dimen>
+    <dimen name="empty_data_message_text_size">24sp</dimen>
+    <dimen name="guideline_base_size">8dp</dimen>
 </resources>

@@ -24,4 +24,5 @@
     <string name="child_mode">Режим для детей</string>
     <string name="notes">Заметки</string>
     <string name="history">История</string>
+    <string name="empty_data">Здесь пока ничего нет</string>
 </resources>
