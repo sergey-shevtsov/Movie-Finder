@@ -7,6 +7,10 @@ class FavoritesLocalRepositoryImpl(private val favoritesDao: FavoritesDao) :
         return favoritesDao.all()
     }
 
+    override fun getByMovieId(movieId: Int): List<FavoritesEntity> {
+        return favoritesDao.getByMovieId(movieId)
+    }
+
     override fun insertFavorites(favoritesEntity: FavoritesEntity) {
         favoritesDao.insert(favoritesEntity)
     }

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +13,7 @@ import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.DetailFragmentBinding
 import com.example.android.moviefinder.model.GenresDTO
 import com.example.android.moviefinder.model.MovieDetailsDTO
+import com.example.android.moviefinder.model.local.FavoritesEntity
 import com.example.android.moviefinder.model.local.HistoryEntity
 import com.example.android.moviefinder.view.*
 import com.example.android.moviefinder.viewmodel.AppState
@@ -46,6 +46,7 @@ class DetailFragment : Fragment(), NoteDialogFragment.DialogCallbackContract {
 
     private var movieDetailsDTO: MovieDetailsDTO? = null
     private var historyEntity: HistoryEntity? = null
+    private var isFavorite = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,9 +76,39 @@ class DetailFragment : Fragment(), NoteDialogFragment.DialogCallbackContract {
             }
         }
 
-        binding.favoritesButton.setOnClickListener {
-            Toast.makeText(context, "To favorites!", Toast.LENGTH_SHORT).show()
+        viewModel.liveDataFavorites.observe(viewLifecycleOwner) {
+            isFavorite = if (it) {
+                binding.favoritesButton.load(R.drawable.ic_added_to_favorites)
+                true
+            } else {
+                binding.favoritesButton.load(R.drawable.ic_add_to_favorites)
+                false
+            }
         }
+
+        binding.favoritesButton.setOnClickListener {
+            if (isFavorite) {
+                viewModel.deleteFromFavorites(movieId)
+                isFavorite = false
+            } else {
+                movieDetailsDTO?.let {
+                    viewModel.insertToFavorites(
+                        FavoritesEntity(
+                            0,
+                            movieId,
+                            it.poster_path!!,
+                            it.title!!,
+                            it.release_date!!.subSequence(0, 4).toString(),
+                            it.vote_average!!,
+                            Calendar.getInstance().timeInMillis
+                        )
+                    )
+                    isFavorite = true
+                }
+            }
+        }
+
+        viewModel.isFavorite(movieId)
     }
 
     override fun passDataBackToFragment(note: String) {
@@ -85,7 +116,7 @@ class DetailFragment : Fragment(), NoteDialogFragment.DialogCallbackContract {
     }
 
     private fun initViewModel() {
-        viewModel.liveData.observe(viewLifecycleOwner,
+        viewModel.liveDataDetails.observe(viewLifecycleOwner,
             {
                 binding.apply {
                     when (it) {
