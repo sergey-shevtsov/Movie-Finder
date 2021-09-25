@@ -15,4 +15,7 @@ interface FavoritesDao {
 
     @Query("DELETE FROM FavoritesEntity WHERE movieId IS :movieId")
     fun deleteByMovieId(movieId: Int)
+
+    @Query("DELETE FROM FavoritesEntity")
+    fun clear()
 }

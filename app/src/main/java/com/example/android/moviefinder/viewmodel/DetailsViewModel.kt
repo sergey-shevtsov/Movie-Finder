@@ -7,8 +7,8 @@ import com.example.android.moviefinder.BuildConfig
 import com.example.android.moviefinder.app.App
 import com.example.android.moviefinder.model.MovieDetailsDTO
 import com.example.android.moviefinder.model.local.HistoryEntity
-import com.example.android.moviefinder.model.local.LocalRepository
-import com.example.android.moviefinder.model.local.LocalRepositoryImpl
+import com.example.android.moviefinder.model.local.HistoryLocalRepository
+import com.example.android.moviefinder.model.local.HistoryLocalRepositoryImpl
 import com.example.android.moviefinder.model.remote.RemoteDataSource
 import com.example.android.moviefinder.model.remote.RemoteRepository
 import com.example.android.moviefinder.model.remote.RemoteRepositoryImpl
@@ -20,7 +20,7 @@ import java.util.*
 class DetailsViewModel(
     private val detailsLiveData: MutableLiveData<AppState> = MutableLiveData(),
     private val remoteRepositoryImpl: RemoteRepository = RemoteRepositoryImpl(RemoteDataSource()),
-    private val localRepositoryImpl: LocalRepository = LocalRepositoryImpl(App.getHistoryDao())
+    private val historyLocalRepositoryImpl: HistoryLocalRepository = HistoryLocalRepositoryImpl(App.getHistoryDao())
 ) : ViewModel() {
     val liveData: LiveData<AppState> = detailsLiveData
 
@@ -62,13 +62,13 @@ class DetailsViewModel(
 
     fun insertHistory(historyEntity: HistoryEntity) {
         Thread {
-            localRepositoryImpl.insertHistory(historyEntity)
+            historyLocalRepositoryImpl.insertHistory(historyEntity)
         }.start()
     }
 
     fun updateHistory(historyEntity: HistoryEntity) {
         Thread {
-            localRepositoryImpl.updateHistory(historyEntity)
+            historyLocalRepositoryImpl.updateHistory(historyEntity)
         }.start()
     }
 }

@@ -1,6 +1,6 @@
 package com.example.android.moviefinder.model.local
 
-interface LocalRepository {
+interface HistoryLocalRepository {
 
     fun getAllHistory(): List<HistoryEntity>
 

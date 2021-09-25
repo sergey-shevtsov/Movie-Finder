@@ -1,6 +1,6 @@
 package com.example.android.moviefinder.model.local
 
-class LocalRepositoryImpl(private val historyDao: HistoryDao) : LocalRepository {
+class HistoryLocalRepositoryImpl(private val historyDao: HistoryDao) : HistoryLocalRepository {
     override fun getAllHistory(): List<HistoryEntity> {
         return historyDao.all()
     }

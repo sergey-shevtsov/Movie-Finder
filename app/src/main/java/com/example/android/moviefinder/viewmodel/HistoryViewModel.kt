@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.moviefinder.app.App
 import com.example.android.moviefinder.model.local.HistoryEntity
-import com.example.android.moviefinder.model.local.LocalRepository
-import com.example.android.moviefinder.model.local.LocalRepositoryImpl
+import com.example.android.moviefinder.model.local.HistoryLocalRepository
+import com.example.android.moviefinder.model.local.HistoryLocalRepositoryImpl
 
 class HistoryViewModel(
-    private val localRepository: LocalRepository = LocalRepositoryImpl(App.getHistoryDao()),
+    private val historyLocalRepository: HistoryLocalRepository = HistoryLocalRepositoryImpl(App.getHistoryDao()),
     private val historyLiveData: MutableLiveData<AppState> = MutableLiveData()
 ) : ViewModel() {
     val liveData: LiveData<AppState> = historyLiveData
@@ -19,7 +19,7 @@ class HistoryViewModel(
 
         Thread {
 
-            historyLiveData.postValue(AppState.Success(localRepository.getAllHistory()))
+            historyLiveData.postValue(AppState.Success(historyLocalRepository.getAllHistory()))
 
         }.start()
     }
@@ -27,7 +27,7 @@ class HistoryViewModel(
     fun deleteHistory(historyEntity: HistoryEntity) {
         Thread {
 
-            localRepository.deleteHistory(historyEntity)
+            historyLocalRepository.deleteHistory(historyEntity)
 
         }.start()
 
@@ -37,7 +37,7 @@ class HistoryViewModel(
     fun deleteAllHistory() {
         Thread {
 
-            localRepository.clearHistory()
+            historyLocalRepository.clearHistory()
 
         }.start()
 
