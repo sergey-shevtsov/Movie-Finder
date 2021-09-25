@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/poster_image"
             android:layout_width="0dp"
-            android:layout_height="240dp"
+            android:layout_height="@dimen/favorites_image_height"
             android:scaleType="centerCrop"
             android:src="@drawable/dummy"
             app:layout_constraintEnd_toEndOf="parent"

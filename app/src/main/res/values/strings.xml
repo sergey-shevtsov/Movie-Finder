@@ -39,4 +39,6 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="enter_your_text_here">Enter your text here</string>
+    <string name="note_title">Note:</string>
+    <string name="delete_everything">Delete everything?</string>
 </resources>

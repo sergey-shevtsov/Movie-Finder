@@ -18,27 +18,13 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/note"
+        android:text="@string/delete_everything"
         android:layout_marginTop="@dimen/dialog_title_margin_top"
         android:textSize="@dimen/title_text_size"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-
-    <EditText
-        android:id="@+id/note_edit_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/dialog_edit_text_padding"
-        android:paddingEnd="@dimen/dialog_edit_text_padding"
-        android:maxLines="5"
-        android:hint="@string/enter_your_text_here"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        android:autofillHints="Note text"
-        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/positive_button"
@@ -50,7 +36,7 @@
         android:layout_marginEnd="@dimen/dialog_button_inner_margin"
         android:layout_marginBottom="@dimen/dialog_button_margin_bottom"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/note_edit_text"
+        app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintEnd_toEndOf="@id/constraint_middle"/>
 
     <Button
@@ -63,7 +49,7 @@
         android:layout_marginStart="@dimen/dialog_button_inner_margin"
         android:layout_marginBottom="@dimen/dialog_button_margin_bottom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/note_edit_text"
+        app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintStart_toStartOf="@id/constraint_middle"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

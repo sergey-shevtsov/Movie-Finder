@@ -2,16 +2,18 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="5dp"
-    android:elevation="@dimen/base_elevation"
-    android:layout_marginTop="16dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/light_grey"
+    android:layout_marginTop="@dimen/history_item_margin_top"
+    android:layout_marginBottom="@dimen/history_item_margin_bottom"
+    android:elevation="@dimen/base_elevation"
+    app:cardCornerRadius="@dimen/movie_item_corner_radius">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="4dp">
+        android:padding="@dimen/history_item_padding">
 
         <TextView
             android:id="@+id/timestamp"
@@ -26,6 +28,8 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/history_movie_title_text_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/timestamp"
             tools:text="Movie title" />
@@ -52,16 +56,29 @@
             android:id="@+id/vote_average"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBaseline_toBaselineOf="@id/released_year"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@id/timestamp"
             tools:text="8.3" />
+
+        <TextView
+            android:id="@+id/note_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/note_title"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/note_title_margin_top"
+            android:textSize="@dimen/note_title_text_size"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/released_year" />
 
         <TextView
             android:id="@+id/note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="italic"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/released_year"
+            app:layout_constraintTop_toBottomOf="@id/note_title"
             tools:text="Note text here" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

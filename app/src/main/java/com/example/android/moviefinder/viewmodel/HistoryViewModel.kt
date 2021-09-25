@@ -38,9 +38,8 @@ class HistoryViewModel(
         Thread {
 
             historyLocalRepository.clearHistory()
+            historyLiveData.postValue(AppState.Success(emptyList<HistoryEntity>()))
 
         }.start()
-
-        getAllHistory()
     }
 }

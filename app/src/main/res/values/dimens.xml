@@ -30,4 +30,21 @@
     <dimen name="empty_data_message_text_size">24sp</dimen>
     <dimen name="guideline_base_size">8dp</dimen>
     <dimen name="favorites_item_margin">8dp</dimen>
+    <dimen name="favorites_image_height">240dp</dimen>
+    <dimen name="dialog_padding">8dp</dimen>
+    <dimen name="dialog_title_margin_top">8dp</dimen>
+    <dimen name="dialog_edit_text_padding">8dp</dimen>
+    <dimen name="dialog_button_margin_top">16dp</dimen>
+    <dimen name="dialog_button_margin_bottom">16dp</dimen>
+    <dimen name="dialog_button_inner_margin">24dp</dimen>
+    <dimen name="dialog_button_outer_margin">8dp</dimen>
+    <dimen name="settings_switch_padding">16dp</dimen>
+    <dimen name="note_title_text_size">16sp</dimen>
+    <dimen name="history_movie_title_text_size">18sp</dimen>
+    <dimen name="note_title_margin_top">8dp</dimen>
+    <dimen name="history_item_padding">4dp</dimen>
+    <dimen name="history_item_margin_top">8dp</dimen>
+    <dimen name="history_title_padding_bottom">8dp</dimen>
+    <dimen name="history_title_padding_top">8dp</dimen>
+    <dimen name="history_item_margin_bottom">8dp</dimen>
 </resources>

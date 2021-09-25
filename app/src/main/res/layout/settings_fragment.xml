@@ -9,7 +9,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="8dp"/>
+        app:layout_constraintGuide_begin="@dimen/guideline_base_size"/>
 
     <TextView
         android:id="@+id/title"
@@ -29,6 +29,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="@dimen/settings_item_text_size"
+        app:switchPadding="@dimen/settings_switch_padding"
         app:layout_constraintStart_toStartOf="@id/start_constraint"
         app:layout_constraintTop_toBottomOf="@id/title"
         android:text="@string/child_mode"/>

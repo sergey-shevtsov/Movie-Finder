@@ -17,7 +17,7 @@ import com.example.android.moviefinder.view.show
 import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.HistoryViewModel
 
-class HistoryFragment : Fragment() {
+class HistoryFragment : Fragment(), DeleteDialogFragment.DialogCallbackContract {
 
     companion object {
         fun newInstance() = HistoryFragment()
@@ -83,10 +83,20 @@ class HistoryFragment : Fragment() {
         }
 
         viewModel.getAllHistory()
+
+        binding.deleteAllButton.setOnClickListener {
+            val dialogFragment = DeleteDialogFragment()
+            dialogFragment.setContractFragment(this)
+            dialogFragment.show(parentFragmentManager, "")
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun sendDialogResult(result: Boolean) {
+        if (result) viewModel.deleteAllHistory()
     }
 }
