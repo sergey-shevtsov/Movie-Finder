@@ -5,7 +5,7 @@ import androidx.room.*
 @Dao
 interface HistoryDao {
 
-    @Query("SELECT * FROM HistoryEntity ORDER BY timestamp")
+    @Query("SELECT * FROM HistoryEntity ORDER BY timestamp DESC")
     fun all(): List<HistoryEntity>
 
     @Query("SELECT * FROM HistoryEntity WHERE movieId IS :movieId")
