@@ -41,6 +41,10 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initChildModeOption()
+    }
+
+    private fun initChildModeOption() {
         binding.childModeSwitch.isChecked = activity?.isChildMode() == true
 
         binding.childModeSwitch.setOnCheckedChangeListener { _, isChecked ->

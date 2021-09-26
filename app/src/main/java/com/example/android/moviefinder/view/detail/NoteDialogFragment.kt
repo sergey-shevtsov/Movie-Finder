@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.DetailFragmentNoteDialogBinding
 import com.example.android.moviefinder.view.toEditable
@@ -53,10 +52,6 @@ class NoteDialogFragment : DialogFragment() {
         }
 
         return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     interface DialogCallbackContract {

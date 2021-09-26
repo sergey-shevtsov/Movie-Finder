@@ -1,5 +1,7 @@
 package com.example.android.moviefinder.viewmodel
 
+import android.os.Handler
+import android.os.HandlerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,33 +15,34 @@ class HistoryViewModel(
     private val historyLiveData: MutableLiveData<AppState> = MutableLiveData()
 ) : ViewModel() {
     val liveData: LiveData<AppState> = historyLiveData
+    private val handlerThread = HandlerThread("handlerThread").also { it.start() }
+    private val handler = Handler(handlerThread.looper)
 
     fun getAllHistory() {
         historyLiveData.value = AppState.Loading
 
-        Thread {
-
+        handler.post {
             historyLiveData.postValue(AppState.Success(historyLocalRepository.getAllHistory()))
-
-        }.start()
+        }
     }
 
     fun deleteHistory(historyEntity: HistoryEntity) {
-        Thread {
-
+        handler.post {
             historyLocalRepository.deleteHistory(historyEntity)
-
-        }.start()
+        }
 
         getAllHistory()
     }
 
     fun deleteAllHistory() {
-        Thread {
-
+        handler.post {
             historyLocalRepository.clearHistory()
             historyLiveData.postValue(AppState.Success(emptyList<HistoryEntity>()))
+        }
+    }
 
-        }.start()
+    override fun onCleared() {
+        handlerThread.quitSafely()
+        super.onCleared()
     }
 }

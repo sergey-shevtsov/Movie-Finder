@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.android.moviefinder.R
@@ -47,6 +46,12 @@ class FavoritesFragment : Fragment() {
 
         val adapter = FavoritesAdapter()
 
+        initRecyclerView(adapter)
+
+        initViewModel(adapter)
+    }
+
+    private fun initRecyclerView(adapter: FavoritesAdapter) {
         adapter.setOnItemClickListener { movieId ->
             activity?.supportFragmentManager?.let { manager ->
                 val bundle = Bundle()
@@ -60,18 +65,24 @@ class FavoritesFragment : Fragment() {
         }
         binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
         binding.recyclerView.adapter = adapter
+    }
 
+    private fun initViewModel(adapter: FavoritesAdapter) {
         viewModel.liveData.observe(viewLifecycleOwner) { state ->
             binding.apply {
                 when (state) {
                     is AppState.Loading -> {
+                        emptyDataFrame.emptyDataContainer.hide()
                         errorFrame.errorContainer.hide()
                         loadingFrame.loadingContainer.show()
                     }
                     is AppState.Success<*> -> {
+                        emptyDataFrame.emptyDataContainer.hide()
                         errorFrame.errorContainer.hide()
                         loadingFrame.loadingContainer.hide()
-                        adapter.setData(state.data as List<FavoritesEntity>)
+                        val data = state.data as List<FavoritesEntity>
+                        adapter.setData(data)
+                        if (data.isEmpty()) emptyDataFrame.emptyDataContainer.show()
                     }
                     is AppState.Error -> {
 

@@ -1,7 +1,5 @@
 package com.example.android.moviefinder.viewmodel
 
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,7 +20,9 @@ class DetailsViewModel(
     private val favoritesLiveData: MutableLiveData<Boolean> = MutableLiveData(),
     private val remoteRepositoryImpl: RemoteRepository = RemoteRepositoryImpl(RemoteDataSource()),
     private val historyLocalRepositoryImpl: HistoryLocalRepository = HistoryLocalRepositoryImpl(App.getHistoryDao()),
-    private val favoritesLocalRepositoryImpl: FavoritesLocalRepository = FavoritesLocalRepositoryImpl(App.getFavoritesDao())
+    private val favoritesLocalRepositoryImpl: FavoritesLocalRepository = FavoritesLocalRepositoryImpl(
+        App.getFavoritesDao()
+    )
 ) : ViewModel() {
     val liveDataDetails: LiveData<AppState> = detailsLiveData
     val liveDataFavorites: LiveData<Boolean> = favoritesLiveData
@@ -77,7 +77,9 @@ class DetailsViewModel(
 
     fun isFavorite(movieId: Int) {
         Thread {
-            favoritesLiveData.postValue(favoritesLocalRepositoryImpl.getByMovieId(movieId).isNotEmpty())
+            favoritesLiveData.postValue(
+                favoritesLocalRepositoryImpl.getByMovieId(movieId).isNotEmpty()
+            )
         }.start()
     }
 

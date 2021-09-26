@@ -46,6 +46,15 @@ class HistoryFragment : Fragment(), DeleteDialogFragment.DialogCallbackContract 
 
         val adapter = HistoryAdapter()
 
+        initRecyclerView(adapter)
+
+        initViewModel(adapter)
+
+        initDeleteAllButton()
+    }
+
+    private fun initRecyclerView(adapter: HistoryAdapter) {
+
         binding.recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.recyclerView.adapter = adapter
@@ -62,17 +71,23 @@ class HistoryFragment : Fragment(), DeleteDialogFragment.DialogCallbackContract 
                     .commit()
             }
         }
+    }
 
+    private fun initViewModel(adapter: HistoryAdapter) {
         viewModel.liveData.observe(viewLifecycleOwner) { state ->
             binding.apply {
 
                 when (state) {
                     is AppState.Loading -> {
+                        emptyDataFrame.emptyDataContainer.hide()
                         loadingFrame.loadingContainer.show()
                     }
                     is AppState.Success<*> -> {
+                        emptyDataFrame.emptyDataContainer.hide()
                         loadingFrame.loadingContainer.hide()
-                        adapter.setData(state.data as List<HistoryEntity>)
+                        val data = state.data as List<HistoryEntity>
+                        adapter.setData(data)
+                        if (data.isEmpty()) emptyDataFrame.emptyDataContainer.show()
                     }
                     is AppState.Error -> {
 
@@ -83,9 +98,11 @@ class HistoryFragment : Fragment(), DeleteDialogFragment.DialogCallbackContract 
         }
 
         viewModel.getAllHistory()
+    }
 
+    private fun initDeleteAllButton() {
         binding.deleteAllButton.setOnClickListener {
-            val dialogFragment = DeleteDialogFragment()
+            val dialogFragment = DeleteDialogFragment.newInstance()
             dialogFragment.setContractFragment(this)
             dialogFragment.show(parentFragmentManager, "")
         }

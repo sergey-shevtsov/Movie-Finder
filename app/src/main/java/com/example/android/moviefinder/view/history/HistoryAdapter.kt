@@ -26,7 +26,7 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.history_item, parent, false)
-        return HistoryViewHolder(view, onItemClickListener)
+        return HistoryViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
@@ -39,7 +39,7 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() 
         fun onItemClick(historyEntity: HistoryEntity)
     }
 
-    inner class HistoryViewHolder(itemView: View, onItemClickListener: OnItemClickListener?) :
+    inner class HistoryViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
         fun bind(historyEntity: HistoryEntity) {

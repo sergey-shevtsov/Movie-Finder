@@ -33,10 +33,6 @@ fun FragmentActivity.hideHomeButton() {
     (this as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
 }
 
-fun View.showSnackBarMessage(stringId: Int, length: Int = Snackbar.LENGTH_SHORT) {
-    Snackbar.make(this, resources.getString(stringId), length).show()
-}
-
 fun String.formatDate(): String {
     val year = this.subSequence(0, 4)
     val month = this.subSequence(5, 7)
@@ -63,4 +59,4 @@ fun Long.formatToPattern(pattern: String): String {
     return sdf.format(this)
 }
 
-fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
+fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)

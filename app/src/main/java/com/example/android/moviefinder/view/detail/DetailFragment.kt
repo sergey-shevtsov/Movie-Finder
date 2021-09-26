@@ -66,6 +66,40 @@ class DetailFragment : Fragment(), NoteDialogFragment.DialogCallbackContract {
 
         initViewModel()
 
+        initHistory()
+
+        initFavoritesViewModel()
+    }
+
+    private fun initViewModel() {
+        viewModel.liveDataDetails.observe(viewLifecycleOwner,
+            {
+                binding.apply {
+                    when (it) {
+                        is AppState.Loading -> {
+                            errorFrame.errorContainer.hide()
+                            loadingFrame.loadingContainer.show()
+                        }
+                        is AppState.Success<*> -> {
+                            errorFrame.errorContainer.hide()
+                            loadingFrame.loadingContainer.hide()
+                            movieDetailsDTO = it.data as MovieDetailsDTO
+                            updateHistory(historyEntity?.note ?: "")
+                            fillDetail()
+                        }
+                        is AppState.Error -> {
+                            errorFrame.errorContainer.show()
+                            loadingFrame.loadingContainer.hide()
+                            showError(it.t)
+                        }
+                    }
+                }
+            })
+
+        viewModel.getMovieDetailsFromRemoteSource(movieId)
+    }
+
+    private fun initHistory() {
         historyEntity = arguments?.getParcelable(HISTORY_EXTRA_KEY)
 
         binding.noteButton.setOnClickListener {
@@ -75,7 +109,9 @@ class DetailFragment : Fragment(), NoteDialogFragment.DialogCallbackContract {
                 noteDialogFragment.show(parentFragmentManager, "")
             }
         }
+    }
 
+    private fun initFavoritesViewModel() {
         viewModel.liveDataFavorites.observe(viewLifecycleOwner) {
             isFavorite = if (it) {
                 binding.favoritesButton.load(R.drawable.ic_added_to_favorites)
@@ -113,34 +149,6 @@ class DetailFragment : Fragment(), NoteDialogFragment.DialogCallbackContract {
 
     override fun passDataBackToFragment(note: String) {
         updateHistory(note)
-    }
-
-    private fun initViewModel() {
-        viewModel.liveDataDetails.observe(viewLifecycleOwner,
-            {
-                binding.apply {
-                    when (it) {
-                        is AppState.Loading -> {
-                            errorFrame.errorContainer.hide()
-                            loadingFrame.loadingContainer.show()
-                        }
-                        is AppState.Success<*> -> {
-                            errorFrame.errorContainer.hide()
-                            loadingFrame.loadingContainer.hide()
-                            movieDetailsDTO = it.data as MovieDetailsDTO
-                            updateHistory(historyEntity?.note ?: "")
-                            fillDetail()
-                        }
-                        is AppState.Error -> {
-                            errorFrame.errorContainer.show()
-                            loadingFrame.loadingContainer.hide()
-                            showError(it.t)
-                        }
-                    }
-                }
-            })
-
-        viewModel.getMovieDetailsFromRemoteSource(movieId)
     }
 
     private fun updateHistory(note: String) {
