@@ -32,4 +32,5 @@
     <string name="enter_your_text_here">Введите текст здесь</string>
     <string name="note_title">Заметка:</string>
     <string name="delete_everything">Удалить всё?</string>
+    <string name="contacts">Контакты</string>
 </resources>
