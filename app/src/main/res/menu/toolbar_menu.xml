@@ -10,4 +10,12 @@
         app:showAsAction="ifRoom"
         />
 
+    <item
+        android:id="@+id/contacts"
+        android:icon="@drawable/ic_contacts"
+        android:title="@string/contacts"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom"
+        />
+
 </menu>
