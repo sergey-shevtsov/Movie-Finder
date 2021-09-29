@@ -1,6 +1,8 @@
 package com.example.android.moviefinder.view.contacts
 
 import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -70,6 +72,13 @@ class ContactsFragment : Fragment() {
     }
 
     private fun initRecyclerView(adapter: ContactsAdapter) {
+        adapter.setOnItemClickListener {
+            it?.let {
+                val intent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", it, null))
+                startActivity(intent)
+            }
+        }
+
         binding.recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.recyclerView.adapter = adapter

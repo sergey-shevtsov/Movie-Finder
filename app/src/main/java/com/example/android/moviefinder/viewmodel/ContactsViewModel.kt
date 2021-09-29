@@ -20,7 +20,8 @@ class ContactsViewModel(
 
         val cursor: Cursor? = cr.query(
             ContactsContract.Contacts.CONTENT_URI,
-            null, null, null, null
+            null, null, null,
+            ContactsContract.Contacts.DISPLAY_NAME + " ASC"
         )
 
         val contacts = mutableListOf<PhonebookContact>()
@@ -57,7 +58,7 @@ class ContactsViewModel(
 
                     }
 
-                    contacts.add(PhonebookContact(name, phoneNumber))
+                    phoneNumber?.let { contacts.add(PhonebookContact(name, it)) }
 
                 }
 

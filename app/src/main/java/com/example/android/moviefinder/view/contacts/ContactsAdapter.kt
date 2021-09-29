@@ -47,15 +47,17 @@ class ContactsAdapter : RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>
         RecyclerView.ViewHolder(itemView) {
 
         fun bind(phonebookContact: PhonebookContact) {
+            val binding = ContactsItemBinding.bind(itemView)
+
             onCallButtonClickListener?.let { listener ->
-                itemView.setOnClickListener {
+                binding.callButton.setOnClickListener {
                     listener.onCallButtonClick(phonebookContact.phoneNumber)
                 }
             }
 
-            ContactsItemBinding.bind(itemView).apply {
+            binding.apply {
                 name.text = phonebookContact.name
-                phoneNumber.text = phonebookContact.phoneNumber ?: ""
+                phoneNumber.text = phonebookContact.phoneNumber
             }
         }
 
