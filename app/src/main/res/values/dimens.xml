@@ -49,4 +49,5 @@
     <dimen name="history_item_margin_bottom">8dp</dimen>
     <dimen name="contacts_item_margin">4dp</dimen>
     <dimen name="contact_item_padding">8dp</dimen>
+    <dimen name="no_access_text_view_padding">32dp</dimen>
 </resources>

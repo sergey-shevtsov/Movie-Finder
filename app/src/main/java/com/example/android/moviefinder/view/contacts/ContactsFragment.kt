@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.moviefinder.databinding.ContactsFragmentBinding
 import com.example.android.moviefinder.model.PhonebookContact
+import com.example.android.moviefinder.view.show
 import com.example.android.moviefinder.view.showHomeButton
 import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.ContactsViewModel
@@ -35,17 +36,7 @@ class ContactsFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
             when {
                 result -> viewModel.getContacts(requireActivity())
-                !ActivityCompat.shouldShowRequestPermissionRationale(
-                    requireActivity(),
-                    Manifest.permission.READ_CONTACTS
-                ) -> {
-                    Toast.makeText(
-                        context,
-                        "Go to app settings and enable permission",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                else -> Toast.makeText(context, "T_T", Toast.LENGTH_LONG).show()
+                else -> binding.noAccessFrame.noAccessContainer.show()
             }
         }
 
