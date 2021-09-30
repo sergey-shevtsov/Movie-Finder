@@ -34,4 +34,5 @@
     <string name="delete_everything">Удалить всё?</string>
     <string name="contacts">Контакты</string>
     <string name="no_access_message"><![CDATA[Нет доступа. Пожалуйста, перейдите в  \"Настройки -> Приложения\" и выдайте соответствующее разрешение.]]></string>
+    <string name="location">Местонахождение</string>
 </resources>

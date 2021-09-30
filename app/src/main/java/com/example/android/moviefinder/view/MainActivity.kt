@@ -103,8 +103,15 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()
-            R.id.search -> Toast.makeText(this, "Searching", Toast.LENGTH_LONG).show()
             R.id.contacts -> replaceFragment(ContactsFragment.newInstance(), true)
+            R.id.location -> {
+                supportFragmentManager.apply {
+                    beginTransaction()
+                        .replace(R.id.fragment_container, MapsFragment())
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
+                }
+            }
             else -> super.onOptionsItemSelected(item)
         }
         return true

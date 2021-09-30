@@ -43,4 +43,5 @@
     <string name="delete_everything">Delete everything?</string>
     <string name="contacts">Contacts</string>
     <string name="no_access_message"><![CDATA[No access. Please go to \"Settings -> Applications\" and grant the appropriate permission.]]></string>
+    <string name="location">Location</string>
 </resources>
