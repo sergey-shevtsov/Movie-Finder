@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
@@ -21,6 +20,7 @@ import com.example.android.moviefinder.view.contacts.ContactsFragment
 import com.example.android.moviefinder.view.favorites.FavoritesFragment
 import com.example.android.moviefinder.view.history.HistoryFragment
 import com.example.android.moviefinder.view.home.HomeFragment
+import com.example.android.moviefinder.view.location.LocationFragment
 import com.example.android.moviefinder.view.settings.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
             R.id.location -> {
                 supportFragmentManager.apply {
                     beginTransaction()
-                        .replace(R.id.fragment_container, MapsFragment())
+                        .replace(R.id.fragment_container, LocationFragment())
                         .addToBackStack("")
                         .commitAllowingStateLoss()
                 }

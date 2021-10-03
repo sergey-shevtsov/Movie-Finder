@@ -16,9 +16,9 @@ class ContactsViewModel(
     fun getContacts(activity: Activity) {
         contactsLiveData.value = AppState.Loading
 
-        val cr = activity.contentResolver
+        val contentResolver = activity.contentResolver
 
-        val cursor: Cursor? = cr.query(
+        val cursor: Cursor? = contentResolver.query(
             ContactsContract.Contacts.CONTENT_URI,
             null, null, null,
             ContactsContract.Contacts.DISPLAY_NAME + " ASC"
@@ -36,11 +36,11 @@ class ContactsViewModel(
                         cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
                     var phoneNumber: String? = null
 
-                    if (cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))
-                            .toInt() > 0
-                    ) {
+                    if (cursor
+                            .getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))
+                            .toInt() > 0) {
 
-                        val phoneCursor = cr.query(
+                        val phoneCursor = contentResolver.query(
                             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                             null,
                             "${ContactsContract.CommonDataKinds.Phone.CONTACT_ID} = ?",

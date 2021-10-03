@@ -17,10 +17,8 @@
     <string name="movie_image">Movie image</string>
     <string name="rating_image">Rating image</string>
     <string name="now_playing">Now playing</string>
-    <string name="now_playing_request" translatable="false">now_playing</string>
     <string name="top_rated">Top rated</string>
     <string name="popular">Popular</string>
-    <string name="in_developing">Section in development</string>
     <string name="detail_orig_title_pattern" translatable="false">%s (%s)</string>
     <string name="detail_duration_pattern" translatable="false">%d %s/ %s</string>
     <string name="detail_rating_pattern" translatable="false">%.2f (%d)</string>
@@ -44,4 +42,6 @@
     <string name="contacts">Contacts</string>
     <string name="no_access_message"><![CDATA[No access. Please go to \"Settings -> Applications\" and grant the appropriate permission.]]></string>
     <string name="location">Location</string>
+    <string name="button_search_map">Search</string>
+    <string name="enter_address_here">Enter address here</string>
 </resources>
