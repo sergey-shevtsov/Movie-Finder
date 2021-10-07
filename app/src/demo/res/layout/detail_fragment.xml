@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/constraint_start"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/guideline_base_size" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/detail_title_margin_top"
+            android:layout_marginEnd="@dimen/detail_title_margin_end"
+            android:textColor="@color/black"
+            android:textSize="@dimen/detail_title_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/constraint_start"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/original_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="@id/constraint_start"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:text="Original Title" />
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/detail_image_width"
+            android:layout_height="@dimen/detail_image_height"
+            android:layout_marginTop="@dimen/detail_image_margin"
+            android:contentDescription="@string/movie_image"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="@id/constraint_start"
+            app:layout_constraintTop_toBottomOf="@id/original_title" />
+
+        <TextView
+            android:id="@+id/genres"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/details_list_item_margin_start"
+            android:layout_marginEnd="@dimen/details_genres_margin_end"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image"
+            app:layout_constraintTop_toTopOf="@id/image"
+            tools:text="Genres" />
+
+        <TextView
+            android:id="@+id/duration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/details_list_item_margin_start"
+            android:layout_marginTop="@dimen/details_list_item_margin_top"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image"
+            app:layout_constraintTop_toBottomOf="@id/genres"
+            tools:text="Duration" />
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/details_list_item_margin_start"
+            android:layout_marginTop="@dimen/details_list_item_margin_top"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@id/image"
+            app:layout_constraintTop_toBottomOf="@id/duration"
+            tools:text="Rating" />
+
+        <ImageView
+            android:id="@+id/rating_icon"
+            android:layout_width="@dimen/rating_icon_size"
+            android:layout_height="@dimen/rating_icon_size"
+            android:layout_marginStart="@dimen/details_rating_icon_margin"
+            android:contentDescription="@string/rating_image"
+            android:src="@drawable/ic_rating"
+            app:layout_constraintStart_toEndOf="@id/rating"
+            app:layout_constraintTop_toTopOf="@id/rating" />
+
+        <TextView
+            android:id="@+id/budget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/details_list_item_margin_start"
+            android:layout_marginTop="@dimen/details_list_item_margin_top"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@id/image"
+            app:layout_constraintTop_toBottomOf="@id/rating"
+            tools:text="Budget" />
+
+        <TextView
+            android:id="@+id/revenue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/details_list_item_margin_start"
+            android:layout_marginTop="@dimen/details_list_item_margin_top"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@id/image"
+            app:layout_constraintTop_toBottomOf="@id/budget"
+            tools:text="Revenue" />
+
+        <TextView
+            android:id="@+id/released"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/details_list_item_margin_start"
+            android:layout_marginTop="@dimen/details_list_item_margin_top"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@id/image"
+            app:layout_constraintTop_toBottomOf="@id/revenue"
+            tools:text="Released" />
+
+        <TextView
+            android:id="@+id/overview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/detail_overview_margin"
+            android:layout_marginEnd="@dimen/detail_overview_margin"
+            android:textColor="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/constraint_start"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            tools:text="Overview" />
+
+        <include
+            android:id="@+id/loading_frame"
+            layout="@layout/loading_frame"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/error_frame"
+            layout="@layout/error_frame"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
