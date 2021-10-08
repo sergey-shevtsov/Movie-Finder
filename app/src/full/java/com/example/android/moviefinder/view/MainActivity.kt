@@ -25,6 +25,10 @@ import com.example.android.moviefinder.view.settings.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
 
+    private val binding: MainActivityBinding by lazy {
+        MainActivityBinding.inflate(layoutInflater)
+    }
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,15 +37,11 @@ class MainActivity : AppCompatActivity() {
 
         initBottomNavigation()
 
+        initNetworkCallback()
+
         if (savedInstanceState == null) {
             replaceFragment(HomeFragment.newInstance())
         }
-
-        initNetworkCallback()
-    }
-
-    private val binding: MainActivityBinding by lazy {
-        MainActivityBinding.inflate(layoutInflater)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -88,11 +88,6 @@ class MainActivity : AppCompatActivity() {
                 AppCompatResources.getDrawable(context, R.drawable.red_bg)
             connectivityTextView.text = getString(R.string.no_internet)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        NetworkMonitor(application).stopNetworkCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
