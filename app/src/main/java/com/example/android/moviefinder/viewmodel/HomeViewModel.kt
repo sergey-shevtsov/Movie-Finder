@@ -27,7 +27,7 @@ class HomeViewModel(
         getMovieListFromRemoteSource(homeLiveDataNowPlaying, "now_playing", page)
     }
 
-    fun getPopularMovieListFromRemoteSource(page: Int = 1) {
+    fun getPopularMovieListFromRemoteSource(page: Int = 2) {
         getMovieListFromRemoteSource(homeLiveDataPopular, "popular", page)
     }
 

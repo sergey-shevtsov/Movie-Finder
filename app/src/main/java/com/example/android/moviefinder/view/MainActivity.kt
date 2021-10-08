@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
@@ -17,9 +16,11 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.MainActivityBinding
 import com.example.android.moviefinder.model.*
+import com.example.android.moviefinder.view.contacts.ContactsFragment
 import com.example.android.moviefinder.view.favorites.FavoritesFragment
 import com.example.android.moviefinder.view.history.HistoryFragment
 import com.example.android.moviefinder.view.home.HomeFragment
+import com.example.android.moviefinder.view.location.LocationFragment
 import com.example.android.moviefinder.view.settings.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
@@ -102,7 +103,15 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()
-            R.id.search -> Toast.makeText(this, "Searching", Toast.LENGTH_LONG).show()
+            R.id.contacts -> replaceFragment(ContactsFragment.newInstance(), true)
+            R.id.location -> {
+                supportFragmentManager.apply {
+                    beginTransaction()
+                        .replace(R.id.fragment_container, LocationFragment())
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
+                }
+            }
             else -> super.onOptionsItemSelected(item)
         }
         return true
@@ -120,12 +129,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = false) {
         supportFragmentManager.apply {
             for (i in 0 until backStackEntryCount) popBackStack()
-            beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit()
+            if (addToBackStack) {
+                beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack("")
+                    .commit()
+            } else {
+                beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .commit()
+            }
         }
     }
 }

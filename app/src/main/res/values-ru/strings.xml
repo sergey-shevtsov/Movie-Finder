@@ -16,7 +16,6 @@
     <string name="rating_image">Рейтинг</string>
     <string name="reload"><u>Перезагрузить</u></string>
     <string name="top_rated">Лучшие за всё время </string>
-    <string name="in_developing">Раздел в разработке</string>
     <string name="popular">Популярные</string>
     <string name="now_playing">Сейчас в кино</string>
     <string name="no_internet">Нет интернета</string>
@@ -32,4 +31,9 @@
     <string name="enter_your_text_here">Введите текст здесь</string>
     <string name="note_title">Заметка:</string>
     <string name="delete_everything">Удалить всё?</string>
+    <string name="contacts">Контакты</string>
+    <string name="no_access_message"><![CDATA[Нет доступа. Пожалуйста, перейдите в  \"Настройки -> Приложения\" и выдайте соответствующее разрешение.]]></string>
+    <string name="location">Местонахождение</string>
+    <string name="button_search_map">Поиск</string>
+    <string name="enter_address_here">Введите адрес здесь</string>
 </resources>
