@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/dialog_padding"
+    android:paddingStart="@dimen/dialog_padding"
+    android:paddingEnd="@dimen/dialog_padding"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/constraint_middle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_everything"
+        android:layout_marginTop="@dimen/dialog_title_margin_top"
+        android:textSize="@dimen/title_text_size"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/positive_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ok"
+        android:layout_marginTop="@dimen/dialog_button_margin_top"
+        android:layout_marginStart="@dimen/dialog_button_outer_margin"
+        android:layout_marginEnd="@dimen/dialog_button_inner_margin"
+        android:layout_marginBottom="@dimen/dialog_button_margin_bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintEnd_toEndOf="@id/constraint_middle"/>
+
+    <Button
+        android:id="@+id/negative_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:layout_marginTop="@dimen/dialog_button_margin_top"
+        android:layout_marginEnd="@dimen/dialog_button_outer_margin"
+        android:layout_marginStart="@dimen/dialog_button_inner_margin"
+        android:layout_marginBottom="@dimen/dialog_button_margin_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintStart_toStartOf="@id/constraint_middle"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

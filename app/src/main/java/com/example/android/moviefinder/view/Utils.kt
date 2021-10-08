@@ -1,10 +1,21 @@
 package com.example.android.moviefinder.view
 
+import android.app.Activity
+import android.content.Context
+import android.text.Editable
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
 import java.util.*
+
+const val CHILD_MODE_KEY = "ChildModeKey"
+
+fun Activity.isChildMode(): Boolean? {
+    return this.getPreferences(Context.MODE_PRIVATE)
+        ?.getBoolean(CHILD_MODE_KEY, false)
+}
 
 fun View.show() {
     this.visibility = View.VISIBLE
@@ -20,10 +31,6 @@ fun FragmentActivity.showHomeButton() {
 
 fun FragmentActivity.hideHomeButton() {
     (this as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-}
-
-fun View.showSnackBarMessage(stringId: Int, length: Int = Snackbar.LENGTH_SHORT) {
-    Snackbar.make(this, resources.getString(stringId), length).show()
 }
 
 fun String.formatDate(): String {
@@ -46,3 +53,10 @@ fun Int.formatNum(): String {
 
 fun String.getStringFormat(vararg args: Any?): String =
     String.format(Locale.getDefault(), this, *args)
+
+fun Long.formatToPattern(pattern: String): String {
+    val sdf = SimpleDateFormat(pattern, Locale.getDefault())
+    return sdf.format(this)
+}
+
+fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)

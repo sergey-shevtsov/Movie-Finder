@@ -18,14 +18,36 @@ import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.MainActivityBinding
 import com.example.android.moviefinder.model.*
 import com.example.android.moviefinder.view.favorites.FavoritesFragment
+import com.example.android.moviefinder.view.history.HistoryFragment
 import com.example.android.moviefinder.view.home.HomeFragment
-import com.example.android.moviefinder.view.ratings.RatingsFragment
-import java.util.*
+import com.example.android.moviefinder.view.settings.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
 
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(binding.root)
+
+        initBottomNavigation()
+
+        if (savedInstanceState == null) {
+            replaceFragment(HomeFragment.newInstance())
+        }
+
+        initNetworkCallback()
+    }
+
     private val binding: MainActivityBinding by lazy {
         MainActivityBinding.inflate(layoutInflater)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun initNetworkCallback() {
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(localMainReceiver, IntentFilter(NETWORK_STATUS_INTENT_FILTER))
+        NetworkMonitor(application).startNetworkCallback()
     }
 
     private val localMainReceiver = object : BroadcastReceiver() {
@@ -67,23 +89,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setContentView(binding.root)
-
-        initBottomNavigation()
-
-        if (savedInstanceState == null) {
-            replaceFragment(HomeFragment.newInstance())
-        }
-
-        LocalBroadcastManager.getInstance(this)
-            .registerReceiver(localMainReceiver, IntentFilter(NETWORK_STATUS_INTENT_FILTER))
-        NetworkMonitor(application).startNetworkCallback()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         NetworkMonitor(application).stopNetworkCallback()
@@ -98,6 +103,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()
             R.id.search -> Toast.makeText(this, "Searching", Toast.LENGTH_LONG).show()
+            else -> super.onOptionsItemSelected(item)
         }
         return true
     }
@@ -107,7 +113,8 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.home -> replaceFragment(HomeFragment.newInstance())
                 R.id.favorites -> replaceFragment(FavoritesFragment.newInstance())
-                R.id.ratings -> replaceFragment(RatingsFragment.newInstance())
+                R.id.history -> replaceFragment(HistoryFragment.newInstance())
+                R.id.settings -> replaceFragment(SettingsFragment.newInstance())
             }
             true
         }

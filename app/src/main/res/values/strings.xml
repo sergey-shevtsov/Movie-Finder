@@ -6,7 +6,7 @@
     <string name="reload"><u>Reload</u></string>
     <string name="home">Home</string>
     <string name="favorites">Favorites</string>
-    <string name="ratings">Ratings</string>
+    <string name="settings">Settings</string>
     <string name="search">Search</string>
     <string name="detail">Detail</string>
     <string name="add_to_favorites">Add to favorites</string>
@@ -30,4 +30,15 @@
     <string name="error_message_pattern" translatable="false">%s: %s</string>
     <string name="no_internet">No internet</string>
     <string name="internet_restored">Internet restored</string>
+    <string name="child_mode">Child mode</string>
+    <string name="notes">Notes</string>
+    <string name="history">History</string>
+    <string name="empty_data">There is nothing here yet</string>
+    <string name="add_note">Add note</string>
+    <string name="note">Note</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter_your_text_here">Enter your text here</string>
+    <string name="note_title">Note:</string>
+    <string name="delete_everything">Delete everything?</string>
 </resources>

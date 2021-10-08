@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/light_grey"
+    android:layout_marginTop="@dimen/history_item_margin_top"
+    android:layout_marginBottom="@dimen/history_item_margin_bottom"
+    android:elevation="@dimen/base_elevation"
+    app:cardCornerRadius="@dimen/movie_item_corner_radius">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/history_item_padding">
+
+        <TextView
+            android:id="@+id/timestamp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="22.09.2021 20:03" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/history_movie_title_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/timestamp"
+            tools:text="Movie title" />
+
+        <TextView
+            android:id="@+id/released_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:text="2015" />
+
+        <ImageView
+            android:id="@+id/vote_icon"
+            android:layout_width="@dimen/rating_icon_size"
+            android:layout_height="@dimen/rating_icon_size"
+            android:layout_marginEnd="@dimen/movie_item_parts_margin"
+            android:contentDescription="@string/rating_image"
+            android:src="@drawable/ic_rating"
+            app:layout_constraintEnd_toStartOf="@id/vote_average"
+            app:layout_constraintTop_toTopOf="@id/vote_average" />
+
+        <TextView
+            android:id="@+id/vote_average"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@id/timestamp"
+            tools:text="8.3" />
+
+        <TextView
+            android:id="@+id/note_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/note_title"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/note_title_margin_top"
+            android:textSize="@dimen/note_title_text_size"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/released_year" />
+
+        <TextView
+            android:id="@+id/note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/note_title"
+            tools:text="Note text here" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

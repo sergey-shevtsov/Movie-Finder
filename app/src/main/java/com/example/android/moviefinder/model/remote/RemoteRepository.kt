@@ -11,6 +11,7 @@ interface RemoteRepository {
         apiKey: String,
         callback: Callback<MovieDetailsDTO>
     )
+
     fun getMovieListFromServer(
         category: String,
         language: String,

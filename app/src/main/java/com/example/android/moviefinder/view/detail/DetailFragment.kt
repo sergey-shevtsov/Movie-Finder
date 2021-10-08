@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,16 +13,20 @@ import com.example.android.moviefinder.R
 import com.example.android.moviefinder.databinding.DetailFragmentBinding
 import com.example.android.moviefinder.model.GenresDTO
 import com.example.android.moviefinder.model.MovieDetailsDTO
+import com.example.android.moviefinder.model.local.FavoritesEntity
+import com.example.android.moviefinder.model.local.HistoryEntity
 import com.example.android.moviefinder.view.*
 import com.example.android.moviefinder.viewmodel.AppState
 import com.example.android.moviefinder.viewmodel.DetailsViewModel
+import java.util.*
 
 const val DETAILS_URL_BASE = "https://image.tmdb.org/t/p/w300"
 
-class DetailFragment : Fragment() {
+class DetailFragment : Fragment(), NoteDialogFragment.DialogCallbackContract {
 
     companion object {
         const val MOVIE_ID_KEY = "MOVIE_EXTRA"
+        const val HISTORY_EXTRA_KEY = "HISTORY_EXTRA"
         fun newInstance(bundle: Bundle): DetailFragment {
             return DetailFragment().also {
                 it.arguments = bundle
@@ -40,6 +43,10 @@ class DetailFragment : Fragment() {
 
     private var _binding: DetailFragmentBinding? = null
     private val binding get() = _binding!!
+
+    private var movieDetailsDTO: MovieDetailsDTO? = null
+    private var historyEntity: HistoryEntity? = null
+    private var isFavorite = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,13 +66,13 @@ class DetailFragment : Fragment() {
 
         initViewModel()
 
-        binding.favoritesButton.setOnClickListener {
-            Toast.makeText(context, "To favorites!", Toast.LENGTH_SHORT).show()
-        }
+        initHistory()
+
+        initFavoritesViewModel()
     }
 
     private fun initViewModel() {
-        viewModel.liveData.observe(viewLifecycleOwner,
+        viewModel.liveDataDetails.observe(viewLifecycleOwner,
             {
                 binding.apply {
                     when (it) {
@@ -76,7 +83,9 @@ class DetailFragment : Fragment() {
                         is AppState.Success<*> -> {
                             errorFrame.errorContainer.hide()
                             loadingFrame.loadingContainer.hide()
-                            fillDetail(it.data as MovieDetailsDTO)
+                            movieDetailsDTO = it.data as MovieDetailsDTO
+                            updateHistory(historyEntity?.note ?: "")
+                            fillDetail()
                         }
                         is AppState.Error -> {
                             errorFrame.errorContainer.show()
@@ -90,32 +99,105 @@ class DetailFragment : Fragment() {
         viewModel.getMovieDetailsFromRemoteSource(movieId)
     }
 
-    private fun fillDetail(movieDetailsDTO: MovieDetailsDTO) {
-        val releaseYear = movieDetailsDTO.release_date?.subSequence(0, 4).toString()
-        binding.apply {
-            title.text = movieDetailsDTO.title
-            originalTitle.text = resources.getString(R.string.detail_orig_title_pattern)
-                .getStringFormat(movieDetailsDTO.original_title, releaseYear)
-            image.load("${DETAILS_URL_BASE}${movieDetailsDTO.poster_path}")
-            genres.text = movieDetailsDTO.genres?.let { getGenresNames(it) }
-            duration.text = resources.getString(R.string.detail_duration_pattern)
-                .getStringFormat(
-                    movieDetailsDTO.runtime,
-                    resources.getString(R.string.minute),
-                    movieDetailsDTO.runtime?.getFormatDuration()
+    private fun initHistory() {
+        historyEntity = arguments?.getParcelable(HISTORY_EXTRA_KEY)
+
+        binding.noteButton.setOnClickListener {
+            historyEntity?.note?.let {
+                val noteDialogFragment = NoteDialogFragment.newInstance(it)
+                noteDialogFragment.setContractFragment(this)
+                noteDialogFragment.show(parentFragmentManager, "")
+            }
+        }
+    }
+
+    private fun initFavoritesViewModel() {
+        viewModel.liveDataFavorites.observe(viewLifecycleOwner) {
+            isFavorite = if (it) {
+                binding.favoritesButton.load(R.drawable.ic_added_to_favorites)
+                true
+            } else {
+                binding.favoritesButton.load(R.drawable.ic_add_to_favorites)
+                false
+            }
+        }
+
+        binding.favoritesButton.setOnClickListener {
+            if (isFavorite) {
+                viewModel.deleteFromFavorites(movieId)
+                isFavorite = false
+            } else {
+                movieDetailsDTO?.let {
+                    viewModel.insertToFavorites(
+                        FavoritesEntity(
+                            0,
+                            movieId,
+                            it.poster_path!!,
+                            it.title!!,
+                            it.release_date!!.subSequence(0, 4).toString(),
+                            it.vote_average!!,
+                            Calendar.getInstance().timeInMillis
+                        )
+                    )
+                    isFavorite = true
+                }
+            }
+        }
+
+        viewModel.isFavorite(movieId)
+    }
+
+    override fun passDataBackToFragment(note: String) {
+        updateHistory(note)
+    }
+
+    private fun updateHistory(note: String) {
+        movieDetailsDTO?.let {
+            if (historyEntity == null) {
+                historyEntity = HistoryEntity(
+                    movieId = it.id!!,
+                    title = it.title!!,
+                    releasedYear = it.release_date!!.subSequence(0, 4).toString(),
+                    voteAverage = it.vote_average!!,
+                    timestamp = Calendar.getInstance().timeInMillis,
+                    note = note
                 )
-            rating.text = resources.getString(R.string.detail_rating_pattern)
-                .getStringFormat(movieDetailsDTO.vote_average, movieDetailsDTO.vote_count)
-            budget.text = resources.getString(R.string.detail_budget_pattern)
-                .getStringFormat(resources.getString(R.string.budget), movieDetailsDTO.budget)
-            revenue.text = resources.getString(R.string.detail_revenue_pattern)
-                .getStringFormat(resources.getString(R.string.revenue), movieDetailsDTO.revenue)
-            released.text = resources.getString(R.string.detail_release_date_pattern)
-                .getStringFormat(
-                    resources.getString(R.string.released),
-                    movieDetailsDTO.release_date?.formatDate()
-                )
-            overview.text = movieDetailsDTO.overview
+                viewModel.insertHistory(historyEntity!!)
+            } else {
+                historyEntity!!.note = note
+                viewModel.updateHistory(historyEntity!!)
+            }
+        }
+    }
+
+    private fun fillDetail() {
+        movieDetailsDTO?.let {
+            val releaseYear = it.release_date?.subSequence(0, 4).toString()
+            binding.apply {
+                title.text = it.title
+                originalTitle.text = resources.getString(R.string.detail_orig_title_pattern)
+                    .getStringFormat(it.original_title, releaseYear)
+                image.load("${DETAILS_URL_BASE}${it.poster_path}")
+                genres.text = it.genres?.let { getGenresNames(it) }
+                duration.text = resources.getString(R.string.detail_duration_pattern)
+                    .getStringFormat(
+                        it.runtime,
+                        resources.getString(R.string.minute),
+                        it.runtime?.getFormatDuration()
+                    )
+                rating.text = resources.getString(R.string.detail_rating_pattern)
+                    .getStringFormat(it.vote_average, it.vote_count)
+                budget.text = resources.getString(R.string.detail_budget_pattern)
+                    .getStringFormat(resources.getString(R.string.budget), it.budget)
+                revenue.text = resources.getString(R.string.detail_revenue_pattern)
+                    .getStringFormat(resources.getString(R.string.revenue), it.revenue)
+                released.text = resources.getString(R.string.detail_release_date_pattern)
+                    .getStringFormat(
+                        resources.getString(R.string.released),
+                        it.release_date?.formatDate()
+                    )
+                overview.text = it.overview
+            }
         }
     }
 

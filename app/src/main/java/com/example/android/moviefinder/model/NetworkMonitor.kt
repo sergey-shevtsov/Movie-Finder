@@ -27,8 +27,10 @@ class NetworkMonitor(private val application: Application) {
 
     private fun doCallback(status: String) {
         LocalBroadcastManager.getInstance(application)
-            .sendBroadcast(Intent(NETWORK_STATUS_INTENT_FILTER)
-                .putExtra(NETWORK_STATUS, status))
+            .sendBroadcast(
+                Intent(NETWORK_STATUS_INTENT_FILTER)
+                    .putExtra(NETWORK_STATUS, status)
+            )
     }
 
     @RequiresApi(Build.VERSION_CODES.N)

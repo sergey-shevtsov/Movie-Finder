@@ -28,7 +28,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieVH {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.movie_item, parent, false)
-        return MovieVH(view, onItemClickListener)
+        return MovieVH(view)
     }
 
     override fun onBindViewHolder(holder: MovieVH, position: Int) {
@@ -41,25 +41,22 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
         fun onItemClicked(movie: MovieListDTO.MovieItemDTO)
     }
 
-    inner class MovieVH(itemView: View, onItemClickListener: OnItemClickListener?) :
+    inner class MovieVH(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         private val binding = MovieItemBinding.bind(itemView)
         private lateinit var movie: MovieListDTO.MovieItemDTO
 
-        init {
+        fun bind(movie: MovieListDTO.MovieItemDTO) {
+            this.movie = movie
+
             itemView.setOnClickListener {
                 onItemClickListener?.onItemClicked(movie)
             }
-        }
-
-        fun bind(movie: MovieListDTO.MovieItemDTO) {
-            this.movie = movie
-            val releaseYear = movie.release_date?.subSequence(0, 4).toString()
 
             binding.apply {
                 posterImage.load("${POSTERS_URL_BASE}${movie.poster_path}")
                 title.text = movie.title
-                released.text = releaseYear
+                released.text = movie.release_date?.subSequence(0, 4).toString()
                 ratingTv.text = movie.vote_average.toString()
             }
         }

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.moviefinder.BuildConfig
-import com.example.android.moviefinder.model.*
+import com.example.android.moviefinder.model.MovieListDTO
 import com.example.android.moviefinder.model.remote.RemoteDataSource
 import com.example.android.moviefinder.model.remote.RemoteRepository
 import com.example.android.moviefinder.model.remote.RemoteRepositoryImpl
@@ -24,18 +24,22 @@ class HomeViewModel(
     val liveDataTopRated: LiveData<AppState> = homeLiveDataTopRated
 
     fun getNowPlayingMovieListFromRemoteSource(page: Int = 1) {
-        getMovieListFromRemoteSource(homeLiveDataNowPlaying,"now_playing", page)
+        getMovieListFromRemoteSource(homeLiveDataNowPlaying, "now_playing", page)
     }
 
     fun getPopularMovieListFromRemoteSource(page: Int = 1) {
-        getMovieListFromRemoteSource(homeLiveDataPopular,"popular", page)
+        getMovieListFromRemoteSource(homeLiveDataPopular, "popular", page)
     }
 
     fun getTopRatedMovieListFromRemoteSource(page: Int = 1) {
-        getMovieListFromRemoteSource(homeLiveDataTopRated,"top_rated", page)
+        getMovieListFromRemoteSource(homeLiveDataTopRated, "top_rated", page)
     }
 
-    private fun getMovieListFromRemoteSource(liveData: MutableLiveData<AppState>, category: String, page: Int) {
+    private fun getMovieListFromRemoteSource(
+        liveData: MutableLiveData<AppState>,
+        category: String,
+        page: Int
+    ) {
         liveData.value = AppState.Loading
 
         remoteRepositoryImpl.getMovieListFromServer(

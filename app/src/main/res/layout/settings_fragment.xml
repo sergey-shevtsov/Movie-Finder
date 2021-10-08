@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/start_constraint"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/guideline_base_size"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/title_margin_start"
+        android:layout_marginTop="@dimen/title_base_margin"
+        android:layout_marginBottom="@dimen/title_base_margin"
+        android:textSize="@dimen/title_text_size"
+        android:textStyle="bold"
+        android:text="@string/settings"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/child_mode_switch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/settings_item_text_size"
+        app:switchPadding="@dimen/settings_switch_padding"
+        app:layout_constraintStart_toStartOf="@id/start_constraint"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:text="@string/child_mode"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
