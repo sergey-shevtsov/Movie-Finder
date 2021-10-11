@@ -18,28 +18,64 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+
+    signingConfigs {
         release {
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file("appkeys.properties").newDataInputStream())
+            storeFile file("${properties.getProperty("store_file")}")
+            storePassword "${properties.getProperty("keystore_password")}"
+            keyAlias "${properties.getProperty("key_alias")}"
+            keyPassword "${properties.getProperty("key_password")}"
+        }
+    }
+
+    buildTypes {
+
+        release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            versionNameSuffix "-debug"
+        }
+
     }
+
+    flavorDimensions "version"
+
+    productFlavors {
+        full {
+            dimension "version"
+        }
+        demo {
+            dimension "version"
+            versionNameSuffix ".demo"
+        }
+    }
+
     buildTypes.each {
         Properties properties = new Properties()
         properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
         def apikey = properties.getProperty("tmdb_api_key", "")
         it.buildConfigField "String", "TMDB_API_KEY", apikey
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
     buildFeatures {
         viewBinding true
     }
+
 }
 
 dependencies {

@@ -31,8 +31,6 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        initBottomNavigation()
-
         if (savedInstanceState == null) {
             replaceFragment(HomeFragment.newInstance())
         }
@@ -95,38 +93,12 @@ class MainActivity : AppCompatActivity() {
         NetworkMonitor(application).stopNetworkCallback()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.toolbar_menu, menu)
-        return true
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()
-            R.id.contacts -> replaceFragment(ContactsFragment.newInstance(), true)
-            R.id.location -> {
-                supportFragmentManager.apply {
-                    beginTransaction()
-                        .replace(R.id.fragment_container, LocationFragment())
-                        .addToBackStack("")
-                        .commitAllowingStateLoss()
-                }
-            }
             else -> super.onOptionsItemSelected(item)
         }
         return true
-    }
-
-    private fun initBottomNavigation() {
-        binding.bottomNavigation.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.home -> replaceFragment(HomeFragment.newInstance())
-                R.id.favorites -> replaceFragment(FavoritesFragment.newInstance())
-                R.id.history -> replaceFragment(HistoryFragment.newInstance())
-                R.id.settings -> replaceFragment(SettingsFragment.newInstance())
-            }
-            true
-        }
     }
 
     private fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = false) {
